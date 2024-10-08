@@ -85,6 +85,8 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.android.appcompat)
     implementation(libs.converter.gson)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.gridlayout)
 
     // Jetpack compose dependencies
     // @see: https://developer.android.google.cn/develop/ui/compose/setup?hl=en#kotlin_1
