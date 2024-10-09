@@ -1,27 +1,12 @@
-![banner](https://user-images.githubusercontent.com/37318022/40349145-3e0c8d8a-5dd8-11e8-8654-5784f9ab7554.png)
+Android-CleanArchitecture 
+=========================
 
-# STATUS: Refactoring! Please check the TODOs below in the **project status section**.
-
-# Android - Clean Architecture - Kotlin [![Build Status](https://travis-ci.org/android10/Android-CleanArchitecture-Kotlin.svg?branch=main)](https://travis-ci.org/android10/Android-CleanArchitecture-Kotlin) [![codecov](https://codecov.io/gh/android10/Android-CleanArchitecture-Kotlin/branch/main/graph/badge.svg?token=x1AtDcNuDv)](https://codecov.io/gh/android10/Android-CleanArchitecture-Kotlin)
-The purpose of this repo is to follow up Clean Architecture principles by bringing them to Android. It is worth saying that the idea is to take advantage of the Kotlin Programming Language features plus also pull in lessons learned and ideas from other interesting approaches like Functional Programming.
-
-## Project Status
-
- - **Last Update: 2024.08**
-   - WIP: Migrate to Kotlin 2.0.
-   - WIP: Migrate to Jetpack Compose.
-   - TODO: Bug Fixes.
-   - TODO: Reorganize and cleanup tests.
-   - TODO: Reorganize dependencies and build system. 
-
-## Blog post with implementation details explanation:
+## New version available written in Kotlin:
 [Architecting Android… Reloaded](https://fernandocejas.com/2018/05/07/architecting-android-reloaded/)
 
-## Android - Clean Architecture - Java:
-There is another Android Clean Architecture repository written in Java: https://github.com/android10/Android-CleanArchitecture with really nice discussions: https://github.com/android10/Android-CleanArchitecture/issues.
-Article, lessons learned and some more material coming up. Check the following known bugs and TODO list. 
-
-## Other material worth reading:
+Introduction
+-----------------
+This is a sample app that is part of a blog post I have written about how to architect android application using the Uncle Bob's clean architecture approach. 
 
 [Architecting Android…The clean way?](http://fernandocejas.com/2014/09/03/architecting-android-the-clean-way/)
 
@@ -31,49 +16,47 @@ Article, lessons learned and some more material coming up. Check the following k
 
 [Clean Architecture…Dynamic Parameters in Use Cases](http://fernandocejas.com/2016/12/24/clean-architecture-dynamic-parameters-in-use-cases/)
 
-### ----------------------------------------------------------------------------------------------
+[Demo video of this sample](http://youtu.be/XSjV4sG3ni0)
 
-## Sample app
-![](https://user-images.githubusercontent.com/1360604/31345866-679a221a-ad17-11e7-8097-7800edb677fa.gif)
+Clean architecture
+-----------------
+![http://fernandocejas.com/2015/07/18/architecting-android-the-evolution/](https://github.com/android10/Sample-Data/blob/master/Android-CleanArchitecture/clean_architecture.png)
 
-### ----------------------------------------------------------------------------------------------
+Architectural approach
+-----------------
+![http://fernandocejas.com/2015/07/18/architecting-android-the-evolution/](https://github.com/android10/Sample-Data/blob/master/Android-CleanArchitecture/clean_architecture_layers.png)
 
-## Clean Architecture
-![https://fernandocejas.com/2018/05/07/architecting-android-reloaded/](https://github.com/android10/Sample-Data/blob/master/Android-CleanArchitecture-Kotlin/architecture/clean_architecture_reloaded_main.png)
+Architectural reactive approach
+-----------------
+![http://fernandocejas.com/2015/07/18/architecting-android-the-evolution/](https://github.com/android10/Sample-Data/blob/master/Android-CleanArchitecture/clean_architecture_layers_details.png)
 
-### ----------------------------------------------------------------------------------------------
+Local Development
+-----------------
 
-## Android 3 Layers Architecture
-![https://fernandocejas.com/2018/05/07/architecting-android-reloaded/](https://github.com/android10/Sample-Data/blob/master/Android-CleanArchitecture-Kotlin/architecture/clean_architecture_reloaded_layers.png)
-
-### ----------------------------------------------------------------------------------------------
-
-## UI Layer: MVVM 
-![https://fernandocejas.com/2018/05/07/architecting-android-reloaded/](https://github.com/android10/Sample-Data/blob/master/Android-CleanArchitecture-Kotlin/architecture/clean_architecture_reloaded_mvvm_app.png)
-
-### ----------------------------------------------------------------------------------------------
-
-## Data Layer: Repository 
-![https://fernandocejas.com/2018/05/07/architecting-android-reloaded/](https://github.com/android10/Sample-Data/blob/master/Android-CleanArchitecture-Kotlin/architecture/clean_archictecture_reloaded_repository.png)
-
-### ----------------------------------------------------------------------------------------------
-
-## Local Development
 Here are some useful Gradle/adb commands for executing this example:
 
- * `./gradlew runApp` - Builds and install the debug apk on the current connected device.
- * `./gradlew compileApp` - Builds the debug apk.
- * `./gradlew runUnitTests` - Execute unit tests (both unit and integration).
- * `./gradlew runAcceptanceTests` - Execute acceptance and instrumentation tests in the connected device.
- * `./gradlew runTestCoverage` - Reports code coverage on tests within the Android codebase.
- * `./gradlew runStaticCodeAnalysis` - Run static analysis on the Android codebase.
+ * `./gradlew clean build` - Build the entire example and execute unit and integration tests plus lint check.
+ * `./gradlew installDebug` - Install the debug apk on the current connected device.
+ * `./gradlew runUnitTests` - Execute domain and data layer tests (both unit and integration).
+ * `./gradlew runAcceptanceTests` - Execute espresso and instrumentation acceptance tests.
  
-## Discussions
-Refer to the issues section: https://github.com/android10/Android-CleanArchitecture-Kotlin/issues
- 
-## License
+Discussions
+-----------------
 
-    Copyright 2024 Fernando Cejas
+Refer to the issues section: https://github.com/android10/Android-CleanArchitecture/issues
+ 
+
+Code style
+-----------
+
+Here you can download and install the java codestyle.
+https://github.com/android10/java-code-styles
+
+
+License
+--------
+
+    Copyright 2018 Fernando Cejas
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -88,6 +71,8 @@ Refer to the issues section: https://github.com/android10/Android-CleanArchitect
     limitations under the License.
 
 
-![https://fernandocejas.com](https://github.com/android10/Sample-Data/blob/master/android10/android10_logo_big.png)
+![http://www.fernandocejas.com](https://github.com/android10/Sample-Data/blob/master/android10/android10_logo_big.png)
+
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Android--CleanArchitecture-brightgreen.svg?style=flat)](https://android-arsenal.com/details/3/909)
 
 <a href="https://www.buymeacoffee.com/android10" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
