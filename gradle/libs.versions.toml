@@ -28,7 +28,7 @@ rules = "1.6.1"
 leakcanaryAndroid = "2.14"
 
 # plugings -------
-androidGradlePlugin = "8.5.2"
+androidGradlePlugin = "8.6.1"
 
 
 [libraries]

@@ -16,7 +16,7 @@
 
   <!--Activities-->
     <activity
-        android:name="com.fernandocejas.sample.core.navigation.RouteActivity"
+        android:name="com.tuankiet.sample.core.navigation.RouteActivity"
         android:noHistory="true"
         android:theme="@style/AppTheme.Translucent"
         android:exported="true">
@@ -26,21 +26,21 @@
         </intent-filter>
     </activity>
 
-    <activity
-        android:name=".features.login.ui.LoginActivity"
-        android:label="@string/login_screen_title">
-    </activity>
+<!--    <activity-->
+<!--        android:name=".features.login.ui.LoginActivity"-->
+<!--        android:label="@string/login_screen_title">-->
+<!--    </activity>-->
 
     <activity
-        android:name=".features.movies.ui.MoviesActivity"
-        android:label="@string/movies_screen_title">
+        android:name=".features.agents.ui.AgentsActivity"
+        android:label="@string/agents_screen_title">
     </activity>
 
-    <activity
-        android:name=".features.movies.ui.MovieDetailsActivity"
-        android:label="@string/movie_details_screen_title"
-        android:theme="@style/AppTheme.Translucent">
-    </activity>
+<!--    <activity-->
+<!--        android:name=".features.agents.ui.AgentDetailsActivity"-->
+<!--        android:label="@string/movie_details_screen_title"-->
+<!--        android:theme="@style/AppTheme.Translucent">-->
+<!--    </activity>-->
 
 </application>
 
