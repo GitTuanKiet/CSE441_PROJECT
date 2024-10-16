@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 
 class AppConfig {
-    val id = "com.fernandocejas.sample"
+    val id = "com.tuankiet.sample"
     val versionCode = 2
     val versionName = "2.0"
 
@@ -54,6 +54,8 @@ android {
         // @see: https://developer.android.com/develop/ui/compose/bom
         compose = true
         buildConfig = true
+
+        viewBinding = true
     }
 
     buildTypes {
@@ -97,6 +99,11 @@ dependencies {
     implementation("androidx.compose.foundation:foundation")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material-icons-core")
+
+    implementation("com.google.android.material:material:1.12.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
     // Integration with activities
     implementation("androidx.activity:activity-compose:1.9.0")
     // Integration with ViewModels
