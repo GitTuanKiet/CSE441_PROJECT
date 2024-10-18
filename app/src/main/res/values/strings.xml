@@ -9,4 +9,19 @@
     <string name="failure_agent_non_existent">Agent Not Existent.</string>
 
     <string name="content_description_empty">No content description.</string>
+    <string name="dashboard_title">Dashboard</string>
+    <string name="total_users">Total Users</string>
+    <string name="total_agents">Total Agents</string>
+    <string name="online_users">Online Users</string>
+    <string name="average_response_time">Average Response Time</string>
+    <string name="total_traffic">Total Traffic</string>
+    <string name="number_of_messages_processed">Number of messages processed</string>
+    <string name="user_management">User Management</string>
+    <string name="home">Home</string>
+    <string name="settings">Settings</string>
+    <string name="apptheme">App Theme</string>
+    <string name="language">Language</string>
+    <string name="logout">Logout</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
