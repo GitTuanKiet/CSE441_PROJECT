@@ -17,9 +17,9 @@ class Navigator(private val authenticator: Authenticator) {
 //        context.startActivity(LoginActivity.callingIntent(context))
 
     fun showMain(context: Context) {
-        showAgents(context)
+//        showAgents(context)
 
-//        showAdmin(context)
+        showAdmin(context)
 
 //        when (authenticator.userLoggedIn()) {
 //            true -> showAgents(context)

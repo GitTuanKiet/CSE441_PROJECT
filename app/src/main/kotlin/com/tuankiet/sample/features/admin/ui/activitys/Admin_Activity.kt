@@ -40,8 +40,7 @@ class Admin_Activity : BaseActivity() {
         )
     }
 
-    override val new: Any
-        get() = ""
+
 
     override fun fragment(): BaseFragment {
         return AdminFragment() // Khởi tạo fragment cho Admin
@@ -51,14 +50,14 @@ class Admin_Activity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLayoutBinding.inflate(layoutInflater)
         // Quan sát danh sách người dùng
-        userViewModel.users.observe(this, { users ->
-            // Cập nhật giao diện người dùng với danh sách người dùng
-            // Ví dụ: Cập nhật RecyclerView trong AdminFragment
-            (supportFragmentManager.findFragmentById(fragmentContainer().id) as AdminFragment).updateUserList(users)
-        })
+//        userViewModel.users.observe(this, { users ->
+//            // Cập nhật giao diện người dùng với danh sách người dùng
+//            // Ví dụ: Cập nhật RecyclerView trong AdminFragment
+//            (supportFragmentManager.findFragmentById(fragmentContainer().id) as AdminFragment).updateUserList(users)
+//        })
 
-        // Lấy danh sách người dùng ngay khi Activity được tạo
-        userViewModel.fetchUsers()
+//        // Lấy danh sách người dùng ngay khi Activity được tạo
+//        userViewModel.fetchUsers()
     }
 
 }
