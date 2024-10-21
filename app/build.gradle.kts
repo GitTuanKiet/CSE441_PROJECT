@@ -148,4 +148,7 @@ dependencies {
 //    debugImplementation(libs.leakcanary.android)
     // UI Chart
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
 }

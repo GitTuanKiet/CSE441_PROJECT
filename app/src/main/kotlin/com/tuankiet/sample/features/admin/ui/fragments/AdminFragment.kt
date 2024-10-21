@@ -15,18 +15,21 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentManager
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.tuankiet.sample.R
 import com.tuankiet.sample.core.platform.BaseFragment
 import com.tuankiet.sample.databinding.ActivityLayoutBinding
 import com.tuankiet.sample.features.admin.data.UserModel
+import com.tuankiet.sample.features.admin.data.UserRepository
 import java.util.Locale
 
 class AdminFragment : BaseFragment() {
     private lateinit var binding: ActivityLayoutBinding
-    private var pageIndex = 0
     private lateinit var btnMenu: ImageButton
     private lateinit var taskBar: DrawerLayout
-    private lateinit var main: ConstraintLayout
     private lateinit var navbar: TableLayout
     private lateinit var locale: Locale
     private lateinit var prefs: SharedPreferences
@@ -39,6 +42,7 @@ class AdminFragment : BaseFragment() {
         prefs = requireContext().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
         currentLanguage = prefs.getString("language", "en").toString()
         setLocale(currentLanguage)
+
     }
 
     override fun onCreateView(
@@ -47,14 +51,15 @@ class AdminFragment : BaseFragment() {
     ): View? {
         val isDarkMode = prefs.getBoolean("isDarkMode", false)
         setDarkMode(isDarkMode)
-
+        val pageIndex = prefs.getInt("pageIndex", 0)
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_admin, container, false)
-
-        Log.d("AdminFragment", "Dark mode status: $isDarkMode")
-
         Mapping(view)
-        loadingFragment(pageIndex)
+        val currentFragment = parentFragmentManager.findFragmentById(R.id.displayData)
+        if (currentFragment == null) {
+            val pageIndex = prefs.getInt("pageIndex", 0)
+            loadingFragment(pageIndex)
+        }
         getEvent()
 
         return view
@@ -103,10 +108,13 @@ class AdminFragment : BaseFragment() {
             }
         }
         fragmentTransaction.commit()
+
     }
 
     private fun toggleDarkMode() {
         val isDarkMode = prefs.getBoolean("isDarkMode", false)
+        val pageIndex = prefs.getInt("pageIndex", 0)
+        prefs.edit().putInt("pageIndex", pageIndex).apply()
         if (isDarkMode) {
             prefs.edit().putBoolean("isDarkMode", false).apply()
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -119,6 +127,8 @@ class AdminFragment : BaseFragment() {
 
     private fun switchLanguage() {
         newLanguage = if (currentLanguage == "en") "vi" else "en"
+        val pageIndex = prefs.getInt("pageIndex", 0)
+        prefs.edit().putInt("pageIndex", pageIndex).apply()
         setLocale(newLanguage)
         prefs.edit().putString("language", newLanguage).apply()
         requireActivity().recreate()
@@ -141,6 +151,6 @@ class AdminFragment : BaseFragment() {
     }
 
     fun updateUserList(users: List<UserModel>) {
-        // Implement the method to update the user list in your UI
+
     }
 }
