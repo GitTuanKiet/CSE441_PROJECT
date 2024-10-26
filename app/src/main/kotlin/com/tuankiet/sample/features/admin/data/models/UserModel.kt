@@ -1,4 +1,4 @@
-package com.tuankiet.sample.features.admin.data
+package com.tuankiet.sample.features.admin.data.models
 
 import com.tuankiet.sample.core.extension.empty
 

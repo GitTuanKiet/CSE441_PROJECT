@@ -5,11 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.tuankiet.sample.core.failure.Failure
 import com.tuankiet.sample.core.platform.BaseViewModel
-import com.tuankiet.sample.features.admin.data.UserModel
-import com.tuankiet.sample.features.admin.data.UserRepository
+import com.tuankiet.sample.features.admin.data.models.UserModel
+import com.tuankiet.sample.features.admin.data.repositorys.UserRepository
 
 class UserViewModel(private val userRepository: UserRepository) : BaseViewModel() {
-
     private val _users: MutableLiveData<List<UserModel>> = MutableLiveData()
     val users: LiveData<List<UserModel>> = _users
     private val _selectedUser: MutableLiveData<UserModel?> = MutableLiveData()
@@ -63,6 +62,41 @@ class UserViewModel(private val userRepository: UserRepository) : BaseViewModel(
                 Log.d("loi", "User deleted successfully")
             },
             onError = { error ->
+                handleFailure(Failure.DatabaseError)
+            }
+        )
+    }
+    fun createAgent(userId: String , agentId: String) {
+        userRepository.createAgent(userId , agentId, {}, { error ->
+            Log.e("loi", "Lỗi khi tạo agent: ${error.message}")
+        })
+    }
+    fun createUser(user: UserModel) {
+        userRepository.createUser(user,
+            onComplete = {
+                Log.d("loi" , "Tạo user thành công")
+            },
+            onError = {
+                handleFailure(Failure.DatabaseError)
+            }
+        )
+    }
+    fun createConversation(id : String ,userId : String , agentId : String) {
+        userRepository.createConversation(id,userId, agentId,
+            onComplete = {
+                Log.d("loi" , "Tạo conversation thành công")
+            },
+            onError = {
+                handleFailure(Failure.DatabaseError)
+            }
+        )
+    }
+    fun createMessage(id : String , conversationId : String ,senderId : String , content : String , type : String , completionTime : Long , timestamp : Long){
+        userRepository.createMessage(id, conversationId ,senderId, content, type, completionTime, timestamp,
+            onComplete = {
+                Log.d("loi" , "Tạo tin nhắn thành công")
+            },
+            onError = {
                 handleFailure(Failure.DatabaseError)
             }
         )

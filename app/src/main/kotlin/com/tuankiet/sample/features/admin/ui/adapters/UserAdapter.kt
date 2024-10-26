@@ -1,9 +1,6 @@
 package com.tuankiet.sample.features.admin.ui.adapters
 
 import android.app.AlertDialog
-import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,19 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tuankiet.sample.R
-import com.tuankiet.sample.features.admin.data.UserModel
-import com.tuankiet.sample.features.admin.ui.fragments.AdminFragment
+import com.tuankiet.sample.features.admin.data.models.UserModel
 import com.tuankiet.sample.features.admin.ui.fragments.DetailUserFragment
-import com.tuankiet.sample.features.admin.ui.fragments.UseManagementFragment
 import com.tuankiet.sample.features.admin.ui.viewmodel.UserViewModel
 
 class UserAdapter(
     private var userList: List<UserModel>,
-    private val userViewModel: UserViewModel ,
+    private val userViewModel: UserViewModel,
     private val fragmentManager: FragmentManager
 ) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
@@ -34,7 +28,11 @@ class UserAdapter(
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val user: UserModel = userList[position]
-        holder.txtEmailPhone.text = user.email
+        if (user.email.isNotEmpty()) {
+            holder.txtEmailPhone.text = user.email
+        } else {
+            holder.txtEmailPhone.text = user.phone
+        }
         holder.txtName.text = user.name
         holder.txtUID.text = user.uid
 
@@ -63,9 +61,8 @@ class UserAdapter(
             val builder = AlertDialog.Builder(context)
 
             builder.setTitle("Thông báo")
-                .setMessage("Bạn có chắc chắn muốn tiếp tục?")
+                .setMessage("Bạn có chắc chắn muốn xóa?")
                 .setPositiveButton("OK") { dialog, _ ->
-                    // Call deleteUser from UserViewModel
                     userViewModel.deleteUser(user.uid)
                     dialog.dismiss()
                 }

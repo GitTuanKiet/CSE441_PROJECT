@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.tuankiet.sample.R
 import com.tuankiet.sample.core.platform.BaseFragment
-import com.tuankiet.sample.features.admin.data.UserRepository
+import com.tuankiet.sample.features.admin.data.repositorys.UserRepository
 import com.tuankiet.sample.features.admin.ui.viewmodel.UserViewModel
 import com.tuankiet.sample.features.admin.ui.viewmodel.UserViewModelFactory
 
@@ -41,7 +41,11 @@ class DetailUserFragment : BaseFragment() {
             viewModel.selectedUser.observe(viewLifecycleOwner) { user ->
                 user?.let {
                     txtName.text = it.name
-                    txtEmail.text = it.email
+                    if (it.email.isNotEmpty()) {
+                        txtEmail.text = it.email
+                    } else {
+                        txtEmail.text = it.phone
+                    }
                     txtStatus.text = if (it.isOnline) "Online" else "Offline"
                     Glide.with(this)
                         .load(it.urlImg)

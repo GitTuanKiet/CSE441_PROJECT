@@ -53,9 +53,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="30dp">
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/avatar"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
+                        android:src="@drawable/user"
+                        android:scaleType="centerCrop"
                         android:background="@drawable/base_circle" />
 
                     <LinearLayout
@@ -65,6 +68,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/txtName"
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"

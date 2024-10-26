@@ -90,6 +90,11 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.androidx.activity)
     implementation(libs.firebase.database)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.storage.ktx)
+//    implementation(libs.firebase.database)
 
     // Jetpack compose dependencies
     // @see: https://developer.android.google.cn/develop/ui/compose/setup?hl=en#kotlin_1
@@ -150,5 +155,7 @@ dependencies {
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
     implementation("com.google.firebase:firebase-analytics")
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
 }
