@@ -11,35 +11,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.values
 import com.google.firebase.storage.FirebaseStorage
 import com.tuankiet.sample.R
 import com.tuankiet.sample.core.platform.BaseFragment
 import com.tuankiet.sample.databinding.ActivityLayoutBinding
-import com.tuankiet.sample.features.admin.data.models.UserModel
 import com.tuankiet.sample.features.admin.data.repositorys.DateRespository
 import com.tuankiet.sample.features.admin.data.repositorys.UserRepository
 import com.tuankiet.sample.features.admin.ui.viewmodel.DateViewModel
 import com.tuankiet.sample.features.admin.ui.viewmodel.UserViewModel
 import de.hdodenhof.circleimageview.CircleImageView
-import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 
 @Suppress("DEPRECATION")
 class AdminFragment : BaseFragment() {
@@ -71,6 +66,11 @@ class AdminFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                showBackConfirmationDialog()
+            }
+        })
         if (savedInstanceState == null) {
 //            userViewModel.createUser(UserModel("wT33iP7XoMOr6tZ8CFGKHEQWTMy2","Kiet" , "nguyenducanh@gmail.com" , "" , "link_anh" , "user" , false , emptyList()))
 //            userViewModel.createUser(UserModel("EOHtOEWvqXZYRV3l8F9r7bKPrfg1","Trường" , "phamxuantruong@gmail.com" , "" , "link_anh" , "admin" , false , emptyList()))
@@ -80,6 +80,20 @@ class AdminFragment : BaseFragment() {
 //            userViewModel.createConversation("3","234" , "12343214")
 //            userViewModel.createMessage("1" ,"3" , "123" , "Xin chào nha" , "text" , 0 , System.currentTimeMillis())\
         }
+    }
+
+    private fun showBackConfirmationDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Xác nhận")
+            .setMessage("Bạn muốn xóa chứ?")
+            .setPositiveButton("Có") { dialog, _ ->
+                dialog.dismiss()
+                requireActivity().finishAffinity()
+            }
+            .setNegativeButton("Không") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     override fun onCreateView(
@@ -170,6 +184,15 @@ class AdminFragment : BaseFragment() {
     }
 
 
+    private fun replaceFragment(newFragment: Fragment) {
+        val fragmentManager = parentFragmentManager
+        fragmentManager.popBackStack()
+        fragmentManager.beginTransaction()
+            .replace(R.id.displayData, newFragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
     fun openImagePicker() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
@@ -242,13 +265,32 @@ class AdminFragment : BaseFragment() {
                     1 -> child.setOnClickListener { loadingFragment(1) }
                     2 -> child.setOnClickListener { toggleDarkMode() }
                     3 -> child.setOnClickListener { switchLanguage() }
-                    4 -> Log.d("AdminFragment", "Logout clicked")
+                    5 -> child.setOnClickListener{ confirmLogout()}
                 }
             }
         }
         avatarImg.setOnClickListener{
             openImagePicker()
         }
+    }
+    private fun confirmLogout(){
+        Log.d("loi" , "Logout")
+        AlertDialog.Builder(requireContext())
+            .setTitle("Xác nhận")
+            .setMessage("Bạn có chắc chắn muốn đăng xuất không?")
+            .setPositiveButton("Có") { dialog, _ ->
+                Logout()
+                dialog.dismiss()
+                /// Quay lại trang đầu nha các cậu :)))
+            }
+            .setNegativeButton("Không") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+    private fun Logout(){
+        val auth = FirebaseAuth.getInstance()
+        auth.signOut()
     }
 
     private fun Mapping(view: View?) {
@@ -265,14 +307,13 @@ class AdminFragment : BaseFragment() {
         when (pageIndex) {
             0 -> {
                 val myFragment1 = HomeAdminFragment()
-                fragmentTransaction.replace(R.id.displayData, myFragment1)
+                replaceFragment(myFragment1)
             }
             1 -> {
                 val myFragment2 = UseManagementFragment()
-                fragmentTransaction.replace(R.id.displayData, myFragment2)
+                replaceFragment((myFragment2))
             }
         }
-        fragmentTransaction.commit()
 
     }
 
