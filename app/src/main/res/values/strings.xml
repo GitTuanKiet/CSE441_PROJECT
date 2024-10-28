@@ -1,14 +1,97 @@
 <resources>
-    <string name="app_name">Movies Kotlin</string>
-
-    <string name="action_refresh">Refresh</string>
-
-    <string name="failure_network_connection">No Network Connection.</string>
-    <string name="failure_server_error">Server Error</string>
-    <string name="failure_movies_list_unavailable">Movies Unavailable.</string>
-    <string name="failure_movie_non_existent">Movie Not Existent.</string>
-
-    <string name="content_description_empty">No content description.</string>
+    <string name="app_name">AIGY</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Activity Email Recovery    -->
+    <string name="forget_your">Forget your</string>
+    <string name="password">Password ?</string>
+    <string name="enter_email">Enter your email and we\'ll send you a link to reset your password</string>
+
+    <!-- Activity Forget Password    -->
+    <string name="select_contact_details">Select which contact details should we use to reset your password</string>
+    <string name="email">Email</string>
+    <string name="code_send_to_your_phone_number">Code send to your phone number</string>
+
+    <!-- Activity Sign In    -->
+    <string name="login_your">Login your</string>
+    <string name="account">Account</string>
+    <string name="tb_enter_email">Enter Your Email</string>
+    <string name="tb_password">Password</string>
+    <string name="forget_password">Forget Password ?</string>
+    <string name="login">Login</string>
+    <string name="create_new_account">Create New Account?</string>
+    <string name="sign_up">Sign Up</string>
+
+    <!-- Activity Sign Up    -->
+    <string name="create_your">Create your</string>
+    <string name="full_name">Full Name</string>
+    <string name="enter_your_phone">Enter Your Phone</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="register">Register</string>
+    <string name="already_have_account">Already have an account?</string>
+    <string name="sign_in">Sign In</string>
+
+    <!-- Activity Splash    -->
+    <string name="welcome_to_aigy">Welcome to AIGY</string>
+
+    <!-- Activity Email Verify    -->
+    <string name="phone_number_verification_code">Phone Number Verification Code</string>
+    <string name="your_verification_code_is_send_by_phone_number_to">Your verification code is send by phone number to</string>
+    <string name="resend">Resend</string>
+    <string name="verify">Verify</string>
+    <string name="wait_resend_verification_code">Wait 60 seconds to resend verification code</string>
+
+    <!-- Activity Reset Password    -->
+    <string name="reset_password">Reset Password</string>
+    <string name="tb_confirm_password">Confirm Password</string>
+    <string name="save_changes">Save Changes</string>
+
+    <!-- Activity Profile    -->
+    <string name="profile">Profile</string>
+    <string name="preferences">Preferences</string>
+    <string name="support">Customer Support</string>
+    <string name="customer_support">Customer Support</string>
+    <string name="logout">Logout</string>
+    <string name="full_name_user">Khánh Đinh</string>
+    <string name="hidden_email">dgkha******@gmail.com</string>
+
+    <!-- Activity Preferences    -->
+    <string name="account_information">Account Information</string>
+    <string name="change_your_account_information">Change your Account information</string>
+    <string name="change_password">Change your Password</string>
+    <string name="invite_your_friends">Invite your Friends</string>
+    <string name="get_rewards">Get $3 For Each Invitation!</string>
+    <string name="theme">Theme</string>
+    <string name="change_your_theme">Change your Theme</string>
+    <string name="language">Language</string>
+    <string name="change_your_language">Change your Language</string>
+
+    <!-- Activity Select Method Recovery    -->
+    <string name="select_method_recovery_description">Select which contact details should we use to reset your password</string>
+
+    <!-- Activity Email Recovery    -->
+    <string name="forget_your_password_description">Enter your phone number and we\'ll send you a link to reset your password</string>
+    <string name="next">Next</string>
+
+
+    <!-- Activity Account Information    -->
+    <string name="phone_number">Phone Number</string>
+
+    <!-- Activity Password    -->
+    <string name="tb_current_password">Current Password</string>
+
+    <!-- Activity Invite Your Friend    -->
+    <string name="invite_friends">Invite Friends</string>
+    <string name="share">Share</string>
+    <string name="refer_a_friend">Refer A Friend</string>
+    <string name="share_your_promo_code_and_get_3_for_each_friend">Share Your Promo Code And Get $3 For Each Friend</string>
+
+    <!-- Activity Theme    -->
+    <string name="light_mode">Light</string>
+    <string name="dark_mode">Dark</string>
+
+    <!-- Activity Language    -->
+    <string name="english">English</string>
+    <string name="vietnamese">Vietnamese</string>
 </resources>

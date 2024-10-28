@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 
 class AppConfig {
-    val id = "com.fernandocejas.sample"
+    val id = "com.cse_411_project.aigy"
     val versionCode = 2
     val versionName = "2.0"
 
@@ -23,7 +23,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose.compiler)
     alias(libs.plugins.kotlin.ksp)
-    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 val appConfig = AppConfig()
@@ -87,50 +87,11 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.gridlayout)
+    implementation(libs.androidx.viewpager2)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
 
-    // Jetpack compose dependencies
-    // @see: https://developer.android.google.cn/develop/ui/compose/setup?hl=en#kotlin_1
-    // Specify the Compose BOM with a version definition
-    val composeBom = platform("androidx.compose:compose-bom:2024.06.00")
-    implementation(composeBom)
-
-
-    // Specify Compose library dependencies without a version definition
-    implementation("androidx.compose.foundation:foundation")
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.material:material-icons-core")
-    // Integration with activities
-    implementation("androidx.activity:activity-compose:1.9.0")
-    // Integration with ViewModels
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
-    // Integration with LiveData
-    implementation("androidx.compose.runtime:runtime-livedata")
-    // ..
-    // ..
-
-    // Android Studio Preview support
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-
-    // Unit/Integration tests dependencies
-    testImplementation(composeBom)
-    testImplementation(libs.kotest.runner.junit5)
-    testImplementation(libs.kotest.assertions.core)
-    testImplementation(libs.kotest.property)
-    testImplementation(libs.junit)
-    testImplementation(libs.mockk)
-    testImplementation(libs.robolectric)
-
-    // UI tests dependencies
-    androidTestImplementation(composeBom)
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
-    androidTestImplementation(libs.androidx.runner)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.rules)
-    androidTestImplementation(libs.androidx.espresso.intents)
-
-    // Development/Tooling dependencies
-    debugImplementation(libs.leakcanary.android)
+    // Page indicator
+    implementation(libs.dotsindicator)
+    implementation(libs.firebase.auth)
 }
