@@ -2,6 +2,7 @@
 # sdk -----------
 compileSdk = "34"
 dotsindicator = "5.0"
+gson = "2.11.0"
 minSdk = "30"
 targetSdk = "34"
 
@@ -37,11 +38,14 @@ material = "1.12.0"
 activity = "1.9.2"
 googleGmsGoogleServices = "4.4.2"
 firebaseAuth = "23.1.0"
+firebaseFirestoreKtx = "25.1.1"
+firebaseDatabaseKtx = "21.0.0"
 
 
 [libraries]
 # kotlin dependencies ---
 dotsindicator = { module = "com.tbuonomo:dotsindicator", version.ref = "dotsindicator" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinCoroutines" }
 
@@ -77,6 +81,8 @@ androidx-viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", vers
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
+firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabaseKtx" }
 
 
 [plugins]

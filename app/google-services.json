@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "253795949396",
+    "firebase_url": "https://chataigy-default-rtdb.firebaseio.com",
+    "project_id": "chataigy",
+    "storage_bucket": "chataigy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253795949396:android:f421b3780e5517272c46c1",
+        "android_client_info": {
+          "package_name": "com.cse_411_project.aigy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDa_B5spofbxHcbAQqs-fU2Ht83p7iyLY8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253795949396:android:cb89b307f3c3539c2c46c1",
+        "android_client_info": {
+          "package_name": "com.fernandocejas.sample"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDa_B5spofbxHcbAQqs-fU2Ht83p7iyLY8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253795949396:android:7b5753a85ea567182c46c1",
+        "android_client_info": {
+          "package_name": "com.tuankiet.sample"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDa_B5spofbxHcbAQqs-fU2Ht83p7iyLY8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

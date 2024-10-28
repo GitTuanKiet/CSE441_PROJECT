@@ -94,4 +94,7 @@ dependencies {
     // Page indicator
     implementation(libs.dotsindicator)
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.gson)
+    implementation(libs.firebase.database.ktx)
 }

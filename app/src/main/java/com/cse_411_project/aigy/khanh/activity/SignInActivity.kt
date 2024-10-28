@@ -13,7 +13,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.cse_411_project.aigy.R
+import com.cse_411_project.aigy.khanh.model.User
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var btnSignUp : TextView
@@ -23,6 +27,8 @@ class SignInActivity : AppCompatActivity() {
     private lateinit var btnBack : ImageButton
     private lateinit var txtForgetPassword : TextView
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var fireStore: FirebaseFirestore
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +39,8 @@ class SignInActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        database = FirebaseDatabase.getInstance().reference
 
         this.btnSignUp = findViewById(R.id.txt_sign_in)
 
@@ -56,6 +64,7 @@ class SignInActivity : AppCompatActivity() {
         }
 
         this.btnLogin = findViewById(R.id.btn_login)
+
         this.btnLogin.setOnClickListener {
             if (edtEmail.text.toString().isEmpty()) {
                 edtEmail.error = "Vui lòng nhập email"
@@ -67,16 +76,53 @@ class SignInActivity : AppCompatActivity() {
                 Toast.makeText(this, "Vui lòng nhập mật khẩu", Toast.LENGTH_SHORT).show()
             } else {
                 firebaseAuth = FirebaseAuth.getInstance()
-                firebaseAuth.signInWithEmailAndPassword(edtEmail.text.toString(), edtPassword.text.toString())
+                firebaseAuth.signInWithEmailAndPassword(
+                    edtEmail.text.toString(),
+                    edtPassword.text.toString()
+                )
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
+                            Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show()
+                            val userId = firebaseAuth.currentUser?.uid
 
-//                            TODO: Open HomeActivity
-//                            val intent = Intent(this, HomeActivity::class.java)
-//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-//                            startActivity(intent)
-//                            finish()
+                            if (userId != null) {
+                                database.child("users").child(userId).get()
+                                    .addOnSuccessListener { dataSnapshot ->
+                                        if (dataSnapshot.exists()) {
+                                            val user = dataSnapshot.getValue(User::class.java)
 
+                                            // Kiểm tra dữ liệu người dùng
+                                            if (user != null) {
+                                                Toast.makeText(
+                                                    this,
+                                                    "Chào mừng ${user.name}",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                                // Sử dụng thông tin người dùng
+//                                                Toast.makeText(this, "Tên: ${user.name}, Email: ${user.email}", Toast.LENGTH_SHORT).show()
+//
+//                                                // Chuyển đến HomeActivity
+//                                                val intent = Intent(this, HomeActivity::class.java)
+//                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+//                                                startActivity(intent)
+//                                                finish()
+                                            }
+                                        } else {
+                                            Toast.makeText(
+                                                this,
+                                                "Không tìm thấy người dùng",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                    }
+                                    .addOnFailureListener { exception ->
+                                        Toast.makeText(
+                                            this,
+                                            "Lỗi lấy thông tin: ${exception.message}",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                            }
                         } else {
                             edtEmail.error = "Email hoặc mật khẩu không đúng"
                             edtEmail.requestFocus()
