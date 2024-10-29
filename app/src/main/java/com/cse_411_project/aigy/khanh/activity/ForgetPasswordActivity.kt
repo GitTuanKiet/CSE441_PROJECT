@@ -4,8 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -14,7 +15,7 @@ import com.cse_411_project.aigy.R
 
 class ForgetPasswordActivity : AppCompatActivity() {
     private lateinit var iBtnBack : ImageButton
-    private lateinit var lBtnEmailRecovery : LinearLayout
+    private lateinit var edtEmail : EditText
     private lateinit var btnNext : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,21 +34,20 @@ class ForgetPasswordActivity : AppCompatActivity() {
             finish()
         }
 
-        lBtnEmailRecovery = findViewById(R.id.lbtn_email_recovery)
+        edtEmail = findViewById(R.id.et_email)
 
-        lBtnEmailRecovery.setOnClickListener {
-            lBtnEmailRecovery.isSelected = !lBtnEmailRecovery.isSelected
-        }
+        val email = edtEmail.text.toString()
 
         btnNext = findViewById(R.id.btn_next)
 
         btnNext.setOnClickListener {
-            if (lBtnEmailRecovery.isSelected) openEmailRecoveryActivity()
+            if (email.isNotEmpty()) openRecoveryMethodActivity(edtEmail.text.toString())
+            else Toast.makeText(this, "Vui lòng nhập email", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun openEmailRecoveryActivity() {
-        val intent = PhoneNumberRecoveryActivity.newIntent(this)
+    private fun openRecoveryMethodActivity(email: String) {
+        val intent = RecoveryMethodActivity.newIntent(this, email)
         startActivity(intent)
     }
 
