@@ -39,5 +39,5 @@ dependencyResolutionManagement {
         maven ("https://jitpack.io")
     }
 }
-rootProject.name = "Movies Kotlin"
+rootProject.name = "AIGY"
 include(":app")

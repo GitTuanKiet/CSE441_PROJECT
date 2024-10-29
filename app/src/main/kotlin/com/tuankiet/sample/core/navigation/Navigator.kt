@@ -10,6 +10,7 @@ import com.tuankiet.sample.features.agents.ui.AgentDetailsActivity
 import com.tuankiet.sample.features.auth.credentials.Authenticator
 import com.tuankiet.sample.features.agents.ui.AgentView
 import com.tuankiet.sample.features.agents.ui.AgentsActivity
+import com.tuankiet.sample.features.chat.WelcomeAgentActivity
 
 class Navigator(private val authenticator: Authenticator) {
 //    private fun showLogin(context: Context) =
@@ -18,7 +19,9 @@ class Navigator(private val authenticator: Authenticator) {
     fun showMain(context: Context) {
 //        showAgents(context)
 
-        showAdmin(context)
+//        showAdmin(context)
+
+        showWelcome(context)
 
 //        when (authenticator.userLoggedIn()) {
 //            true -> showAgents(context)
@@ -30,6 +33,7 @@ class Navigator(private val authenticator: Authenticator) {
     // Display UI Admin
     private fun showAdmin(context: Context) = context.startActivity(AdminActivity.callingIntent(context))
 
+    private fun showWelcome(context: Context) = context.startActivity(WelcomeAgentActivity.callingIntent(context))
 
     private fun showAgents(context: Context) =
         context.startActivity(AgentsActivity.callingIntent(context))
