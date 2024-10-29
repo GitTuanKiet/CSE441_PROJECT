@@ -46,6 +46,7 @@
     <string name="reset_password">Reset Password</string>
     <string name="tb_confirm_password">Confirm Password</string>
     <string name="save_changes">Save Changes</string>
+    <string name="enter_your_email">Enter your email</string>
 
     <!-- Activity Profile    -->
     <string name="profile">Profile</string>

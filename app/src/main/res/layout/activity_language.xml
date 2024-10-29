@@ -62,7 +62,7 @@
 
 
         <Button
-            android:id="@+id/btn_light_mode"
+            android:id="@+id/btn_vietnamese_mode"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:drawableStart="@drawable/vn"
@@ -76,7 +76,7 @@
             android:textAllCaps="false"/>
 
         <Button
-            android:id="@+id/btn_dark_mode"
+            android:id="@+id/btn_english_mode"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/button_white_border"

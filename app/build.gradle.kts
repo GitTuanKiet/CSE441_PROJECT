@@ -97,4 +97,8 @@ dependencies {
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.gson)
     implementation(libs.firebase.database.ktx)
+
+
+    //
+    implementation ("androidx.compose.runtime:runtime:1.5.0")
 }

@@ -84,7 +84,6 @@ class SignInActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show()
                             val userId = firebaseAuth.currentUser?.uid
-
                             if (userId != null) {
                                 database.child("users").child(userId).get()
                                     .addOnSuccessListener { dataSnapshot ->
