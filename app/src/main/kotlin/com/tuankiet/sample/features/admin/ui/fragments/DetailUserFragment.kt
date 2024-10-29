@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.tuankiet.sample.R
 import com.tuankiet.sample.core.platform.BaseFragment
-import com.tuankiet.sample.features.admin.data.repositorys.UserRepository
+import com.tuankiet.sample.features.admin.data.repositories.UserRepository
 import com.tuankiet.sample.features.admin.ui.viewmodel.UserViewModel
 import com.tuankiet.sample.features.admin.ui.viewmodel.UserViewModelFactory
 
@@ -49,6 +49,7 @@ class DetailUserFragment : BaseFragment() {
                     txtStatus.text = if (it.isOnline) "Online" else "Offline"
                     Glide.with(this)
                         .load(it.urlImg)
+                        .centerCrop()
                         .into(imgUrl)
                 } ?: run {
                     Log.d("loi", "User not found")

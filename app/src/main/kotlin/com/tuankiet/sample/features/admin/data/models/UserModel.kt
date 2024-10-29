@@ -10,9 +10,10 @@ data class UserModel(
     val urlImg: String,
     val decentralization: String,
     val isOnline: Boolean,
-    val idListAgent: List<String>
+    val idListAgent: List<String>,
+    val listVist : List<Long>
     ){
     companion object {
-        val empty = UserModel(String.empty(),String.empty(),String.empty(),String.empty(),String.empty(),String.empty(),false, emptyList())
+        val empty = UserModel(String.empty(),String.empty(),String.empty(),String.empty(),String.empty(),String.empty(),false, emptyList() , emptyList())
     }
 }

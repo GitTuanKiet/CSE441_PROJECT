@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.tuankiet.sample.core.failure.Failure
 import com.tuankiet.sample.core.platform.BaseViewModel
 import com.tuankiet.sample.features.admin.data.models.DateModel
-import com.tuankiet.sample.features.admin.data.repositorys.DateRespository
+import com.tuankiet.sample.features.admin.data.repositories.DateRespository
 
 
 class DateViewModel(private val dateRespository: DateRespository) : BaseViewModel() {

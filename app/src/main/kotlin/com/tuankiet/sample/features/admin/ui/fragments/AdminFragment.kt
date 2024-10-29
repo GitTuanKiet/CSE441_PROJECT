@@ -27,14 +27,13 @@ import com.google.firebase.storage.FirebaseStorage
 import com.tuankiet.sample.R
 import com.tuankiet.sample.core.platform.BaseFragment
 import com.tuankiet.sample.databinding.ActivityLayoutBinding
-import com.tuankiet.sample.features.admin.data.repositorys.DateRespository
-import com.tuankiet.sample.features.admin.data.repositorys.UserRepository
+import com.tuankiet.sample.features.admin.data.repositories.DateRespository
+import com.tuankiet.sample.features.admin.data.repositories.UserRepository
 import com.tuankiet.sample.features.admin.ui.viewmodel.DateViewModel
 import com.tuankiet.sample.features.admin.ui.viewmodel.UserViewModel
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.Locale
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
 
 @Suppress("DEPRECATION")
 class AdminFragment : BaseFragment() {
@@ -68,7 +67,13 @@ class AdminFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                showBackConfirmationDialog()
+                val currentFragment = parentFragmentManager.findFragmentById(R.id.displayData)
+
+                if (currentFragment is HomeAdminFragment) {
+                    showBackConfirmationDialog()
+                } else {
+                    parentFragmentManager.popBackStack()
+                }
             }
         })
         if (savedInstanceState == null) {
@@ -85,7 +90,7 @@ class AdminFragment : BaseFragment() {
     private fun showBackConfirmationDialog() {
         AlertDialog.Builder(requireContext())
             .setTitle("Xác nhận")
-            .setMessage("Bạn muốn xóa chứ?")
+            .setMessage("Bạn muốn thoát khỏỉ chương trình chứ?")
             .setPositiveButton("Có") { dialog, _ ->
                 dialog.dismiss()
                 requireActivity().finishAffinity()
@@ -151,10 +156,8 @@ class AdminFragment : BaseFragment() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    // Đăng ký thành công, lấy thông tin currentUser
                     val currentUser = auth.currentUser
                     currentUser?.let {
-                        // Làm gì đó với currentUser nếu cần
                         onComplete()
                     }
                 } else {
@@ -185,12 +188,12 @@ class AdminFragment : BaseFragment() {
 
 
     private fun replaceFragment(newFragment: Fragment) {
-        val fragmentManager = parentFragmentManager
-        fragmentManager.popBackStack()
-        fragmentManager.beginTransaction()
-            .replace(R.id.displayData, newFragment)
-            .addToBackStack(null)
-            .commit()
+            val fragmentManager = parentFragmentManager
+            fragmentManager.popBackStack()
+            fragmentManager.beginTransaction()
+                .replace(R.id.displayData, newFragment)
+                .addToBackStack(null)
+                .commit()
     }
 
     fun openImagePicker() {

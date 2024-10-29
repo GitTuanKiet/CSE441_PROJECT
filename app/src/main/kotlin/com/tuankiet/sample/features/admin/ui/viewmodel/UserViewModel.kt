@@ -6,13 +6,16 @@ import androidx.lifecycle.MutableLiveData
 import com.tuankiet.sample.core.failure.Failure
 import com.tuankiet.sample.core.platform.BaseViewModel
 import com.tuankiet.sample.features.admin.data.models.UserModel
-import com.tuankiet.sample.features.admin.data.repositorys.UserRepository
+import com.tuankiet.sample.features.admin.data.repositories.UserRepository
 
 class UserViewModel(private val userRepository: UserRepository) : BaseViewModel() {
     private val _users: MutableLiveData<List<UserModel>> = MutableLiveData()
     val users: LiveData<List<UserModel>> = _users
     private val _selectedUser: MutableLiveData<UserModel?> = MutableLiveData()
     val selectedUser: LiveData<UserModel?> = _selectedUser
+    private val _listVisit: MutableLiveData<List<List<Long>>> = MutableLiveData()
+    val listVisit: LiveData<List<List<Long>>> = _listVisit
+
     fun fetchUsers() {
         userRepository.getUsers(
             onComplete = { userList ->
@@ -24,7 +27,16 @@ class UserViewModel(private val userRepository: UserRepository) : BaseViewModel(
             }
         )
     }
-
+    fun fetchListVisit(){
+        userRepository.fetchVisit(
+            onComplete = {
+                _listVisit.value = it
+            },
+            onError = {
+                handleFailure(Failure.DatabaseError)
+            }
+        )
+    }
     fun getUserByName(name: String) {
         userRepository.getUserByName(name,
             onComplete = { user ->

@@ -1,4 +1,4 @@
-package com.tuankiet.sample.features.admin.data.repositorys
+package com.tuankiet.sample.features.admin.data.repositories
 
 import android.util.Log
 import com.google.firebase.database.DataSnapshot

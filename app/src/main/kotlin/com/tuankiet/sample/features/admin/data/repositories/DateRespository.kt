@@ -1,6 +1,5 @@
-package com.tuankiet.sample.features.admin.data.repositorys
+package com.tuankiet.sample.features.admin.data.repositories
 
-import android.util.Log
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.tuankiet.sample.features.admin.data.models.DateModel

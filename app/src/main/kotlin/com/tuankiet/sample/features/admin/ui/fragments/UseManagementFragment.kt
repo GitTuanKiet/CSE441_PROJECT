@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tuankiet.sample.R
 import com.tuankiet.sample.core.platform.BaseFragment
-import com.tuankiet.sample.features.admin.data.repositorys.UserRepository
+import com.tuankiet.sample.features.admin.data.repositories.UserRepository
 import com.tuankiet.sample.features.admin.ui.adapters.UserAdapter
 import com.tuankiet.sample.features.admin.ui.viewmodel.UserViewModel
 import com.tuankiet.sample.features.admin.ui.viewmodel.UserViewModelFactory

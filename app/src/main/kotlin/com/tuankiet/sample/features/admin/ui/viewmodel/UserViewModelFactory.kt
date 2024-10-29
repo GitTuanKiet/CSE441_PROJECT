@@ -2,7 +2,7 @@ package com.tuankiet.sample.features.admin.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.tuankiet.sample.features.admin.data.repositorys.UserRepository
+import com.tuankiet.sample.features.admin.data.repositories.UserRepository
 
 class UserViewModelFactory(private val userRepository: UserRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

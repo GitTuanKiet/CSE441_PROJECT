@@ -1,7 +1,6 @@
-package com.tuankiet.sample.features.admin.data.repositorys
+package com.tuankiet.sample.features.admin.data.repositories
 
 import android.util.Log
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -27,7 +26,8 @@ class UserRepository {
         val decentralization = userSnapshot.child("decentralization").getValue(String::class.java)
         val isOnline = userSnapshot.child("online").getValue(Boolean::class.java)
         val idListAgent = userSnapshot.child("idListAgent").getValue(object : GenericTypeIndicator<MutableList<String>>() {}) ?: mutableListOf()
-        val user = UserModel(uid ?: "", name ?: "", email ?: "", phone ?: "", urlImg ?: "", decentralization ?: "", isOnline ?: false, idListAgent )
+        val listVisit = userSnapshot.child("listVist").getValue(object : GenericTypeIndicator<MutableList<Long>>() {}) ?: mutableListOf()
+        val user = UserModel(uid ?: "", name ?: "", email ?: "", phone ?: "", urlImg ?: "", decentralization ?: "", isOnline ?: false, idListAgent , listVisit)
         return user
     }
     // Lấy tất cả danh sách người dùng từ fire base
@@ -214,6 +214,25 @@ class UserRepository {
             }
     }
 
+    fun fetchVisit(onComplete: (List<List<Long>>) -> Unit, onError: (DatabaseError) -> Unit) {
+        usersRef.get().addOnSuccessListener { snapshot ->
+            if (snapshot.exists()) {
+                val userVisits = mutableListOf<List<Long>>()
+                for (data in snapshot.children) {
+                    val user = getData(data)
+                    user.let {
+                        userVisits.add(it.listVist)
+                    }
+                }
+                onComplete(userVisits)
+            } else {
+                onComplete(emptyList())
+            }
+        }
+            .addOnFailureListener { e ->
+                onError(DatabaseError.fromException(e))
+            }
+    }
     // Tạo tin nhắn trong cuộc trò chuyện
     fun createMessage(
         id: String,
@@ -247,6 +266,7 @@ class UserRepository {
 
             }
     }
+
     fun updateConversationWithMessageId(conversationId: String, messageId: String, onComplete: () -> Unit, onError: (Exception) -> Unit){
         val db = FirebaseFirestore.getInstance()
         val conversationRef = db.collection("conversations").document(conversationId)

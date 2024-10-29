@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.tuankiet.sample.core.failure.Failure
 import com.tuankiet.sample.core.platform.BaseViewModel
 import com.tuankiet.sample.features.admin.data.models.MessageModel
-import com.tuankiet.sample.features.admin.data.repositorys.MessageRepository
+import com.tuankiet.sample.features.admin.data.repositories.MessageRepository
 
 class MessageViewModel(private val  messagesRepossitory : MessageRepository) : BaseViewModel(){
     private val _messages: MutableLiveData<List<MessageModel>> = MutableLiveData()

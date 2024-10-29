@@ -1,4 +1,4 @@
-package com.tuankiet.sample.features.admin.data.repositorys
+package com.tuankiet.sample.features.admin.data.repositories
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot

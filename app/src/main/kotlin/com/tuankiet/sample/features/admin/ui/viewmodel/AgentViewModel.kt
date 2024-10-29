@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.tuankiet.sample.core.failure.Failure
 import com.tuankiet.sample.core.platform.BaseViewModel
 import com.tuankiet.sample.features.admin.data.models.AgentModel
-import com.tuankiet.sample.features.admin.data.repositorys.AgentRepository
+import com.tuankiet.sample.features.admin.data.repositories.AgentRepository
 
 class AgentViewModel(private val agentRepository : AgentRepository) : BaseViewModel() {
     private val _agents : MutableLiveData<List<AgentModel>> = MutableLiveData()
