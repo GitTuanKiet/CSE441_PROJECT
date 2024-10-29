@@ -13,22 +13,22 @@ class AgentDetailsAnimator {
     private val TRANSITION_DELAY = 200L
     private val TRANSITION_DURATION = 400L
 
-    private val SCALE_UP_VALUE = 1.0F
-    private val SCALE_UP_DURATION = 400L
+    private val TRANSLATE_RIGHT_VALUE = 200f
+    private val TRANSLATE_DURATION = 400L
 
-    private val SCALE_DOWN_VALUE = 0.0F
-    private val SCALE_DOWN_DURATION = 200L
+    private val TRANSLATE_LEFT_VALUE = -200f
+    private val TRANSLATE_LEFT_DURATION = 400L
 
     internal fun postponeEnterTransition(activity: FragmentActivity) =
         activity.postponeEnterTransition()
 
     internal fun cancelTransition(view: View) = view.cancelTransition()
 
-    internal fun scaleUpView(view: View) =
-        scaleView(view, SCALE_UP_VALUE, SCALE_UP_VALUE, SCALE_UP_DURATION)
+    internal fun translateRightView(view: View) =
+        translateView(view, TRANSLATE_RIGHT_VALUE, TRANSLATE_DURATION)
 
-    internal fun scaleDownView(view: View) =
-        scaleView(view, SCALE_DOWN_VALUE, SCALE_DOWN_VALUE, SCALE_DOWN_DURATION)
+    internal fun translateLeftView(view: View) =
+        translateView(view, TRANSLATE_LEFT_VALUE, TRANSLATE_LEFT_DURATION)
 
     internal fun fadeVisible(viewContainer: ViewGroup, view: View) =
         beginTransitionFor(viewContainer, view, View.VISIBLE)
@@ -36,10 +36,9 @@ class AgentDetailsAnimator {
     internal fun fadeInvisible(viewContainer: ViewGroup, view: View) =
         beginTransitionFor(viewContainer, view, View.INVISIBLE)
 
-    private fun scaleView(view: View, x: Float, y: Float, duration: Long) =
+    private fun translateView(view: View, translationX: Float, duration: Long) =
         view.animate()
-            .scaleX(x)
-            .scaleY(y)
+            .translationX(translationX)
             .setDuration(duration)
             .setInterpolator(FastOutSlowInInterpolator())
             .withLayer()

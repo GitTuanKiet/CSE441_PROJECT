@@ -28,10 +28,10 @@
                 style="@style/AgentAvatar"
                 android:layout_height="240dp"
                 android:layout_centerHorizontal="true"
+                android:contentDescription="@string/agent_transition_avatar"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
-                app:layout_collapseMode="parallax"
-                />
+                app:layout_collapseMode="parallax" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -79,7 +79,7 @@
 
             <TextView
                 style="@style/AgentDetailsText"
-                android:text="@string/agent_category"/> 
+                android:text="@string/agent_category"/>
             <TextView
                 android:id="@+id/agentCategory"
                 style="@style/AgentDetailsText"
@@ -94,6 +94,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:contentDescription="@string/agent_config"
         android:focusable="true"
         android:src="@mipmap/ic_launcher"
         android:layout_margin="20dp"
