@@ -28,7 +28,6 @@ import com.tuankiet.sample.databinding.ActivityLayoutBinding
  */
 abstract class BaseActivity : AppCompatActivity() {
 
-    abstract val new: Any
     private lateinit var binding: ActivityLayoutBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

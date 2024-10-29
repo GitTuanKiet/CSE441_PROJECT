@@ -40,9 +40,6 @@ class Admin_Activity : BaseActivity() {
         )
     }
 
-    override val new: Any
-        get() = ""
-
     override fun fragment(): BaseFragment {
         return AdminFragment() // Khởi tạo fragment cho Admin
     }

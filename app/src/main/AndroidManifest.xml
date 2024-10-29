@@ -32,6 +32,10 @@
         <activity
             android:name=".features.agents.ui.AgentsActivity"
             android:label="@string/agents_screen_title" />
+
+        <activity
+            android:name=".features.agents.ui.AgentDetailsActivity"
+            android:label="@string/agent_details_screen_title" />
     </application>
 
 </manifest>

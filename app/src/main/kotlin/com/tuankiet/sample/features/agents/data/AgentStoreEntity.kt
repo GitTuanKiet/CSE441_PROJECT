@@ -1,9 +1,11 @@
 package com.tuankiet.sample.features.agents.data
 
 import com.tuankiet.sample.features.agents.interactor.Agent
+import com.tuankiet.sample.features.agents.interactor.AgentConfig
+import com.tuankiet.sample.features.agents.interactor.AgentDetails
 import com.tuankiet.sample.features.agents.interactor.AgentMeta
 
-data class ResponseEntity(
+data class AgentStoreEntity(
     private val agents: List<AgentEntity>,
     private val tags: List<String>
 ) {
@@ -27,4 +29,19 @@ data class AgentMetaEntity(
     private val category: String
 ) {
     fun toAgentMeta() = AgentMeta(title, description, avatar, tags, category)
+}
+
+data class AgentDetailsEntity (
+    private val identifier: String,
+    private val author: String,
+    private val config: AgentConfigEntity,
+    private val meta: AgentMetaEntity
+) {
+    fun toAgentDetails() = AgentDetails(identifier, author, config.toAgentConfig(), meta.toAgentMeta())
+}
+
+data class AgentConfigEntity(
+    private val systemRoles: String,
+) {
+    fun toAgentConfig() = AgentConfig(systemRoles)
 }
