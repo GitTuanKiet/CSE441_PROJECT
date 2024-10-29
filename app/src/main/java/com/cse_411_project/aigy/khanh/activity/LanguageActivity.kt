@@ -12,26 +12,31 @@ import android.content.Context
 import java.util.Locale
 
 class LanguageActivity : AppCompatActivity() {
-    private lateinit var btnEnglishMode : Button
-    private lateinit var btnVietnameseMode : Button
+    private lateinit var btnEnglishMode: Button
+    private lateinit var btnVietnameseMode: Button
     private lateinit var sharedPreferences: SharedPreferences
     private val LANGUAGE_KEY = "language_key"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        sharedPreferences.getString(LANGUAGE_KEY, "en")
+        val savedLanguage = sharedPreferences.getString(LANGUAGE_KEY, "en") ?: "en"
+        setLocale(savedLanguage)
 
         setContentView(R.layout.activity_language)
         btnEnglishMode = findViewById(R.id.btn_english_mode)
         btnVietnameseMode = findViewById(R.id.btn_vietnamese_mode)
-        btnEnglishMode.setOnClickListener{
+
+        btnEnglishMode.setOnClickListener {
             changeLanguage("en")
         }
-        btnVietnameseMode.setOnClickListener{
+
+        btnVietnameseMode.setOnClickListener {
             changeLanguage("vi")
         }
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -45,12 +50,13 @@ class LanguageActivity : AppCompatActivity() {
         val config = resources.configuration
         config.setLocale(locale)
         resources.updateConfiguration(config, resources.displayMetrics)
+
         recreate()
     }
 
-    private fun changeLanguage(newLanguage : String) {
+    private fun changeLanguage(newLanguage: String) {
         val currentLanguage = sharedPreferences.getString(LANGUAGE_KEY, "en")
-        if(currentLanguage != newLanguage){
+        if (currentLanguage != newLanguage) {
             sharedPreferences.edit().putString(LANGUAGE_KEY, newLanguage).apply()
             setLocale(newLanguage)
         }
