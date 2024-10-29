@@ -230,7 +230,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/lbtn_themes"
+            android:id="@+id/lbtn_theme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
