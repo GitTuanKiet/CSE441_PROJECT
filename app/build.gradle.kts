@@ -93,8 +93,21 @@ dependencies {
 
     // Page indicator
     implementation(libs.dotsindicator)
+
+    // Firebase
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore.ktx)
-    implementation(libs.gson)
     implementation(libs.firebase.database.ktx)
+    implementation(libs.firebase.firestore.ktx.v2410)
+    implementation(libs.firebase.storage.ktx)
+
+    // Gson
+    implementation(libs.gson)
+
+    // Image Cropper
+    implementation(libs.android.image.cropper.v280)
+
+    // Image Picker
+    implementation(libs.imagepicker)
+    implementation(libs.play.services.cast.framework)
 }

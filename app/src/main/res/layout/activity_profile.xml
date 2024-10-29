@@ -90,7 +90,7 @@
         </FrameLayout>
 
         <TextView
-            android:id="@+id/full_name_user"
+            android:id="@+id/txt_full_name_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/full_name_user"

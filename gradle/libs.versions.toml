@@ -1,8 +1,15 @@
 [versions]
 # sdk -----------
+activityKtx = "1.9.3"
+androidImageCropper = "2.3.1"
+androidImageCropperVersion = "2.8.0"
+appcompatV7 = "28.0.0"
+appcompatVersion = "1.4.1"
 compileSdk = "34"
 dotsindicator = "5.0"
+firebaseFirestoreKtxVersion = "24.1.0"
 gson = "2.11.0"
+imagepicker = "3.0.0"
 minSdk = "30"
 targetSdk = "34"
 
@@ -33,6 +40,8 @@ leakcanaryAndroid = "2.14"
 androidGradlePlugin = "8.6.0"
 constraintlayout = "2.1.4"
 gridlayout = "1.0.0"
+ucrop = "2.2.6"
+ucropVersion = "2.2.6"
 viewpager2 = "1.1.0"
 material = "1.12.0"
 activity = "1.9.2"
@@ -40,12 +49,21 @@ googleGmsGoogleServices = "4.4.2"
 firebaseAuth = "23.1.0"
 firebaseFirestoreKtx = "25.1.1"
 firebaseDatabaseKtx = "21.0.0"
+playServicesCastFramework = "22.0.0"
+firebaseStorageKtx = "21.0.1"
 
 
 [libraries]
 # kotlin dependencies ---
+android-image-cropper = { module = "com.theartofdev.edmodo:android-image-cropper", version.ref = "androidImageCropper" }
+android-image-cropper-v280 = { module = "com.theartofdev.edmodo:android-image-cropper", version.ref = "androidImageCropperVersion" }
+androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
+androidx-appcompat-v141 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
+appcompat-v7 = { module = "com.android.support:appcompat-v7", version.ref = "appcompatV7" }
 dotsindicator = { module = "com.tbuonomo:dotsindicator", version.ref = "dotsindicator" }
+firebase-firestore-ktx-v2410 = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseFirestoreKtxVersion" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+imagepicker = { module = "com.github.esafirm.android-image-picker:imagepicker", version.ref = "imagepicker" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinCoroutines" }
 
@@ -83,6 +101,10 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabaseKtx" }
+ucrop = { module = "com.yalantis:ucrop", version.ref = "ucrop" }
+play-services-cast-framework = { group = "com.google.android.gms", name = "play-services-cast-framework", version.ref = "playServicesCastFramework" }
+firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx", version.ref = "firebaseStorageKtx" }
+yalantis-ucrop = { module = "com.github.yalantis:ucrop", version.ref = "ucropVersion" }
 
 
 [plugins]
