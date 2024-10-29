@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.FragmentActivity
-import com.tuankiet.sample.features.admin.ui.activitys.Admin_Activity
+import com.tuankiet.sample.features.admin.ui.activitys.AdminActivity
 import com.tuankiet.sample.features.agents.ui.AgentDetailsActivity
 import com.tuankiet.sample.features.auth.credentials.Authenticator
 import com.tuankiet.sample.features.agents.ui.AgentView
@@ -16,9 +16,9 @@ class Navigator(private val authenticator: Authenticator) {
 //        context.startActivity(LoginActivity.callingIntent(context))
 
     fun showMain(context: Context) {
-        showAgents(context)
+//        showAgents(context)
 
-//        showAdmin(context)
+        showAdmin(context)
 
 //        when (authenticator.userLoggedIn()) {
 //            true -> showAgents(context)
@@ -28,7 +28,7 @@ class Navigator(private val authenticator: Authenticator) {
 
 
     // Display UI Admin
-    private fun showAdmin(context: Context) = context.startActivity(Admin_Activity.callingIntent(context))
+    private fun showAdmin(context: Context) = context.startActivity(AdminActivity.callingIntent(context))
 
 
     private fun showAgents(context: Context) =

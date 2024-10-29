@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/base_color_light"
     android:fitsSystemWindows="true"
     tools:context=".features.admin.ui.fragments.AdminFragment">
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/Taskbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         > <!--        tools:openDrawer="start"-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -52,9 +52,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="30dp">
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/avatar"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
+                        android:src="@drawable/user"
+                        android:scaleType="centerCrop"
                         android:background="@drawable/base_circle" />
 
                     <LinearLayout
@@ -64,6 +67,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/txtName"
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -89,9 +93,12 @@
             <FrameLayout
                 android:id="@+id/displayData"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+        
 
         <com.google.android.material.navigation.NavigationView
             android:layout_width="310dp"
@@ -153,12 +160,23 @@
                             android:layout_height="wrap_content"
                             android:text="@string/language"/>
                     </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:paddingVertical="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/logout"
+                            tools:ignore="HardcodedText" />
+                    </TableRow>
                 </TableLayout>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/logout"
-                    tools:ignore="HardcodedText" />
+
             </LinearLayout>
 
         </com.google.android.material.navigation.NavigationView>
