@@ -1,20 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Permissions -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
         android:name=".AndroidApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- dna -->
+        <activity
+            android:name=".features.chat.ExploreActivity">
+        </activity>
+
+        <activity
+            android:name=".features.chat.WelcomeAgentActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+        </activity>
+
+        <activity
+            android:name=".features.chat.ChatActivity"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- truong -->
         <activity
             android:name=".features.admin.ui.activitys.AdminActivity"
             android:exported="false" />
-        <!-- Activities -->
+
+        <!-- kiet -->
         <activity
             android:name=".core.navigation.RouteActivity"
             android:exported="true"
@@ -24,7 +44,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- <activity -->
+        </activity>
+        <!-- <activity -->
         <!-- android:name=".features.login.ui.LoginActivity" -->
         <!-- android:label="@string/login_screen_title"> -->
         <!-- </activity> -->
@@ -36,5 +57,4 @@
             android:name=".features.agents.ui.AgentDetailsActivity"
             android:label="@string/agent_details_screen_title" />
     </application>
-
 </manifest>
