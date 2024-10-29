@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cse_411_project.aigy.khanh.activity.PhoneNumberRecoveryActivity">
+    tools:context="com.cse_411_project.aigy.khanh.activity.InviteYourFriendActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -89,7 +89,6 @@
             android:textStyle="bold"/>
 
         <LinearLayout
-            android:id="@+id/lbtn_email_recovery"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="10dp"
@@ -132,7 +131,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/btn_save_changes"
+            android:id="@+id/btn_share"
             android:padding="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
