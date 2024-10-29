@@ -4,10 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-  <include
-      android:id="@+id/toolBarContainer"
-      layout="@layout/toolbar"/>
-
   <FrameLayout
       android:id="@+id/fragmentContainer"
       android:layout_width="match_parent"
@@ -15,5 +11,9 @@
       android:layout_below="@+id/appbar"
       app:layout_behavior="@string/appbar_scrolling_view_behavior"
       />
+
+  <include
+      android:id="@+id/toolBarContainer"
+      layout="@layout/toolbar"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -25,3 +25,22 @@ data class AgentMeta(
         val empty = AgentMeta(String.empty(), String.empty(), String.empty(), emptyList(), String.empty())
     }
 }
+
+data class AgentDetails(
+    val identifier: String,
+    val author: String,
+    val config: AgentConfig,
+    val meta: AgentMeta
+) {
+    companion object {
+        val empty = AgentDetails(String.empty(), String.empty(), AgentConfig.empty, AgentMeta.empty)
+    }
+}
+
+data class AgentConfig(
+    val systemRoles: String
+) {
+    companion object {
+        val empty = AgentConfig(String.empty())
+    }
+}

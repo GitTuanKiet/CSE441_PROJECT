@@ -4,6 +4,6 @@ import com.tuankiet.sample.core.failure.Failure.FeatureFailure
 
 class AgentFailure {
     class ListNotAvailable : FeatureFailure()
-    class NonExistentMovie : FeatureFailure()
+    class NonExistentAgent : FeatureFailure()
 }
 

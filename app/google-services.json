@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "799976968698",
+    "firebase_url": "https://aigy-b9dbc-default-rtdb.firebaseio.com",
+    "project_id": "aigy-b9dbc",
+    "storage_bucket": "aigy-b9dbc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799976968698:android:4986a2d2d789e33fb89443",
+        "android_client_info": {
+          "package_name": "com.tuankiet.sample"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvD1XYifhhaL-0E_fbfAez05TQWTk1cTg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

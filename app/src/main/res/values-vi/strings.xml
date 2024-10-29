@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_refresh">Làm mới</string>
+
+    <string name="failure_network_connection">Không có kết nối với mạng</string>
+    <string name="failure_server_error">Lỗi server</string>
+    <string name="failure_agents_list_unavailable">Trợ lý không khả dụng.</string>
+    <string name="failure_agent_non_existent">Trợ lý không tồn tại.</string>
+
+    <string name="content_description_empty">Không có mô tả.</string>
+    <string name="app_name">AIGY</string>
+    <string name="dashboard_title">"Bảng điều khiển "</string>
+    <string name="total_users">Tổng số người dùng</string>
+    <string name="total_agents">"Tổng số trợ lý "</string>
+    <string name="online_users">"Tổng người dùng trực tuyến "</string>
+    <string name="average_response_time">Thời gian phản hồi trung bình</string>
+    <string name="total_traffic">Tổng lưu lượng truy cập</string>
+    <string name="number_of_messages_processed">Số lượng tin nhắn được xử lý</string>
+    <string name="user_management">Quản lý người dùng</string>
+    <string name="language">Ngôn ngữ</string>
+    <string name="apptheme">Giao diện</string>
+    <string name="home">Trang chủ</string>
+    <string name="settings">"Cài đặt "</string>
+    <string name="logout">"Đăng xuất "</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

@@ -24,6 +24,7 @@ plugins {
     alias(libs.plugins.kotlin.compose.compiler)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 val appConfig = AppConfig()
@@ -87,6 +88,8 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.android.appcompat)
     implementation(libs.converter.gson)
+    implementation(libs.androidx.activity)
+    implementation(libs.firebase.database)
 
     // Jetpack compose dependencies
     // @see: https://developer.android.google.cn/develop/ui/compose/setup?hl=en#kotlin_1
@@ -117,6 +120,8 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     debugImplementation("androidx.compose.ui:ui-tooling")
 
+
+
     // Unit/Integration tests dependencies
     testImplementation(composeBom)
     testImplementation(libs.kotest.runner.junit5)
@@ -136,6 +141,11 @@ dependencies {
     androidTestImplementation(libs.androidx.rules)
     androidTestImplementation(libs.androidx.espresso.intents)
 
+
+
+
     // Development/Tooling dependencies
-    debugImplementation(libs.leakcanary.android)
+//    debugImplementation(libs.leakcanary.android)
+    // UI Chart
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }
