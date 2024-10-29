@@ -27,7 +27,7 @@
         android:layout_height="100dp"
         android:layout_marginTop="96dp"
         android:contentDescription="TikTok Logo"
-        android:src="@drawable/vector"
+        android:src="@drawable/sample_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

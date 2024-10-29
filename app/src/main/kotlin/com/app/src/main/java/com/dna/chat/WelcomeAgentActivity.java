@@ -8,13 +8,12 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeAgentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
+        setContentView(R.layout.activity_welcome_agent);
 
-        // Back button to go to the previous activity
         ImageButton backButton = findViewById(R.id.back_button);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -23,12 +22,11 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         });
 
-        // Get Started button to move to the next activity (e.g., ChatActivity)
         Button getStartedButton = findViewById(R.id.get_started_button);
         getStartedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(WelcomeActivity.this, ChatActivity.class);
+                Intent intent = new Intent(WelcomeAgentActivity.this, ChatActivity.class);
                 startActivity(intent);
             }
         });
