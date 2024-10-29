@@ -16,6 +16,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.cse_411_project.aigy.R
+import com.cse_411_project.aigy.khanh.activity.PhoneNumberRecoveryActivity
 import com.cse_411_project.aigy.khanh.activity.SignUpActivity
 
 class PhoneNumberVerifyDialogFragment : DialogFragment() {
@@ -27,6 +28,7 @@ class PhoneNumberVerifyDialogFragment : DialogFragment() {
     private var dismissListener: OnDialogDismissListener? = null
     private var timer: CountDownTimer? = null
     private lateinit var txtResend: TextView
+    private lateinit var txtPhoneNumber: TextView
     private var isTimerRunning = false
     private lateinit var edtSlot1: EditText
     private lateinit var edtSlot2: EditText
@@ -42,6 +44,10 @@ class PhoneNumberVerifyDialogFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_phone_number_verify, container, false)
+        txtPhoneNumber = view.findViewById(R.id.txt_phone_number)
+
+        val phoneNumber = arguments?.getString("phone_number")
+        txtPhoneNumber.text = phoneNumber ?: "Số điện thoại không có sẵn"
 
         edtSlot1 = view.findViewById(R.id.etn_slot_1)
         edtSlot2 = view.findViewById(R.id.etn_slot_2)
@@ -57,7 +63,11 @@ class PhoneNumberVerifyDialogFragment : DialogFragment() {
 
         txtResend.setOnClickListener {
             if (!isTimerRunning) {
-                (activity as? SignUpActivity)?.resendOtp()
+                if (activity is SignUpActivity) {
+                    (activity as? SignUpActivity)?.resendOtp()
+                } else if (activity is PhoneNumberRecoveryActivity) {
+                    (activity as? PhoneNumberRecoveryActivity)?.resendOtp()
+                }
                 startCountdown(60)
             }
         }
@@ -92,7 +102,11 @@ class PhoneNumberVerifyDialogFragment : DialogFragment() {
     }
 
     private fun verifyOtp(code: String) {
-        (activity as? SignUpActivity)?.verifyOtp(code)
+        if (activity is SignUpActivity) {
+            (activity as? SignUpActivity)?.verifyOtp(code)
+        } else if (activity is PhoneNumberRecoveryActivity) {
+            (activity as? PhoneNumberRecoveryActivity)?.verifyOtp(code)
+        }
     }
 
     override fun onDismiss(dialog: DialogInterface) {

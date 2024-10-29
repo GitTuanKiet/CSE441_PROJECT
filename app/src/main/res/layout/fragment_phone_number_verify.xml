@@ -59,9 +59,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="dgkha*******@gmail.com"
+                android:text="0123456789"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:textColor="@color/black"
+                android:enabled="false"
                 app:layout_constraintBottom_toTopOf="@+id/linearLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -79,8 +81,8 @@
 
                 <EditText
                     android:id="@+id/etn_slot_1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:background="@drawable/edit_text_square"
                     android:fontFamily="@font/poppins_regular"
                     android:gravity="center"
@@ -94,8 +96,8 @@
 
                 <EditText
                     android:id="@+id/etn_slot_2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:background="@drawable/edit_text_square"
                     android:fontFamily="@font/poppins_regular"
                     android:gravity="center"
@@ -108,8 +110,8 @@
 
                 <EditText
                     android:id="@+id/etn_slot_3"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/edit_text_square"
@@ -124,8 +126,8 @@
 
                 <EditText
                     android:id="@+id/etn_slot_4"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:background="@drawable/edit_text_square"
                     android:fontFamily="@font/poppins_regular"
                     android:gravity="center"
@@ -140,8 +142,8 @@
 
                 <EditText
                     android:id="@+id/etn_slot_5"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:background="@drawable/edit_text_square"
                     android:fontFamily="@font/poppins_regular"
                     android:gravity="center"
@@ -155,8 +157,8 @@
 
                 <EditText
                     android:id="@+id/etn_slot_6"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:background="@drawable/edit_text_square"
                     android:fontFamily="@font/poppins_regular"
                     android:gravity="center"

@@ -133,6 +133,11 @@ class SignUpActivity : AppCompatActivity() {
     private fun openPhoneNumberVerifyFragment() {
         isDialogOpen = true
         val phoneNumberVerifyDialog = PhoneNumberVerifyDialogFragment()
+
+        val bundle = Bundle()
+        bundle.putString("phone_number", "+84" + edtPhoneNumber.text.toString().trim())
+        phoneNumberVerifyDialog.arguments = bundle
+
         phoneNumberVerifyDialog.isCancelable = false
         phoneNumberVerifyDialog.setOnDismissListener(object : PhoneNumberVerifyDialogFragment.OnDialogDismissListener {
             override fun onDialogDismiss() {
