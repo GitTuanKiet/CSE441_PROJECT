@@ -2,7 +2,6 @@
 
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-
 class AppConfig {
     val id = "com.cse_411_project.aigy"
     val versionCode = 2
@@ -106,7 +105,7 @@ dependencies {
     implementation(libs.gson)
 
     // Image Cropper
-    implementation(libs.android.image.cropper.v280)
+    implementation("com.vanniktech:android-image-cropper:4.6.0")
 
     // Image Picker
     implementation(libs.imagepicker)

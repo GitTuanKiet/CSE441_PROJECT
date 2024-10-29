@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="32"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -17,40 +20,40 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name="com.cse_411_project.aigy.khanh.activity.LanguageActivity"
-            android:exported="false"/>
-        <activity
-            android:name="com.cse_411_project.aigy.khanh.activity.InviteYourFriendActivity"
+            android:name=".khanh.activity.RecoveryMethodActivity"
             android:exported="false" />
         <activity
-            android:name="com.cse_411_project.aigy.khanh.activity.PasswordActivity"
+            android:name=".khanh.activity.LanguageActivity"
             android:exported="false" />
         <activity
-            android:name="com.cse_411_project.aigy.khanh.activity.AccountInformationActivity"
+            android:name=".khanh.activity.InviteYourFriendActivity"
             android:exported="false" />
         <activity
-            android:name="com.cse_411_project.aigy.khanh.activity.PreferencesActivity"
+            android:name=".khanh.activity.PasswordActivity"
             android:exported="false" />
         <activity
-            android:name="com.cse_411_project.aigy.khanh.activity.ProfileActivity"
+            android:name=".khanh.activity.AccountInformationActivity"
             android:exported="false" />
         <activity
-            android:name="com.cse_411_project.aigy.khanh.activity.ResetPasswordActivity"
+            android:name=".khanh.activity.PreferencesActivity"
             android:exported="false" />
         <activity
-            android:name="com.cse_411_project.aigy.khanh.activity.ForgetPasswordActivity"
+            android:name=".khanh.activity.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name="com.cse_411_project.aigy.khanh.activity.SignInActivity"
+            android:name=".khanh.activity.ResetPasswordActivity"
             android:exported="false" />
         <activity
-            android:name="com.cse_411_project.aigy.khanh.activity.SignUpActivity"
+            android:name=".khanh.activity.ForgetPasswordActivity"
             android:exported="false" />
         <activity
-            android:name="com.cse_411_project.aigy.khanh.activity.PhoneNumberRecoveryActivity"
+            android:name=".khanh.activity.SignInActivity"
             android:exported="false" />
         <activity
-            android:name="com.cse_411_project.aigy.khanh.activity.MainActivity"
+            android:name=".khanh.activity.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".khanh.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,7 +61,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.cse_411_project.aigy.khanh.activity.WelcomeActivity" />
+        <activity android:name=".khanh.activity.WelcomeActivity" />
     </application>
 
 </manifest>
