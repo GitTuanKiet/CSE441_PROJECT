@@ -18,7 +18,7 @@ class ResetPasswordActivity : AppCompatActivity() {
     private lateinit var edtConfirmPassword: EditText
     private lateinit var btnSaveChanges: Button
     private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var phoneNumber: String // Thêm biến để lưu số điện thoại
+    private lateinit var phoneNumber: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,8 +66,9 @@ class ResetPasswordActivity : AppCompatActivity() {
     private fun resetPassword(newPassword: String) {
         firebaseAuth.fetchSignInMethodsForEmail(phoneNumber)
             .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
+                if (task.isSuccessful && task.result?.signInMethods?.isNotEmpty() == true) {
                     val user = firebaseAuth.currentUser
+
                     user?.updatePassword(newPassword)?.addOnCompleteListener { updateTask ->
                         if (updateTask.isSuccessful) {
                             Toast.makeText(this, "Mật khẩu đã được thay đổi thành công", Toast.LENGTH_SHORT).show()
@@ -84,10 +85,11 @@ class ResetPasswordActivity : AppCompatActivity() {
             }
     }
 
+
     companion object {
         fun newIntent(context: Context, phoneNumber: String): Intent {
             val intent = Intent(context, ResetPasswordActivity::class.java)
-            intent.putExtra("phone_number", phoneNumber) // Truyền số điện thoại vào Intent
+            intent.putExtra("phone_number", phoneNumber)
             return intent
         }
     }
