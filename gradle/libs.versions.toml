@@ -1,7 +1,17 @@
 [versions]
 # sdk -----------
+activityKtx = "1.9.3"
+androidImageCropper = "2.3.1"
+androidImageCropperVersion = "2.8.0"
+appcompatV7 = "28.0.0"
+appcompatVersion = "1.7.0"
 compileSdk = "34"
+dotsindicator = "5.0"
+firebaseFirestoreKtxVersion = "25.1.1"
+gridlayout = "1.0.0"
+gson = "2.11.0"
 minSdk = "30"
+runtime = "1.7.4"
 targetSdk = "34"
 
 # kotlin ---------
@@ -39,10 +49,18 @@ firebaseFirestoreKtx = "25.1.1"
 firebaseFirestore = "25.1.1"
 firebaseAuthKtx = "23.1.0"
 firebaseStorageKtx = "21.0.1"
+viewpager2 = "1.1.0"
 
 
 [libraries]
 # kotlin dependencies ---
+androidx-gridlayout = { module = "androidx.gridlayout:gridlayout", version.ref = "gridlayout" }
+androidx-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "runtime" }
+androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewpager2" }
+dotsindicator = { module = "com.tbuonomo:dotsindicator", version.ref = "dotsindicator" }
+#noinspection SimilarGradleDependency
+firebase-firestore-ktx-v2410 = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseFirestoreKtxVersion" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinCoroutines" }
 
@@ -77,6 +95,7 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabaseKtx" }
+#noinspection SimilarGradleDependency
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
