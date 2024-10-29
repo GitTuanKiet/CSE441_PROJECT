@@ -2,7 +2,6 @@ package com.cse_411_project.aigy.khanh.fragment
 
 import android.annotation.SuppressLint
 import android.content.DialogInterface
-import android.graphics.Rect
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Editable
@@ -16,7 +15,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.cse_411_project.aigy.R
-import com.cse_411_project.aigy.khanh.activity.PhoneNumberRecoveryActivity
+import com.cse_411_project.aigy.khanh.activity.RecoveryMethodActivity
 import com.cse_411_project.aigy.khanh.activity.SignUpActivity
 
 class PhoneNumberVerifyDialogFragment : DialogFragment() {
@@ -65,8 +64,8 @@ class PhoneNumberVerifyDialogFragment : DialogFragment() {
             if (!isTimerRunning) {
                 if (activity is SignUpActivity) {
                     (activity as? SignUpActivity)?.resendOtp()
-                } else if (activity is PhoneNumberRecoveryActivity) {
-                    (activity as? PhoneNumberRecoveryActivity)?.resendOtp()
+                } else if (activity is RecoveryMethodActivity) {
+                    (activity as? RecoveryMethodActivity)?.resendOtp()
                 }
                 startCountdown(60)
             }
@@ -104,8 +103,8 @@ class PhoneNumberVerifyDialogFragment : DialogFragment() {
     private fun verifyOtp(code: String) {
         if (activity is SignUpActivity) {
             (activity as? SignUpActivity)?.verifyOtp(code)
-        } else if (activity is PhoneNumberRecoveryActivity) {
-            (activity as? PhoneNumberRecoveryActivity)?.verifyOtp(code)
+        } else if (activity is RecoveryMethodActivity) {
+            (activity as? RecoveryMethodActivity)?.verifyOtp(code)
         }
     }
 
