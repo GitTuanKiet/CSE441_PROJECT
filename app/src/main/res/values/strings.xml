@@ -1,81 +1,95 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AIGY</string>
-    <string name="hello_blank_fragment">Xin chào</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <!-- Activity Email Recovery    -->
     <string name="forget_your">Forget your</string>
     <string name="password">Password ?</string>
-    <string name="enter_email">Nhập email của bạn vào và chúng tôi sẽ gửi bạn đường dẫn để cài lại mật khẩu</string>
+    <string name="enter_email">Enter your email and we\'ll send you a link to reset your password</string>
+
     <!-- Activity Forget Password    -->
-    <string name="select_contact_details">Chọn chi tiết liên hệ nào chúng tôi nên sử dụng để đặt lại mật khẩu của bạn</string>
+    <string name="select_contact_details">Select which contact details should we use to reset your password</string>
     <string name="email">Email</string>
-    <string name="code_send_to_your_phone_number">Mã gửi đến số điện thoại của bạn</string>
+    <string name="code_send_to_your_phone_number">Code send to your phone number</string>
+
     <!-- Activity Sign In    -->
-    <string name="login_your">Đăng nhập của bạn</string>
+    <string name="login_your">Login your</string>
     <string name="account">Account</string>
-    <string name="tb_enter_email">Nhập email của bạn</string>
-    <string name="tb_password">Mật khẩu</string>
-    <string name="forget_password">Quên mật khẩu ?</string>
-    <string name="login">Đăng nhập</string>
-    <string name="create_new_account">Tạo tài khoản mới ?</string>
-    <string name="sign_up">Đăng ký</string>
+    <string name="tb_enter_email">Enter Your Email</string>
+    <string name="tb_password">Password</string>
+    <string name="forget_password">Forget Password ?</string>
+    <string name="login">Login</string>
+    <string name="create_new_account">Create New Account?</string>
+    <string name="sign_up">Sign Up</string>
+
     <!-- Activity Sign Up    -->
     <string name="create_your">Create your</string>
-    <string name="full_name">Họ và tên</string>
-    <string name="enter_your_phone">Nhập số điện thoại của bạn</string>
-    <string name="confirm_password">Xác nhận lại mật khẩu</string>
-    <string name="register">Đăng ký</string>
+    <string name="full_name">Full Name</string>
+    <string name="enter_your_phone">Enter Your Phone</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="register">Register</string>
+    <string name="already_have_account">Already have an account?</string>
     <string name="sign_in">Sign In</string>
-    <string name="already_have_account">Bạn đã có tài khoản?</string>
+
     <!-- Activity Splash    -->
-    <string name="welcome_to_aigy">Chào mừng đến AIGY</string>
+    <string name="welcome_to_aigy">Welcome to AIGY</string>
+
     <!-- Activity Email Verify    -->
-    <string name="phone_number_verification_code">Mã xác minh số điện thoại</string>
-    <string name="your_verification_code_is_send_by_phone_number_to">Mã xác minh của bạn được gửi bằng số điện thoại đến</string>
-    <string name="resend">Gửi lại</string>
-    <string name="verify">Xác minh</string>
-    <string name="wait_resend_verification_code">Chờ 60 giây để gửi lại mã xác minh</string>
+    <string name="phone_number_verification_code">Phone Number Verification Code</string>
+    <string name="your_verification_code_is_send_by_phone_number_to">Your verification code is send by phone number to</string>
+    <string name="resend">Resend</string>
+    <string name="verify">Verify</string>
+    <string name="wait_resend_verification_code">Wait 60 seconds to resend verification code</string>
+
     <!-- Activity Reset Password    -->
-    <string name="reset_password">Đặt lại mật khẩu</string>
-    <string name="tb_confirm_password">Xác nhận mật khẩu</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="tb_confirm_password">Confirm Password</string>
     <string name="save_changes">Save Changes</string>
-    <string name="enter_your_email">Nhập email của bạn</string>
+
     <!-- Activity Profile    -->
-    <string name="profile">Hồ sơ</string>
-    <string name="preferences">Sở thích</string>
-    <string name="support">Hỗ trợ</string>
-    <string name="customer_support">Hỗ trợ khách hàng</string>
-    <string name="logout">Đăng xuất</string>
+    <string name="profile">Profile</string>
+    <string name="preferences">Preferences</string>
+    <string name="support">Customer Support</string>
+    <string name="customer_support">Customer Support</string>
+    <string name="logout">Logout</string>
     <string name="full_name_user">Khánh Đinh</string>
     <string name="hidden_email">dgkha******@gmail.com</string>
+
     <!-- Activity Preferences    -->
-    <string name="account_information">Thông tin tài khoản</string>
-    <string name="change_your_account_information">Thay đổi thông tin tài khoản của bạn</string>
-    <string name="change_password">Thay đổi mật khẩu của bạn</string>
-    <string name="invite_your_friends">Mời bạn bè của bạn</string>
-    <string name="get_rewards">Nhận $ 3 cho mỗi lời mời!</string>
-    <string name="theme">Giao diện</string>
-    <string name="change_your_theme">Thay đổi giao diện</string>
-    <string name="language">Ngôn ngữ</string>
-    <string name="change_your_language">Thay đổi ngôn ngữ</string>
+    <string name="account_information">Account Information</string>
+    <string name="change_your_account_information">Change your Account information</string>
+    <string name="change_password">Change your Password</string>
+    <string name="invite_your_friends">Invite your Friends</string>
+    <string name="get_rewards">Get $3 For Each Invitation!</string>
+    <string name="theme">Theme</string>
+    <string name="change_your_theme">Change your Theme</string>
+    <string name="language">Language</string>
+    <string name="change_your_language">Change your Language</string>
+
     <!-- Activity Select Method Recovery    -->
-    <string name="select_method_recovery_description">Chọn chi tiết liên hệ nào chúng tôi nên sử dụng để đặt lại mật khẩu của bạn</string>
+    <string name="select_method_recovery_description">Select which contact details should we use to reset your password</string>
+
     <!-- Activity Email Recovery    -->
-    <string name="forget_your_password_description">Nhập số điện thoại của bạn và chúng tôi sẽ gửi cho bạn một liên kết để đặt lại mật khẩu của bạn</string>
-    <string name="next">Tiếp theo</string>
+    <string name="forget_your_password_description">Enter your phone number and we\'ll send you a link to reset your password</string>
+    <string name="next">Next</string>
+
     <!-- Activity Account Information    -->
-    <string name="phone_number">Số điện thoại</string>
+    <string name="phone_number">Phone Number</string>
+
     <!-- Activity Password    -->
-    <string name="tb_current_password">Mật khẩu hiện tại</string>
+    <string name="tb_current_password">Current Password</string>
+
     <!-- Activity Invite Your Friend    -->
-    <string name="invite_friends">Mời bạn bè</string>
-    <string name="share">Chia sẻ</string>
-    <string name="refer_a_friend">Giới thiệu một người bạn</string>
-    <string name="share_your_promo_code_and_get_3_for_each_friend">Chia sẻ mã khuyến mãi của bạn và nhận $ 3 cho mỗi người bạn</string>
+    <string name="invite_friends">Invite Friends</string>
+    <string name="share">Share</string>
+    <string name="refer_a_friend">Refer A Friend</string>
+    <string name="share_your_promo_code_and_get_3_for_each_friend">Share Your Promo Code And Get $3 For Each Friend</string>
+
     <!-- Activity Theme    -->
-    <string name="light_mode">Sáng</string>
-    <string name="dark_mode">Tối</string>
+    <string name="light_mode">Light</string>
+    <string name="dark_mode">Dark</string>
+
     <!-- Activity Language    -->
-    <string name="english">Tiếng Anh</string>
-    <string name="vietnamese">Tiếng Việt</string>
+    <string name="english">English</string>
+    <string name="vietnamese">Vietnamese</string>
 </resources>
