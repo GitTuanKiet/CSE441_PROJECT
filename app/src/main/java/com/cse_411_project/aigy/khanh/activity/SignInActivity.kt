@@ -2,6 +2,7 @@ package com.cse_411_project.aigy.khanh.activity
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -29,6 +30,7 @@ class SignInActivity : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var fireStore: FirebaseFirestore
     private lateinit var database: DatabaseReference
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,65 +71,63 @@ class SignInActivity : AppCompatActivity() {
             if (edtEmail.text.toString().isEmpty()) {
                 edtEmail.error = "Vui lòng nhập email"
                 edtEmail.requestFocus()
-                Toast.makeText(this, "Vui lòng nhập email", Toast.LENGTH_SHORT).show()
             } else if (edtPassword.text.toString().isEmpty()) {
                 edtPassword.error = "Vui lòng nhập mật khẩu"
                 edtPassword.requestFocus()
-                Toast.makeText(this, "Vui lòng nhập mật khẩu", Toast.LENGTH_SHORT).show()
             } else {
                 firebaseAuth = FirebaseAuth.getInstance()
                 firebaseAuth.signInWithEmailAndPassword(
                     edtEmail.text.toString(),
                     edtPassword.text.toString()
-                )
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show()
-                            val userId = firebaseAuth.currentUser?.uid
-
-                            if (userId != null) {
-                                database.child("users").child(userId).get()
-                                    .addOnSuccessListener { dataSnapshot ->
-                                        if (dataSnapshot.exists()) {
-                                            val user = dataSnapshot.getValue(User::class.java)
-
-                                            // Kiểm tra dữ liệu người dùng
-                                            if (user != null) {
-                                                Toast.makeText(
-                                                    this,
-                                                    "Chào mừng ${user.name}",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                                // Sử dụng thông tin người dùng
-//                                                Toast.makeText(this, "Tên: ${user.name}, Email: ${user.email}", Toast.LENGTH_SHORT).show()
-//
-//                                                // Chuyển đến HomeActivity
-//                                                val intent = Intent(this, HomeActivity::class.java)
-//                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-//                                                startActivity(intent)
-//                                                finish()
-                                            }
-                                        } else {
-                                            Toast.makeText(
-                                                this,
-                                                "Không tìm thấy người dùng",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                ).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val userId = firebaseAuth.currentUser?.uid
+                        if (userId != null) {
+                            database.child("users").child(userId).get()
+                                .addOnSuccessListener { dataSnapshot ->
+                                    val user = dataSnapshot.getValue(User::class.java)
+                                    if (user != null) {
+                                        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+                                        sharedPreferences.edit().apply {
+                                            putString("uid", user.uid)
+                                            putString("decentralization", user.decentralization)
+                                            putString("fullName", user.fullName)
+                                            putString("email", user.email)
+                                            putString("phoneNumber", user.phoneNumber)
+                                            putString("urlImage", user.urlImage)
+                                            putInt("referralCount", user.referralCount!!)
+                                            putBoolean("online", user.online!!)
+                                            putStringSet("conversationList", user.conversationList?.toSet())
+                                            apply()
                                         }
+
+                                        val updates = mutableMapOf<String, Any>()
+                                        updates["online"] = true
+                                        val userRef = user.uid?.let { FirebaseDatabase.getInstance().getReference("users").child(it) }
+
+                                        if (userRef != null && updates.isNotEmpty()) {
+                                            userRef.updateChildren(updates)
+                                        }
+
+                                        Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
+                                        // Chuyển đến HomeActivity
+//                                        val intent = Intent(this, HomeActivity::class.java)
+//                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+//                                        startActivity(intent)
+//                                        finish()
+                                    } else {
+                                        Toast.makeText(this, "Không tìm thấy người dùng", Toast.LENGTH_SHORT).show()
                                     }
-                                    .addOnFailureListener { exception ->
-                                        Toast.makeText(
-                                            this,
-                                            "Lỗi lấy thông tin: ${exception.message}",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                            }
-                        } else {
-                            edtEmail.error = "Email hoặc mật khẩu không đúng"
-                            edtEmail.requestFocus()
+                                }
+                                .addOnFailureListener { exception ->
+                                    Toast.makeText(this, "Lỗi lấy thông tin: ${exception.message}", Toast.LENGTH_SHORT).show()
+                                }
                         }
+                    } else {
+                        edtEmail.error = "Email hoặc mật khẩu không đúng"
+                        edtEmail.requestFocus()
                     }
+                }
             }
         }
     }
