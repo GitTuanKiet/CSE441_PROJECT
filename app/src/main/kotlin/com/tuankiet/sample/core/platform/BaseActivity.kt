@@ -16,7 +16,10 @@
 package com.tuankiet.sample.core.platform
 
 import android.os.Bundle
+import android.view.View
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
+import com.tuankiet.sample.R
 import com.tuankiet.sample.core.extension.inTransaction
 import com.tuankiet.sample.databinding.ActivityLayoutBinding
 
@@ -29,14 +32,13 @@ import com.tuankiet.sample.databinding.ActivityLayoutBinding
 abstract class BaseActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLayoutBinding
-
+    private lateinit var processBar: ProgressBar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityLayoutBinding.inflate(layoutInflater)
-
+        processBar = findViewById<ProgressBar>(R.id.progress_circular)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolBarContainer.toolbar)
         addFragment(savedInstanceState)
     }
 
@@ -46,15 +48,15 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    fun toolbar() = binding.toolBarContainer.toolbar
-
     fun fragmentContainer() = binding.fragmentContainer
-    fun progressBar() = binding.toolBarContainer.progress
 
     private fun addFragment(savedInstanceState: Bundle?) =
         savedInstanceState ?: supportFragmentManager.inTransaction {
             add(binding.fragmentContainer.id, fragment())
         }
 
+    fun getProcessBar(): ProgressBar {
+        return processBar
+    }
     abstract fun fragment(): BaseFragment
 }

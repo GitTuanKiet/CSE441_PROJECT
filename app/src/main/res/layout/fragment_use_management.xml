@@ -11,12 +11,12 @@
         android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp">
         <EditText
+            android:id="@+id/txtSearch"
             android:layout_gravity="end"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:background="@drawable/shape_search"
             android:paddingHorizontal="20dp"
-            android:text="sdsd"
             android:textColor="@color/black"
             android:ems="10"/>
         <ImageView
@@ -38,9 +38,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp">
+
             <TableRow>
                 <TextView
-                    android:textSize="9sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     android:layout_weight="1"
                     android:layout_width="0dp"
@@ -48,8 +49,9 @@
                     android:layout_height="wrap_content"
                     android:text="UID"
                     tools:ignore="HardcodedText" />
+
                 <TextView
-                    android:textSize="9sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     android:layout_weight="1"
                     android:layout_width="0dp"
@@ -57,8 +59,9 @@
                     android:layout_height="wrap_content"
                     android:text="NAME"
                     tools:ignore="HardcodedText" />
+
                 <TextView
-                    android:textSize="9sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     android:layout_weight="1"
                     android:layout_width="0dp"
@@ -66,8 +69,9 @@
                     android:layout_height="wrap_content"
                     android:text="EMAIL/PHONE"
                     tools:ignore="HardcodedText" />
+
                 <TextView
-                    android:textSize="9sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     android:layout_weight="1"
                     android:layout_width="0dp"
@@ -77,10 +81,13 @@
                     tools:ignore="HardcodedText" />
             </TableRow>
         </TableLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listUser"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:minHeight="700dp"/>
     </LinearLayout>
+
 
 </FrameLayout>

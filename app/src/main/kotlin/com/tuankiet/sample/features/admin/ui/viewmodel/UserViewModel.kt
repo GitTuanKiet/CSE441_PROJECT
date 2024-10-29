@@ -1,87 +1,116 @@
 package com.tuankiet.sample.features.admin.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.database.DatabaseError
 import com.tuankiet.sample.core.failure.Failure
 import com.tuankiet.sample.core.platform.BaseViewModel
-import com.tuankiet.sample.features.admin.data.UserModel
-import com.tuankiet.sample.features.admin.interactor.DeleteUserInteractor
-import com.tuankiet.sample.features.admin.interactor.FetchUsersInteractor
-import com.tuankiet.sample.features.admin.interactor.GetUserByUIDInteractor
-import com.tuankiet.sample.features.admin.interactor.UpdateUserInteractor
+import com.tuankiet.sample.features.admin.data.models.UserModel
+import com.tuankiet.sample.features.admin.data.repositories.UserRepository
 
-class UserViewModel (
-    private val fetchUsersInteractor: FetchUsersInteractor,
-    private val deleteUserInteractor: DeleteUserInteractor,
-    private val getUserByUIDInteractor: GetUserByUIDInteractor,
-    private val updateUserInteractor: UpdateUserInteractor
-) : BaseViewModel() {
-
+class UserViewModel(private val userRepository: UserRepository) : BaseViewModel() {
     private val _users: MutableLiveData<List<UserModel>> = MutableLiveData()
     val users: LiveData<List<UserModel>> = _users
+    private val _selectedUser: MutableLiveData<UserModel?> = MutableLiveData()
+    val selectedUser: LiveData<UserModel?> = _selectedUser
+    private val _listVisit: MutableLiveData<List<List<Long>>> = MutableLiveData()
+    val listVisit: LiveData<List<List<Long>>> = _listVisit
 
-    private val _user: MutableLiveData<UserModel?> = MutableLiveData()
-    val user: LiveData<UserModel?> = _user
-
-    // Xử lý logic lấy danh sách người dùng
     fun fetchUsers() {
-        fetchUsersInteractor.execute(
+        userRepository.getUsers(
             onComplete = { userList ->
                 _users.value = userList
             },
             onError = { error ->
-                handleFirebaseError(error)
+                handleFailure(Failure.DatabaseError)
+                Log.e("loi", "Error fetching users: ${error.message}")
             }
         )
     }
-
-    // Xử lý logic xóa người dùng
-    fun deleteUser(uid: String) {
-        deleteUserInteractor.execute(
-            uid,
+    fun fetchListVisit(){
+        userRepository.fetchVisit(
             onComplete = {
-                fetchUsers() // Cập nhật lại danh sách sau khi xóa
+                _listVisit.value = it
+            },
+            onError = {
+                handleFailure(Failure.DatabaseError)
+            }
+        )
+    }
+    fun getUserByName(name: String) {
+        userRepository.getUserByName(name,
+            onComplete = { user ->
+                _users.value = user
             },
             onError = { error ->
-                handleFirebaseError(error)
+                handleFailure(Failure.DatabaseError)
             }
         )
     }
-
-    // Tìm kiếm người dùng theo UID
     fun getUserByUID(uid: String) {
-        getUserByUIDInteractor.execute(
-            uid,
-            onComplete = { foundUser ->
-                _user.value = foundUser
+        userRepository.getUserByUID(uid,
+            onComplete = { user ->
+                _selectedUser.value = user
             },
             onError = { error ->
-                handleFirebaseError(error)
+                handleFailure(Failure.DatabaseError)
             }
         )
     }
-
-    // Cập nhật thông tin người dùng
     fun updateUser(user: UserModel) {
-        updateUserInteractor.execute(
-            user,
+        userRepository.updateUser(user,
             onComplete = {
-                // Cập nhật lại danh sách người dùng sau khi chỉnh sửa thành công
-                fetchUsers()
+                // Handle successful update if needed
             },
             onError = { error ->
-                handleFirebaseError(error)
+                handleFailure(Failure.DatabaseError)
             }
         )
     }
 
-    // Xử lý lỗi Firebase và chuyển đổi sang Failure
-    private fun handleFirebaseError(error: DatabaseError) { // Đưa ra ngoài các phương thức
-        val failure = when (error.code) {
-            DatabaseError.DISCONNECTED -> Failure.NetworkConnection
-            else -> Failure.ServerError
-        }
-        handleFailure(failure) // Gọi hàm xử lý thất bại của BaseViewModel
+    fun deleteUser(uid: String) {
+        userRepository.deleteUser(uid,
+            onComplete = {
+                Log.d("loi", "User deleted successfully")
+            },
+            onError = { error ->
+                handleFailure(Failure.DatabaseError)
+            }
+        )
+    }
+    fun createAgent(userId: String , agentId: String) {
+        userRepository.createAgent(userId , agentId, {}, { error ->
+            Log.e("loi", "Lỗi khi tạo agent: ${error.message}")
+        })
+    }
+    fun createUser(user: UserModel) {
+        userRepository.createUser(user,
+            onComplete = {
+                Log.d("loi" , "Tạo user thành công")
+            },
+            onError = {
+                handleFailure(Failure.DatabaseError)
+            }
+        )
+    }
+    fun createConversation(id : String ,userId : String , agentId : String) {
+        userRepository.createConversation(id,userId, agentId,
+            onComplete = {
+                Log.d("loi" , "Tạo conversation thành công")
+            },
+            onError = {
+                handleFailure(Failure.DatabaseError)
+            }
+        )
+    }
+    fun createMessage(id : String , conversationId : String ,senderId : String , content : String , type : String , completionTime : Long , timestamp : Long){
+        userRepository.createMessage(id, conversationId ,senderId, content, type, completionTime, timestamp,
+            onComplete = {
+                Log.d("loi" , "Tạo tin nhắn thành công")
+            },
+            onError = {
+                handleFailure(Failure.DatabaseError)
+            }
+        )
     }
 }
