@@ -14,10 +14,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:targetApi="31">
         <activity
             android:name="com.cse_411_project.aigy.khanh.activity.LanguageActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name="com.cse_411_project.aigy.khanh.activity.InviteYourFriendActivity"
             android:exported="false" />

@@ -90,6 +90,7 @@ dependencies {
     implementation(libs.androidx.viewpager2)
     implementation(libs.material)
     implementation(libs.androidx.activity)
+    implementation (libs.androidx.runtime)
 
     // Page indicator
     implementation(libs.dotsindicator)
@@ -110,4 +111,6 @@ dependencies {
     // Image Picker
     implementation(libs.imagepicker)
     implementation(libs.play.services.cast.framework)
+
+
 }
