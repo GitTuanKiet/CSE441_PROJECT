@@ -38,5 +38,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Movies Kotlin"
+rootProject.name = "Aigy"
 include(":app")
