@@ -57,6 +57,17 @@ class UserViewModel(private val userRepository: UserRepository) : BaseViewModel(
         )
     }
 
+    fun updatePasswordByEmailAndPhoneNumber(email: String, phoneNumber: String, password: String){
+        userRepository.updatePasswordByEmailAndPhoneNumber(email, phoneNumber, password,
+            onComplete = {
+                Log.d("loi" , "Cập nhật mật khẩu thành công")
+            },
+            onError = {
+                handleFailure(Failure.DatabaseError)
+            }
+        )
+    }
+
     fun createUser(user: UserModel) {
         userRepository.createUser(user,
             onComplete = {
