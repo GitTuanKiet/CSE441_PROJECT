@@ -11,18 +11,26 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.cse_411_project.aigy.R
 import com.cse_411_project.aigy.core.platform.BaseFragment
+import com.cse_411_project.aigy.features.admin.data.repositories.ConversationRepository
 import com.cse_411_project.aigy.features.admin.data.repositories.UserRepository
+import com.cse_411_project.aigy.features.admin.ui.viewmodel.ConversationViewModel
 import com.cse_411_project.aigy.features.admin.ui.viewmodel.UserViewModel
 import com.cse_411_project.aigy.features.admin.ui.viewmodel.UserViewModelFactory
 
 class DetailUserFragment : BaseFragment() {
     private val userRepository = UserRepository()
     private val viewModel: UserViewModel by viewModels { UserViewModelFactory(userRepository) }
+    private val conversationRepository = ConversationRepository()
+    private val conversationViewModel: ConversationViewModel by lazy {
+        ConversationViewModel(conversationRepository)
+    }
     private lateinit var view: View
     private lateinit var imgUrl : ImageView
     private lateinit var txtName : TextView
     private lateinit var txtEmail : TextView
     private lateinit var txtStatus : TextView
+    private lateinit var txtVisitCount : TextView
+    private lateinit var txtMessageCount : TextView
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,6 +44,7 @@ class DetailUserFragment : BaseFragment() {
 
     private fun getData() {
         val uid = arguments?.getString("uid") ?: return
+        conversationViewModel.getConversationByUserID(uid)
         try {
             viewModel.getUserByUID(uid)
             viewModel.selectedUser.observe(viewLifecycleOwner) { user ->
@@ -47,8 +56,18 @@ class DetailUserFragment : BaseFragment() {
                         txtEmail.text = it.phone
                     }
                     txtStatus.text = if (it.isOnline) "Online" else "Offline"
+                    txtVisitCount.text = it.listVist.size.toString()
+                    conversationViewModel.conversations.observe(viewLifecycleOwner){
+                        var count = 0
+                        for(conversation in it){
+                            count = count + (conversation.messages.size / 2 )
+                        }
+                        txtMessageCount.text = count.toString()
+                    }
+                    val img = if (it.urlImg.trim().isNotEmpty()) it.urlImg else null
+
                     Glide.with(this)
-                        .load(it.urlImg)
+                        .load(img ?: R.drawable.user) // Nếu img là null, dùng drawable mặc định
                         .centerCrop()
                         .into(imgUrl)
                 } ?: run {
@@ -66,5 +85,7 @@ class DetailUserFragment : BaseFragment() {
         txtName = view.findViewById(R.id.txtName)
         txtEmail = view.findViewById(R.id.txtEmail_Phone)
         txtStatus = view.findViewById(R.id.txtStatus)
+        txtVisitCount = view.findViewById(R.id.txtVisitCount)
+        txtMessageCount = view.findViewById(R.id.txtMessageCount)
     }
 }

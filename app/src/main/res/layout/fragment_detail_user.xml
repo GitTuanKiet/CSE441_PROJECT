@@ -77,6 +77,32 @@
                     android:layout_height="wrap_content"
                     tools:ignore="HardcodedText" />
             </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Số lần truy câp"
+                    tools:ignore="HardcodedText" />
+                <TextView
+                    android:layout_marginStart="10dp"
+                    android:id="@+id/txtVisitCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:ignore="HardcodedText" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Số lượng tin nhắn"
+                    tools:ignore="HardcodedText" />
+                <TextView
+                    android:layout_marginStart="10dp"
+                    android:id="@+id/txtMessageCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:ignore="HardcodedText" />
+            </TableRow>
         </TableLayout>
     </LinearLayout>
 </LinearLayout>

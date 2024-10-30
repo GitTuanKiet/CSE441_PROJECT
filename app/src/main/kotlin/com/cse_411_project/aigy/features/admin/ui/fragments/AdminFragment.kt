@@ -34,6 +34,7 @@ import com.cse_411_project.aigy.features.admin.ui.viewmodel.UserViewModel
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.Locale
 import androidx.activity.OnBackPressedCallback
+import com.cse_411_project.aigy.features.admin.data.models.UserModel
 
 @Suppress("DEPRECATION")
 class AdminFragment : BaseFragment() {
@@ -77,7 +78,7 @@ class AdminFragment : BaseFragment() {
             }
         })
         if (savedInstanceState == null) {
-//            userViewModel.createUser(UserModel("wT33iP7XoMOr6tZ8CFGKHEQWTMy2","Kiet" , "nguyenducanh@gmail.com" , "" , "link_anh" , "user" , false , emptyList()))
+//            userViewModel.createUser(UserModel("3I6rwDv6ZecpGDF2kI6LkrWJ0R43","Trường" , "truongpham@gmail.com" , "" , "link_anh" , "user" , false , emptyList() , emptyList()))
 //            userViewModel.createUser(UserModel("EOHtOEWvqXZYRV3l8F9r7bKPrfg1","Trường" , "phamxuantruong@gmail.com" , "" , "link_anh" , "admin" , false , emptyList()))
 //            userViewModel.createUser(UserModel("567","Khanh" , "nguyenducanh@gmail.com" , "" , "link_anh" , "user" , false , emptyList()))
 //            userViewModel.createUser(UserModel("789","Anh" , "nguyenducanh@gmail.com" , "" , "link_anh" , "user" , false , emptyList()))
@@ -127,9 +128,10 @@ class AdminFragment : BaseFragment() {
 //                     },
 //                    onError = { error -> Log.d("loi", "Lỗi: ${error.message}") }
 //                )
-                getAdmin("EOHtOEWvqXZYRV3l8F9r7bKPrfg1")
+
             }
         }
+        getAdmin("3I6rwDv6ZecpGDF2kI6LkrWJ0R43")
         getEvent()
 
         return view
@@ -213,8 +215,6 @@ class AdminFragment : BaseFragment() {
 
     fun uploadImageToFirebase(imageUri: Uri?) {
         if (imageUri == null) return
-
-
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         if (userId == null) {
             return

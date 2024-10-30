@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -45,7 +46,8 @@ class SignInActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance().reference
 
         this.btnSignUp = findViewById(R.id.txt_sign_in)
-
+        this.edtEmail = findViewById(R.id.et_email)
+        this.edtPassword = findViewById(R.id.et_password)
         this.btnSignUp.setOnClickListener {
             openSignUpActivity()
         }
@@ -85,6 +87,7 @@ class SignInActivity : AppCompatActivity() {
                         if (userId != null) {
                             database.child("users").child(userId).get()
                                 .addOnSuccessListener { dataSnapshot ->
+
                                     val user = dataSnapshot.getValue(User::class.java)
                                     if (user != null) {
                                         sharedPreferences =

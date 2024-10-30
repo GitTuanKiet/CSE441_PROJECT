@@ -50,5 +50,26 @@ class ConversationRepository {
 
         })
     }
+    fun getConversationsByUserId(
+        userId: String,
+        onComplete: (List<ConversationModel>) -> Unit,
+        onError: (DatabaseError) -> Unit
+    ) {
+        conversationsRef.orderByChild("user_id").equalTo(userId)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val conversationList = mutableListOf<ConversationModel>()
+                    for (conversationSnapshot in snapshot.children) {
+                        conversationList.add(getData(conversationSnapshot))
+                    }
+                    onComplete(conversationList)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    onError(error)
+                }
+            })
+    }
+
 
 }

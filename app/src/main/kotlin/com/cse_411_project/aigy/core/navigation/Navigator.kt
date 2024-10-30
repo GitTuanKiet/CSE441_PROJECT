@@ -11,6 +11,7 @@ import com.cse_411_project.aigy.features.auth.credentials.Authenticator
 import com.cse_411_project.aigy.features.agents.ui.AgentView
 import com.cse_411_project.aigy.features.agents.ui.AgentsActivity
 import com.cse_411_project.aigy.features.chat.WelcomeAgentActivity
+import com.cse_411_project.aigy.khanh.activity.HomePage
 import com.cse_411_project.aigy.khanh.activity.MainActivity
 
 class Navigator(private val authenticator: Authenticator) {
@@ -38,7 +39,7 @@ class Navigator(private val authenticator: Authenticator) {
 
     private fun showWelcome(context: Context) = context.startActivity(WelcomeAgentActivity.callingIntent(context))
 
-    private fun showKhanhMain(context: Context) = context.startActivity(MainActivity.callingIntent(context))
+    private fun showKhanhMain(context: Context) = context.startActivity(HomePage.callingIntent(context))
 
     private fun showAgents(context: Context) =
         context.startActivity(AgentsActivity.callingIntent(context))
