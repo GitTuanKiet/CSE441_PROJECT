@@ -15,10 +15,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.cse_411_project.aigy.R
 import com.cse_411_project.aigy.khanh.model.UserModel
+import com.cse_411_project.aigy.khanh.repositories.UserRepository
+import com.cse_411_project.aigy.khanh.viewmodel.UserViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.FirebaseFirestore
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var btnSignUp: TextView
@@ -28,9 +29,11 @@ class SignInActivity : AppCompatActivity() {
     private lateinit var btnBack: ImageButton
     private lateinit var txtForgetPassword: TextView
     private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var fireStore: FirebaseFirestore
     private lateinit var database: DatabaseReference
     private lateinit var sharedPreferences: SharedPreferences
+
+    private val userRepository = UserRepository()
+    private val userViewModel = UserViewModel(userRepository)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,16 +113,19 @@ class SignInActivity : AppCompatActivity() {
                                             apply()
                                         }
 
-                                        val updates = mutableMapOf<String, Any>()
-                                        updates["online"] = true
-                                        val userRef = userModel.uid?.let {
-                                            FirebaseDatabase.getInstance().getReference("users")
-                                                .child(it)
-                                        }
-
-                                        if (userRef != null && updates.isNotEmpty()) {
-                                            userRef.updateChildren(updates)
-                                        }
+                                        userViewModel.updateUser(UserModel(
+                                            uid = userModel.uid,
+                                            decentralization = userModel.decentralization,
+                                            fullName = userModel.fullName,
+                                            password = userModel.password,
+                                            email = userModel.email,
+                                            phoneNumber = userModel.phoneNumber,
+                                            urlImage = userModel.urlImage,
+                                            referralCount = userModel.referralCount,
+                                            isOnline = true,
+                                            idListAgent = userModel.idListAgent,
+                                            conversationList = userModel.conversationList
+                                        ))
 
                                         Toast.makeText(
                                             this,
