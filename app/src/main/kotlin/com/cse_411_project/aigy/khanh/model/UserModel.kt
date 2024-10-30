@@ -6,7 +6,7 @@ data class UserModel(
     val uid: String,
     val fullName: String,
     val email: String,
-    val password: String,
+    var password: String,
     var phoneNumber: String,
     val urlImage: String,
     val decentralization: String,
