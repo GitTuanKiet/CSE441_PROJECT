@@ -34,6 +34,7 @@ class RecoveryMethodActivity : AppCompatActivity() {
     private lateinit var forceResendingToken: PhoneAuthProvider.ForceResendingToken
     private var isDialogOpen = false
     private lateinit var phoneNumber: String
+    private lateinit var email: String
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -129,7 +130,7 @@ class RecoveryMethodActivity : AppCompatActivity() {
         val credential = PhoneAuthProvider.getCredential(verificationCode, otpCode ?: "")
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                val intent = ResetPasswordActivity.newIntent(this, phoneNumber)
+                val intent = ResetPasswordActivity.newIntent(this, email, phoneNumber)
                 startActivity(intent)
                 finish()
             } else {
@@ -179,7 +180,9 @@ class RecoveryMethodActivity : AppCompatActivity() {
 
     companion object {
         fun newIntent(context: Context, email: String): Intent {
-            return Intent(context, RecoveryMethodActivity::class.java)
+            val intent = Intent(context, RecoveryMethodActivity::class.java)
+            intent.putExtra("email", email)
+            return intent
         }
     }
 }
