@@ -11,14 +11,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.cse_411_project.aigy.R
-import com.google.firebase.auth.FirebaseAuth
+import com.cse_411_project.aigy.khanh.repositories.UserRepository
+import com.cse_411_project.aigy.khanh.viewmodel.UserViewModel
 
 class ResetPasswordActivity : AppCompatActivity() {
     private lateinit var edtPassword: EditText
     private lateinit var edtConfirmPassword: EditText
     private lateinit var btnSaveChanges: Button
-    private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var phoneNumber: String
+    private lateinit var email: String
+
+    private val userRepository = UserRepository()
+    private val userViewModel = UserViewModel(userRepository)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,11 +34,9 @@ class ResetPasswordActivity : AppCompatActivity() {
             insets
         }
 
-        // Khởi tạo FirebaseAuth
-        firebaseAuth = FirebaseAuth.getInstance()
-
         // Nhận số điện thoại từ Intent
         phoneNumber = intent.getStringExtra("phone_number") ?: ""
+        email = intent.getStringExtra("email") ?: ""
 
         this.edtPassword = findViewById(R.id.et_password)
         this.edtConfirmPassword = findViewById(R.id.et_confirm_password)
@@ -64,44 +66,14 @@ class ResetPasswordActivity : AppCompatActivity() {
     }
 
     private fun resetPassword(newPassword: String) {
-        firebaseAuth.fetchSignInMethodsForEmail(phoneNumber)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful && task.result?.signInMethods?.isNotEmpty() == true) {
-                    val user = firebaseAuth.currentUser
-
-                    user?.updatePassword(newPassword)?.addOnCompleteListener { updateTask ->
-                        if (updateTask.isSuccessful) {
-                            Toast.makeText(
-                                this,
-                                "Mật khẩu đã được thay đổi thành công",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            val intent = Intent(this, SignInActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        } else {
-                            Toast.makeText(
-                                this,
-                                "Cập nhật mật khẩu thất bại: ${updateTask.exception?.message}",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-                } else {
-                    Toast.makeText(
-                        this,
-                        "Không tìm thấy tài khoản với số điện thoại này",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
+        userViewModel.updatePasswordByEmailAndPhoneNumber(email, phoneNumber, newPassword)
     }
 
-
     companion object {
-        fun newIntent(context: Context, phoneNumber: String): Intent {
+        fun newIntent(context: Context, email: String, phoneNumber: String): Intent {
             val intent = Intent(context, ResetPasswordActivity::class.java)
             intent.putExtra("phone_number", phoneNumber)
+            intent.putExtra("email", email)
             return intent
         }
     }
