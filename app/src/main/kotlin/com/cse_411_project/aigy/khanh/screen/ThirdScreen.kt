@@ -1,4 +1,4 @@
-package com.cse_411_project.aigy.screen
+package com.cse_411_project.aigy.khanh.screen
 
 import android.os.Bundle
 import android.view.LayoutInflater

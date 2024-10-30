@@ -1,4 +1,4 @@
-package com.cse_411_project.aigy.adapter
+package com.cse_411_project.aigy.khanh.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
