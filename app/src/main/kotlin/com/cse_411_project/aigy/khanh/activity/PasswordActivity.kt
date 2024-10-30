@@ -11,7 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.cse_411_project.aigy.R
-import com.google.firebase.database.FirebaseDatabase
+import com.cse_411_project.aigy.khanh.model.UserModel
+import com.cse_411_project.aigy.khanh.repositories.UserRepository
+import com.cse_411_project.aigy.khanh.viewmodel.UserViewModel
 
 class PasswordActivity : AppCompatActivity() {
     private lateinit var edtCurrentPassword: EditText
@@ -21,10 +23,15 @@ class PasswordActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var ibtnBack: ImageButton
 
+    private val userRepository = UserRepository()
+    private val userViewModel = UserViewModel(userRepository)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_password)
+
+        // Set up window insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -32,9 +39,7 @@ class PasswordActivity : AppCompatActivity() {
         }
 
         ibtnBack = findViewById(R.id.ibtn_back)
-        ibtnBack.setOnClickListener {
-            finish()
-        }
+        ibtnBack.setOnClickListener { finish() }
 
         edtCurrentPassword = findViewById(R.id.et_current_password)
         edtNewPassword = findViewById(R.id.et_new_password)
@@ -47,39 +52,39 @@ class PasswordActivity : AppCompatActivity() {
             val currentPassword = edtCurrentPassword.text.toString()
             val newPassword = edtNewPassword.text.toString()
             val confirmPassword = edtConfirmPassword.text.toString()
+
+            // Validate input fields
             if (currentPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
             } else if (newPassword != confirmPassword) {
-                Toast.makeText(
-                    this,
-                    "New password and confirm password do not match",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(this, "New password and confirm password do not match", Toast.LENGTH_SHORT).show()
             } else {
                 val uid = sharedPreferences.getString("uid", "")
-                val userRef =
-                    uid?.let { FirebaseDatabase.getInstance().getReference("users").child(it) }
-                val updates = mutableMapOf<String, Any>()
-                updates["password"] = newPassword
 
-                if (userRef != null && updates.isNotEmpty()) {
-                    userRef.updateChildren(updates)
-                        .addOnSuccessListener {
-                            Toast.makeText(
-                                this,
-                                "Cập nhật thông tin thành công!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        .addOnFailureListener { exception ->
-                            Toast.makeText(
-                                this,
-                                "Lỗi cập nhật thông tin: ${exception.message}",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                // Create a UserModel object with the new password
+                val updatedUser = UserModel(
+                    uid = uid ?: "",
+                    password = newPassword,
+                    fullName = sharedPreferences.getString("full_name", "") ?: "",
+                    email = sharedPreferences.getString("email", "") ?: "",
+                    phoneNumber = sharedPreferences.getString("phone_number", "") ?: "",
+                    urlImage = sharedPreferences.getString("url_image", "") ?: "",
+                    decentralization = sharedPreferences.getString("decentralization", "") ?: "",
+                    isOnline = sharedPreferences.getBoolean("is_online", false),
+                    idListAgent = sharedPreferences.getStringSet("id_list_agent", setOf())?.toList() ?: emptyList(),
+                    conversationList = sharedPreferences.getStringSet("conversation_list", setOf())?.toList() ?: emptyList(),
+                    referralCount = sharedPreferences.getInt("referral_count", 0)
+                )
+
+                // Call ViewModel to update the user
+                try {
+                    userViewModel.updateUser(updatedUser)
+                    Toast.makeText(this, "Cập nhật mật khẩu thành công!", Toast.LENGTH_SHORT).show()
+                } catch (e: Exception) {
+                    Toast.makeText(this, "Lỗi cập nhật mật khẩu: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
 }
+

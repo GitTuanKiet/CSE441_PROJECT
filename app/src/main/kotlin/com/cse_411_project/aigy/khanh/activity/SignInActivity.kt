@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.cse_411_project.aigy.R
-import com.cse_411_project.aigy.khanh.model.User
+import com.cse_411_project.aigy.khanh.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -85,29 +85,34 @@ class SignInActivity : AppCompatActivity() {
                         if (userId != null) {
                             database.child("users").child(userId).get()
                                 .addOnSuccessListener { dataSnapshot ->
-                                    val user = dataSnapshot.getValue(User::class.java)
-                                    if (user != null) {
+                                    val userModel = dataSnapshot.getValue(UserModel::class.java)
+                                    if (userModel != null) {
                                         sharedPreferences =
                                             getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
                                         sharedPreferences.edit().apply {
-                                            putString("uid", user.uid)
-                                            putString("decentralization", user.decentralization)
-                                            putString("fullName", user.fullName)
-                                            putString("email", user.email)
-                                            putString("phoneNumber", user.phoneNumber)
-                                            putString("urlImage", user.urlImage)
-                                            putInt("referralCount", user.referralCount!!)
-                                            putBoolean("online", user.online!!)
+                                            putString("uid", userModel.uid)
+                                            putString("decentralization", userModel.decentralization)
+                                            putString("fullName", userModel.fullName)
+                                            putString("password", userModel.password)
+                                            putString("email", userModel.email)
+                                            putString("phoneNumber", userModel.phoneNumber)
+                                            putString("urlImage", userModel.urlImage)
+                                            putInt("referralCount", userModel.referralCount)
+                                            putBoolean("isOnline", userModel.isOnline)
+                                            putStringSet(
+                                                "idListAgent",
+                                                userModel.idListAgent.toSet()
+                                            )
                                             putStringSet(
                                                 "conversationList",
-                                                user.conversationList?.toSet()
+                                                userModel.conversationList.toSet()
                                             )
                                             apply()
                                         }
 
                                         val updates = mutableMapOf<String, Any>()
                                         updates["online"] = true
-                                        val userRef = user.uid?.let {
+                                        val userRef = userModel.uid?.let {
                                             FirebaseDatabase.getInstance().getReference("users")
                                                 .child(it)
                                         }

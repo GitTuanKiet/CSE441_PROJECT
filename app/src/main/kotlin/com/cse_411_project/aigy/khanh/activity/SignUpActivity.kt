@@ -12,7 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.cse_411_project.aigy.R
+import com.cse_411_project.aigy.khanh.model.UserModel
+import com.cse_411_project.aigy.khanh.viewmodel.UserViewModel
 import com.cse_411_project.aigy.khanh.fragment.PhoneNumberVerifyDialogFragment
+import com.cse_411_project.aigy.khanh.repositories.UserRepository
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
@@ -34,6 +37,9 @@ class SignUpActivity : AppCompatActivity() {
 
     private lateinit var verificationCode: String
     private lateinit var forceResendingToken: PhoneAuthProvider.ForceResendingToken
+
+    private val userRepository = UserRepository()
+    private val userViewModel = UserViewModel(userRepository)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,6 +124,21 @@ class SignUpActivity : AppCompatActivity() {
                     }
                     Toast.makeText(this@SignUpActivity, "Đăng ký thành công", Toast.LENGTH_SHORT)
                         .show()
+                    userViewModel.createUser(
+                        UserModel(
+                            uid = firebaseAuth.currentUser!!.uid,
+                            fullName = edtFullName.text.toString().trim(),
+                            email = edtEmail.text.toString().trim(),
+                            password = edtPassword.text.toString().trim(),
+                            phoneNumber = edtPhoneNumber.text.toString().trim(),
+                            urlImage = "",
+                            decentralization = "user",
+                            isOnline = true,
+                            idListAgent = emptyList(),
+                            conversationList = emptyList(),
+                            referralCount = 0
+                        )
+                    )
                     openSignInActivity()
                 } else {
                     Toast.makeText(this@SignUpActivity, "Đăng ký thất bại", Toast.LENGTH_SHORT)
