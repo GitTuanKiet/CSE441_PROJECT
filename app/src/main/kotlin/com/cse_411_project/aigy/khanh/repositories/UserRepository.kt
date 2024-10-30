@@ -1,6 +1,5 @@
 package com.cse_411_project.aigy.khanh.repositories
 
-import android.util.Log
 import com.cse_411_project.aigy.khanh.model.UserModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -137,6 +136,29 @@ class UserRepository {
                         .addOnFailureListener { e -> onError(DatabaseError.fromException(e)) }
                 }
             }
+            override fun onCancelled(error: DatabaseError) {
+                onError(error)
+            }
+        })
+    }
+
+    // Cập nhật mật khẩu của người dùng qua email
+    fun updatePasswordByEmailAndPhoneNumber(email: String, phoneNumber: String, password: String, onComplete: () -> Unit, onError: (DatabaseError) -> Unit) {
+        usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (userSnapshot in snapshot.children) {
+                    val user = getData(userSnapshot)
+                    user.let{
+                        if (user.email == email && user.phoneNumber == phoneNumber) {
+                            user.password = password
+                            usersRef.child(user.uid).setValue(user)
+                                .addOnSuccessListener { onComplete() }
+                                .addOnFailureListener { e -> onError(DatabaseError.fromException(e)) }
+                        }
+                    }
+                }
+            }
+
             override fun onCancelled(error: DatabaseError) {
                 onError(error)
             }
