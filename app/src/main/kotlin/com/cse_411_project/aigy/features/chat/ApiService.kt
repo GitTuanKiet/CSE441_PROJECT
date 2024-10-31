@@ -1,9 +1,9 @@
-package com.cse_411_project.aigy.features.chat;
+package com.cse_411_project.aigy.features.chat
 
-import retrofit2.Call;
-import retrofit2.http.GET;
+import retrofit2.Call
+import retrofit2.http.GET
 
-public interface ApiService {
+interface ApiService {
     @GET("/")
-    Call<AgentResponse> getAgents();
+    fun getAgents(): Call<AgentResponse>
 }
