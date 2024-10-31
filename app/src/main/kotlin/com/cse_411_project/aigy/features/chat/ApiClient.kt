@@ -1,19 +1,19 @@
-package com.cse_411_project.aigy.features.chat;
+package com.cse_411_project.aigy.features.chat
 
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
-public class ApiClient {
-    private static final String BASE_URL = "https://chat-agents.lobehub.com/";
-    private static Retrofit retrofit = null;
+object ApiClient {
+private const val BASE_URL = "https://chat-agents.lobehub.com/"
+private var retrofit: Retrofit? = null
 
-    public static Retrofit getClient() {
-        if (retrofit == null) {
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-        }
-        return retrofit;
+fun getClient(): Retrofit {
+    if (retrofit == null) {
+        retrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
     }
+    return retrofit!!
+}
 }
