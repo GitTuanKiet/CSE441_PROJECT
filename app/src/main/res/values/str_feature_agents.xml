@@ -6,7 +6,9 @@
     <string name="agent_author">Author</string>
     <string name="agent_category">Category</string>">
     <string name="agent_config">Config</string>
+    <string name="agent_button">Try it</string>
 
+    <string name="agent_transition_back">agentBackTransition</string>
     <!-- Animations -->
     <string name="agent_transition_avatar">agentAvatarTransition</string>
 </resources>
