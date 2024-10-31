@@ -22,9 +22,9 @@ class Navigator(private val authenticator: Authenticator) {
 
 //        showAdmin(context)
 
-//        showWelcome(context)
+        showWelcome(context)
 
-        showKhanhMain(context)
+//        showKhanhMain(context)
 
 //        when (authenticator.userLoggedIn()) {
 //            true -> showAgents(context)

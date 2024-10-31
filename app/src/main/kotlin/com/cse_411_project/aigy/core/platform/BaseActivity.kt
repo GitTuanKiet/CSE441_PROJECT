@@ -31,12 +31,10 @@ import com.cse_411_project.aigy.databinding.ActivityLayoutBinding
 abstract class BaseActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLayoutBinding
-    private lateinit var processBar: ProgressBar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityLayoutBinding.inflate(layoutInflater)
-        processBar = findViewById<ProgressBar>(R.id.progress_circular)
         setContentView(binding.root)
         addFragment(savedInstanceState)
     }
@@ -54,8 +52,5 @@ abstract class BaseActivity : AppCompatActivity() {
             add(binding.fragmentContainer.id, fragment())
         }
 
-    fun getProcessBar(): ProgressBar {
-        return processBar
-    }
     abstract fun fragment(): BaseFragment
 }
