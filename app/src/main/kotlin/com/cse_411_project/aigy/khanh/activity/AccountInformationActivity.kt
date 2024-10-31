@@ -10,9 +10,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.google.firebase.database.FirebaseDatabase
 import com.cse_411_project.aigy.R
-
+import com.cse_411_project.aigy.khanh.model.UserModel
+import com.cse_411_project.aigy.khanh.repositories.UserRepository
+import com.cse_411_project.aigy.khanh.viewmodel.UserViewModel
 class AccountInformationActivity : AppCompatActivity() {
     private lateinit var ibtnBack: ImageButton
     private lateinit var edtFullName: EditText
@@ -21,10 +22,14 @@ class AccountInformationActivity : AppCompatActivity() {
     private lateinit var btnSaveChanges: Button
     private lateinit var sharedPreferences: SharedPreferences
 
+    private val userRepository = UserRepository()
+    private val userViewModel = UserViewModel(userRepository)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_account_information)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -34,72 +39,59 @@ class AccountInformationActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
 
         ibtnBack = findViewById(R.id.ibtn_back)
-        ibtnBack.setOnClickListener {
-            finish()
-        }
+        ibtnBack.setOnClickListener { finish() }
 
         edtFullName = findViewById(R.id.et_full_name)
-        val fullName = sharedPreferences.getString("full_name", "")
-        edtFullName.setText(fullName)
-
         edtEmail = findViewById(R.id.et_email)
-        val email = sharedPreferences.getString("email", "")
-        edtEmail.setText(email)
-
         edtPhoneNumber = findViewById(R.id.et_phone_number)
-        val phoneNumber = sharedPreferences.getString("phone_number", "")
-        edtPhoneNumber.setText(phoneNumber)
-
         btnSaveChanges = findViewById(R.id.btn_save_changes)
+
+        loadUserInfo()
+
         btnSaveChanges.setOnClickListener {
-            val newFullName = edtFullName.text.toString()
-            val newEmail = edtEmail.text.toString()
-            val newPhoneNumber = edtPhoneNumber.text.toString()
+            updateUserInformation()
+        }
+    }
 
-            val updates = mutableMapOf<String, Any>()
+    private fun loadUserInfo() {
+        edtFullName.setText(sharedPreferences.getString("full_name", ""))
+        edtEmail.setText(sharedPreferences.getString("email", ""))
+        edtPhoneNumber.setText(sharedPreferences.getString("phone_number", ""))
+    }
 
-            if (newFullName.isNotEmpty() && newFullName != fullName) {
-                updates["name"] = newFullName
-                with(sharedPreferences.edit()) {
-                    putString("full_name", newFullName)
-                    apply()
-                }
-            }
+    private fun updateUserInformation() {
+        val newFullName = edtFullName.text.toString()
+        val newEmail = edtEmail.text.toString()
+        val newPhoneNumber = edtPhoneNumber.text.toString()
 
-            if (newEmail.isNotEmpty() && newEmail != email) {
-                updates["email"] = newEmail
-                with(sharedPreferences.edit()) {
-                    putString("email", newEmail)
-                    apply()
-                }
-            }
+        // Create a UserModel object with updated information
+        val updatedUser = UserModel(
+            fullName = newFullName,
+            email = newEmail,
+            phoneNumber = newPhoneNumber,
+            password = sharedPreferences.getString("password", "") ?: "",
+            uid = sharedPreferences.getString("uid", "") ?: "",
+            urlImage = sharedPreferences.getString("url_image", "") ?: "",
+            decentralization = sharedPreferences.getString("decentralization", "") ?: "",
+            isOnline = sharedPreferences.getBoolean("is_online", false),
+            idListAgent = sharedPreferences.getStringSet("id_list_agent", setOf())?.toList() ?: emptyList(),
+            conversationList = sharedPreferences.getStringSet("conversation_list", setOf())?.toList() ?: emptyList(),
+            referralCount = sharedPreferences.getInt("referral_count", 0)
+        )
 
-            if (newPhoneNumber.isNotEmpty() && newPhoneNumber != phoneNumber) {
-                updates["phone"] = newPhoneNumber
-                with(sharedPreferences.edit()) {
-                    putString("phone_number", newPhoneNumber)
-                    apply()
-                }
-            }
+        // Update SharedPreferences
+        with(sharedPreferences.edit()) {
+            putString("full_name", newFullName)
+            putString("email", newEmail)
+            putString("phone_number", newPhoneNumber)
+            apply()
+        }
 
-            val uid = sharedPreferences.getString("uid", "")
-            val userRef =
-                uid?.let { FirebaseDatabase.getInstance().getReference("users").child(it) }
-
-            if (userRef != null && updates.isNotEmpty()) {
-                userRef.updateChildren(updates)
-                    .addOnSuccessListener {
-                        Toast.makeText(this, "Cập nhật thông tin thành công!", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                    .addOnFailureListener { exception ->
-                        Toast.makeText(
-                            this,
-                            "Lỗi cập nhật thông tin: ${exception.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-            }
+        try {
+            userViewModel.updateUser(updatedUser)
+            Toast.makeText(this, "Cập nhật thông tin thành công!", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Toast.makeText(this, "Lỗi cập nhật thông tin: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
 }

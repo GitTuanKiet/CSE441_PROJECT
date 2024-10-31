@@ -11,11 +11,11 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.cse_411_project.aigy.R
-import com.cse_411_project.aigy.adapter.ViewPageAdapter
+import com.cse_411_project.aigy.khanh.adapter.ViewPageAdapter
 import com.cse_411_project.aigy.khanh.activity.WelcomeActivity
 import com.cse_411_project.aigy.khanh.screen.FirstScreen
-import com.cse_411_project.aigy.screen.SecondScreen
-import com.cse_411_project.aigy.screen.ThirdScreen
+import com.cse_411_project.aigy.khanh.screen.SecondScreen
+import com.cse_411_project.aigy.khanh.screen.ThirdScreen
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 
 class OnBoardingFragment : Fragment() {

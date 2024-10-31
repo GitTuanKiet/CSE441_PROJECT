@@ -14,11 +14,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.cse_411_project.aigy.R
-import com.cse_411_project.aigy.khanh.model.User
+import com.cse_411_project.aigy.khanh.model.UserModel
+import com.cse_411_project.aigy.khanh.repositories.UserRepository
+import com.cse_411_project.aigy.khanh.viewmodel.UserViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.FirebaseFirestore
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var btnSignUp: TextView
@@ -28,9 +29,11 @@ class SignInActivity : AppCompatActivity() {
     private lateinit var btnBack: ImageButton
     private lateinit var txtForgetPassword: TextView
     private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var fireStore: FirebaseFirestore
     private lateinit var database: DatabaseReference
     private lateinit var sharedPreferences: SharedPreferences
+
+    private val userRepository = UserRepository()
+    private val userViewModel = UserViewModel(userRepository)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,36 +88,44 @@ class SignInActivity : AppCompatActivity() {
                         if (userId != null) {
                             database.child("users").child(userId).get()
                                 .addOnSuccessListener { dataSnapshot ->
-                                    val user = dataSnapshot.getValue(User::class.java)
-                                    if (user != null) {
+                                    val userModel = dataSnapshot.getValue(UserModel::class.java)
+                                    if (userModel != null) {
                                         sharedPreferences =
                                             getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
                                         sharedPreferences.edit().apply {
-                                            putString("uid", user.uid)
-                                            putString("decentralization", user.decentralization)
-                                            putString("fullName", user.fullName)
-                                            putString("email", user.email)
-                                            putString("phoneNumber", user.phoneNumber)
-                                            putString("urlImage", user.urlImage)
-                                            putInt("referralCount", user.referralCount!!)
-                                            putBoolean("online", user.online!!)
+                                            putString("uid", userModel.uid)
+                                            putString("decentralization", userModel.decentralization)
+                                            putString("fullName", userModel.fullName)
+                                            putString("password", userModel.password)
+                                            putString("email", userModel.email)
+                                            putString("phoneNumber", userModel.phoneNumber)
+                                            putString("urlImage", userModel.urlImage)
+                                            putInt("referralCount", userModel.referralCount)
+                                            putBoolean("isOnline", userModel.isOnline)
+                                            putStringSet(
+                                                "idListAgent",
+                                                userModel.idListAgent.toSet()
+                                            )
                                             putStringSet(
                                                 "conversationList",
-                                                user.conversationList?.toSet()
+                                                userModel.conversationList.toSet()
                                             )
                                             apply()
                                         }
 
-                                        val updates = mutableMapOf<String, Any>()
-                                        updates["online"] = true
-                                        val userRef = user.uid?.let {
-                                            FirebaseDatabase.getInstance().getReference("users")
-                                                .child(it)
-                                        }
-
-                                        if (userRef != null && updates.isNotEmpty()) {
-                                            userRef.updateChildren(updates)
-                                        }
+                                        userViewModel.updateUser(UserModel(
+                                            uid = userModel.uid,
+                                            decentralization = userModel.decentralization,
+                                            fullName = userModel.fullName,
+                                            password = userModel.password,
+                                            email = userModel.email,
+                                            phoneNumber = userModel.phoneNumber,
+                                            urlImage = userModel.urlImage,
+                                            referralCount = userModel.referralCount,
+                                            isOnline = true,
+                                            idListAgent = userModel.idListAgent,
+                                            conversationList = userModel.conversationList
+                                        ))
 
                                         Toast.makeText(
                                             this,
