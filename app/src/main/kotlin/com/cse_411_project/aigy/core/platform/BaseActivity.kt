@@ -16,6 +16,7 @@
 package com.cse_411_project.aigy.core.platform
 
 import android.os.Bundle
+import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import com.cse_411_project.aigy.R
@@ -53,4 +54,7 @@ abstract class BaseActivity : AppCompatActivity() {
         }
 
     abstract fun fragment(): BaseFragment
+    fun onBackPressed(view: View) {
+        (supportFragmentManager.findFragmentById(binding.fragmentContainer.id) as BaseFragment).onBackPressed()
+    }
 }
