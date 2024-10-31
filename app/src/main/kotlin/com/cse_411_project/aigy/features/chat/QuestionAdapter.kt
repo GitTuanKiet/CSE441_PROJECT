@@ -1,49 +1,27 @@
-package com.cse_411_project.aigy.features.chat;
+package com.cse_411_project.aigy.features.chat
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import androidx.recyclerview.widget.RecyclerView
+import com.cse_411_project.aigy.R
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+class QuestionAdapter(private val questionList: List<String>) : RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder>() {
 
-import java.util.List;
+override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestionViewHolder {
+    val view = LayoutInflater.from(parent.context).inflate(R.layout.item_question, parent, false)
+    return QuestionViewHolder(view)
+}
 
-import com.cse_411_project.aigy.R;
+override fun onBindViewHolder(holder: QuestionViewHolder, position: Int) {
+    val question = questionList[position]
+    holder.questionButton.text = question
+}
 
-public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder> {
+override fun getItemCount(): Int = questionList.size
 
-    private final List<String> questionList;
-
-    public QuestionAdapter(List<String> questionList) {
-        this.questionList = questionList;
-    }
-
-    @NonNull
-    @Override
-    public QuestionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_question, parent, false);
-        return new QuestionViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull QuestionViewHolder holder, int position) {
-        String question = questionList.get(position);
-        holder.questionButton.setText(question);
-    }
-
-    @Override
-    public int getItemCount() {
-        return questionList.size();
-    }
-
-    public static class QuestionViewHolder extends RecyclerView.ViewHolder {
-        Button questionButton;
-
-        public QuestionViewHolder(@NonNull View itemView) {
-            super(itemView);
-            questionButton = itemView.findViewById(R.id.question_button);
-        }
-    }
+class QuestionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    val questionButton: Button = itemView.findViewById(R.id.question_button)
+}
 }
