@@ -14,27 +14,38 @@ import com.cse_411_project.aigy.features.agents.ui.AgentView
 import com.cse_411_project.aigy.features.agents.ui.AgentsActivity
 import com.cse_411_project.aigy.features.chat.WelcomeAgentActivity
 import com.cse_411_project.aigy.khanh.activity.MainActivity
+import com.cse_411_project.aigy.khanh.activity.ProfileActivity
+import com.cse_411_project.aigy.khanh.activity.WelcomeActivity
 
 class Navigator(private val authenticator: Authenticator) {
 //    private fun showLogin(context: Context) =
 //        context.startActivity(LoginActivity.callingIntent(context))
 
     fun showMain(context: Context) {
-        showAgents(context)
+//        showAgents(context)
 
 //        showAdmin(context)
 
+//        showWelcome(context)
+
 //        showKhanhMain(context)
 
-//        when (authenticator.userLoggedIn()) {
-//            true -> showAgents(context)
-//            false -> showLogin(context)
-//        }
+        when (authenticator.userLoggedIn()) {
+            -1 -> showWelcome(context)
+            0 -> showAdmin(context)
+            1 -> showProfile(context)
+        }
     }
 
 
     // Display UI Admin
     private fun showAdmin(context: Context) = context.startActivity(AdminActivity.callingIntent(context))
+
+    private fun showWelcome(context: Context) = context.startActivity(WelcomeActivity.callingIntent(context))
+
+    private fun showHome(context: Context) = context.startActivity(AgentsActivity.callingIntent(context))
+
+    private fun showProfile(context: Context) = context.startActivity(ProfileActivity.callingIntent(context))
 
     private fun showKhanhMain(context: Context) = context.startActivity(MainActivity.callingIntent(context))
 

@@ -46,4 +46,8 @@ class WelcomeActivity : AppCompatActivity() {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
     }
+
+    companion object {
+        fun callingIntent(context: android.content.Context) = Intent(context, WelcomeActivity::class.java)
+    }
 }

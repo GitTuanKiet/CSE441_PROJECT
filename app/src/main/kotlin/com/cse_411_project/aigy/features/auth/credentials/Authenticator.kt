@@ -15,10 +15,18 @@
  */
 package com.cse_411_project.aigy.features.auth.credentials
 
+import android.content.SharedPreferences
 
-class Authenticator {
-    //Learning purpose: We assume the user is always logged in
-    //Here you should put your own logic to return whether the user
-    //is authenticated or not
-    fun userLoggedIn() = true
+
+class Authenticator(private val sharedPreferences: SharedPreferences) {
+
+    fun userLoggedIn(): Int {
+        val decentralization = sharedPreferences.getString("decentralization", "")
+        if (decentralization.isNullOrEmpty()) return -1
+        return when (decentralization) {
+            "user" -> 1
+            "admin" -> 0
+            else -> -1
+        }
+    }
 }

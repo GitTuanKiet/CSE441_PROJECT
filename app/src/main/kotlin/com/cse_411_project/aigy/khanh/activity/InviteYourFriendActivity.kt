@@ -35,7 +35,7 @@ class InviteYourFriendActivity : AppCompatActivity() {
         btnShare = findViewById(R.id.btn_share)
 
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
-        val idCode = sharedPreferences.getString("idCode", "")
+        val idCode = sharedPreferences.getString("uid", "")
         txtIDCode.text = idCode
 
         ibtnBack.setOnClickListener {

@@ -1,80 +1,93 @@
 package com.cse_411_project.aigy.khanh.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.cse_411_project.aigy.khanh.core.failure.Failure
-import com.cse_411_project.aigy.khanh.core.platform.BaseViewModel
 import com.cse_411_project.aigy.khanh.model.UserModel
 import com.cse_411_project.aigy.khanh.repositories.UserRepository
 
-class UserViewModel(private val userRepository: UserRepository) : BaseViewModel() {
-    private val _users: MutableLiveData<List<UserModel>> = MutableLiveData()
-    val users: LiveData<List<UserModel>> = _users
-    private val _selectedUser: MutableLiveData<UserModel?> = MutableLiveData()
+class UserViewModel(private val userRepository: UserRepository) {
+    private var _user: UserModel? = null
 
-    fun getUserByEmail(name: String) {
+    fun getUserByEmail(name: String, onComplete: (UserModel?) -> Unit) {
         userRepository.getUserByEmail(name,
             onComplete = { user ->
-                _selectedUser.value = user
+                _user = user
+                if (user != null) {
+                    onComplete(user)
+                }
             },
             onError = {
-                handleFailure(Failure.DatabaseError)
+                Log.d("loi" , "Lấy user thất bại")
+                onComplete(null)
             }
         )
     }
 
-    fun getUserByUID(uid: String) {
+    fun getUserByUID(uid: String, onComplete: (UserModel?) -> Unit) {
         userRepository.getUserByUID(uid,
             onComplete = { user ->
-                _selectedUser.value = user
+                _user = user
+                if (user != null) {
+                    onComplete(user)
+                }
             },
             onError = {
-                handleFailure(Failure.DatabaseError)
+                Log.d("loi" , "Lấy user thất bại")
+                onComplete(null)
             }
         )
     }
 
-    fun getPhoneNumberByEmail(email: String) {
+    fun getPhoneNumberByEmail(email: String, onComplete: (String) -> Unit) {
         userRepository.getPhoneNumberByEmail(email,
             onComplete = { phoneNumber ->
-                _selectedUser.value?.phoneNumber ?: phoneNumber
+                _user?.phoneNumber ?: phoneNumber
+                if (phoneNumber != null) {
+                    onComplete(phoneNumber)
+                }
             },
             onError = {
-                handleFailure(Failure.DatabaseError)
+                Log.d("loi" , "Lấy số điện thoại thất bại")
+                onComplete("")
             }
         )
     }
 
-    fun updateUser(user: UserModel) {
+    fun updateUser(user: UserModel, onComplete: (Boolean) -> Unit) {
         userRepository.updateUser(user,
             onComplete = {
                 Log.d("loi" , "Cập nhật user thành công")
+                onComplete(true)
             },
             onError = {
-                handleFailure(Failure.DatabaseError)
+                Log.d("loi" , "Cập nhật user thất bại")
+                onComplete(false)
             }
         )
     }
 
-    fun updatePasswordByEmailAndPhoneNumber(email: String, phoneNumber: String, password: String){
+    fun updatePasswordByEmailAndPhoneNumber(email: String, phoneNumber: String, password: String, onComplete: (Boolean) -> Unit) {
         userRepository.updatePasswordByEmailAndPhoneNumber(email, phoneNumber, password,
             onComplete = {
                 Log.d("loi" , "Cập nhật mật khẩu thành công")
+                onComplete(true)
             },
             onError = {
-                handleFailure(Failure.DatabaseError)
+                Log.d("loi" , "Cập nhật mật khẩu thất bại")
+                onComplete(false)
             }
         )
     }
 
-    fun createUser(user: UserModel) {
+    fun createUser(user: UserModel, onComplete: (Boolean) -> Unit) {
         userRepository.createUser(user,
             onComplete = {
                 Log.d("loi" , "Tạo user thành công")
+                onComplete(true)
             },
             onError = {
-                handleFailure(Failure.DatabaseError)
+                Log.d("loi" , "Tạo user thất bại")
+                onComplete(false)
             }
         )
     }

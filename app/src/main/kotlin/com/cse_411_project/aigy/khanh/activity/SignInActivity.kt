@@ -9,17 +9,13 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.cse_411_project.aigy.R
+import com.cse_411_project.aigy.features.chat.ExploreActivity
 import com.cse_411_project.aigy.khanh.model.UserModel
 import com.cse_411_project.aigy.khanh.repositories.UserRepository
 import com.cse_411_project.aigy.khanh.viewmodel.UserViewModel
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var btnSignUp: TextView
@@ -29,148 +25,125 @@ class SignInActivity : AppCompatActivity() {
     private lateinit var btnBack: ImageButton
     private lateinit var txtForgetPassword: TextView
     private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var database: DatabaseReference
     private lateinit var sharedPreferences: SharedPreferences
-
-    private val userRepository = UserRepository()
-    private val userViewModel = UserViewModel(userRepository)
+    private lateinit var userViewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_sign_in)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
-        database = FirebaseDatabase.getInstance().reference
+        initFirebaseAuth()
+        initSharedPreferences()
+        initViewModel()
+        initViews()
+        setupClickListeners()
+    }
 
-        this.btnSignUp = findViewById(R.id.txt_sign_in)
+    private fun initFirebaseAuth() {
+        firebaseAuth = FirebaseAuth.getInstance()
+    }
 
-        this.btnSignUp.setOnClickListener {
-            openSignUpActivity()
-        }
+    private fun initSharedPreferences() {
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+    }
 
-        this.btnBack = findViewById(R.id.ibtn_back)
+    private fun initViewModel() {
+        userViewModel = UserViewModel(UserRepository())
+    }
 
-        this.btnBack.setOnClickListener {
-            val intent = Intent(this, WelcomeActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-            finish()
-        }
+    private fun initViews() {
+        btnSignUp = findViewById(R.id.txt_sign_in)
+        btnBack = findViewById(R.id.ibtn_back)
+        txtForgetPassword = findViewById(R.id.txt_forget_password)
+        edtEmail = findViewById(R.id.et_email)
+        edtPassword = findViewById(R.id.et_password)
+        btnLogin = findViewById(R.id.btn_login)
+    }
 
-        this.txtForgetPassword = findViewById(R.id.txt_forget_password)
+    private fun setupClickListeners() {
+        btnSignUp.setOnClickListener { openSignUpActivity() }
+        btnBack.setOnClickListener { finish() }
+        txtForgetPassword.setOnClickListener { openForgetPasswordActivity() }
 
-        this.txtForgetPassword.setOnClickListener {
-            openForgetPasswordActivity()
-        }
+        btnLogin.setOnClickListener { handleLogin() }
+    }
 
-        this.btnLogin = findViewById(R.id.btn_login)
+    private fun handleLogin() {
+        val email = edtEmail.text.toString().trim()
+        val password = edtPassword.text.toString().trim()
 
-        this.btnLogin.setOnClickListener {
-            if (edtEmail.text.toString().isEmpty()) {
-                edtEmail.error = "Vui lòng nhập email"
-                edtEmail.requestFocus()
-            } else if (edtPassword.text.toString().isEmpty()) {
-                edtPassword.error = "Vui lòng nhập mật khẩu"
-                edtPassword.requestFocus()
-            } else {
-                firebaseAuth = FirebaseAuth.getInstance()
-                firebaseAuth.signInWithEmailAndPassword(
-                    edtEmail.text.toString(),
-                    edtPassword.text.toString()
-                ).addOnCompleteListener { task ->
+        if (validateInput(email, password)) {
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        val userId = firebaseAuth.currentUser?.uid
-                        if (userId != null) {
-                            database.child("users").child(userId).get()
-                                .addOnSuccessListener { dataSnapshot ->
-                                    val userModel = dataSnapshot.getValue(UserModel::class.java)
-                                    if (userModel != null) {
-                                        sharedPreferences =
-                                            getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-                                        sharedPreferences.edit().apply {
-                                            putString("uid", userModel.uid)
-                                            putString("decentralization", userModel.decentralization)
-                                            putString("fullName", userModel.fullName)
-                                            putString("password", userModel.password)
-                                            putString("email", userModel.email)
-                                            putString("phoneNumber", userModel.phoneNumber)
-                                            putString("urlImage", userModel.urlImage)
-                                            putInt("referralCount", userModel.referralCount)
-                                            putBoolean("isOnline", userModel.isOnline)
-                                            putStringSet(
-                                                "idListAgent",
-                                                userModel.idListAgent.toSet()
-                                            )
-                                            putStringSet(
-                                                "conversationList",
-                                                userModel.conversationList.toSet()
-                                            )
-                                            apply()
-                                        }
+                        firebaseAuth.currentUser?.uid?.let { userId ->
+                            showToast("Đang đăng nhập...")
+                            userViewModel.getUserByUID(userId) { userModel ->
+                                showToast("Đã tìm thấy người dùng")
+                                if (userModel != null) {
+                                    saveUserDataToPreferences(userModel)
+                                    showToast("Đăng nhập thành công")
+//                                    startHomeActivity()
 
-                                        userViewModel.updateUser(UserModel(
-                                            uid = userModel.uid,
-                                            decentralization = userModel.decentralization,
-                                            fullName = userModel.fullName,
-                                            password = userModel.password,
-                                            email = userModel.email,
-                                            phoneNumber = userModel.phoneNumber,
-                                            urlImage = userModel.urlImage,
-                                            referralCount = userModel.referralCount,
-                                            isOnline = true,
-                                            idListAgent = userModel.idListAgent,
-                                            conversationList = userModel.conversationList
-                                        ))
-
-                                        Toast.makeText(
-                                            this,
-                                            "Đăng nhập thành công",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                        // Chuyển đến HomeActivity
-//                                        val intent = Intent(this, HomeActivity::class.java)
-//                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-//                                        startActivity(intent)
-//                                        finish()
-                                    } else {
-                                        Toast.makeText(
-                                            this,
-                                            "Không tìm thấy người dùng",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
+                                    openProfileActivity()
+                                } else {
+                                    showToast("Không tìm thấy người dùng")
                                 }
-                                .addOnFailureListener { exception ->
-                                    Toast.makeText(
-                                        this,
-                                        "Lỗi lấy thông tin: ${exception.message}",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
+                            }
                         }
                     } else {
-                        edtEmail.error = "Email hoặc mật khẩu không đúng"
-                        edtEmail.requestFocus()
+                        showToast("Email hoặc mật khẩu không đúng")
                     }
                 }
-            }
         }
+    }
+
+    private fun validateInput(email: String, password: String): Boolean {
+        return when {
+            email.isEmpty().also { if (it) edtEmail.error = "Vui lòng nhập email" } -> false
+            password.isEmpty().also { if (it) edtPassword.error = "Vui lòng nhập mật khẩu" } -> false
+            else -> true
+        }
+    }
+
+    private fun saveUserDataToPreferences(userModel: UserModel) {
+        with(sharedPreferences.edit()) {
+            putString("uid", userModel.uid)
+            putString("decentralization", userModel.decentralization)
+            putString("fullName", userModel.fullName)
+            putString("password", userModel.password)
+            putString("email", userModel.email)
+            putString("phoneNumber", userModel.phoneNumber)
+            putString("urlImage", userModel.urlImage)
+            putInt("referralCount", userModel.referralCount)
+            putBoolean("isOnline", true)
+            putStringSet("idListAgent", userModel.idListAgent.toSet())
+            putStringSet("conversationList", userModel.conversationList.toSet())
+            apply()
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun startHomeActivity() {
+        val intent = Intent(this, ExploreActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun openProfileActivity() {
+        startActivity(ProfileActivity.newIntent(this))
     }
 
     private fun openSignUpActivity() {
-        val intent = SignUpActivity.newIntent(this)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
+        startActivity(SignUpActivity.newIntent(this))
     }
 
     private fun openForgetPasswordActivity() {
-        val intent = ForgetPasswordActivity.newIntent(this)
-        startActivity(intent)
+        startActivity(ForgetPasswordActivity.newIntent(this))
     }
 
     companion object {

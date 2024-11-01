@@ -63,7 +63,7 @@ class PhoneNumberVerifyDialogFragment : DialogFragment() {
         txtResend.setOnClickListener {
             if (!isTimerRunning) {
                 if (activity is SignUpActivity) {
-                    (activity as? SignUpActivity)?.resendOtp()
+//                    (activity as? SignUpActivity)?.resendOtp()
                 } else if (activity is RecoveryMethodActivity) {
                     (activity as? RecoveryMethodActivity)?.resendOtp()
                 }
@@ -108,7 +108,7 @@ class PhoneNumberVerifyDialogFragment : DialogFragment() {
 
     private fun verifyOtp(code: String) {
         if (activity is SignUpActivity) {
-            (activity as? SignUpActivity)?.verifyOtp(code)
+//            (activity as? SignUpActivity)?.verifyOtp(code)
         } else if (activity is RecoveryMethodActivity) {
             (activity as? RecoveryMethodActivity)?.verifyOtp(code)
         }

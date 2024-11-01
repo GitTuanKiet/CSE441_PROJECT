@@ -36,12 +36,11 @@ class ForgetPasswordActivity : AppCompatActivity() {
 
         edtEmail = findViewById(R.id.et_email)
 
-        val email = edtEmail.text.toString()
-
         btnNext = findViewById(R.id.btn_next)
 
         btnNext.setOnClickListener {
-            if (email.isNotEmpty()) openRecoveryMethodActivity(edtEmail.text.toString())
+            val email = edtEmail.text.toString()
+            if (email.isNotEmpty()) openRecoveryMethodActivity(email)
             else Toast.makeText(this, "Vui lòng nhập email", Toast.LENGTH_SHORT).show()
         }
     }
