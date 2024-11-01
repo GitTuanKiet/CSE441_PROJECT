@@ -65,7 +65,7 @@ class PasswordActivity : AppCompatActivity() {
                 val updatedUser = UserModel(
                     uid = uid ?: "",
                     password = newPassword,
-                    fullName = sharedPreferences.getString("full_name", "") ?: "",
+                    fullName = sharedPreferences.getString("fullName", "") ?: "",
                     email = sharedPreferences.getString("email", "") ?: "",
                     phoneNumber = sharedPreferences.getString("phone_number", "") ?: "",
                     urlImage = sharedPreferences.getString("url_image", "") ?: "",
@@ -77,12 +77,18 @@ class PasswordActivity : AppCompatActivity() {
                 )
 
                 // Call ViewModel to update the user
-                try {
-                    userViewModel.updateUser(updatedUser)
-                    Toast.makeText(this, "Cập nhật mật khẩu thành công!", Toast.LENGTH_SHORT).show()
-                } catch (e: Exception) {
-                    Toast.makeText(this, "Lỗi cập nhật mật khẩu: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
+                    userViewModel.updateUser(updatedUser) { isSuccess ->
+                        if (isSuccess) {
+                            sharedPreferences.edit().putString("password", newPassword).apply()
+                            Toast.makeText(this, "Cập nhật mật khẩu thành công!", Toast.LENGTH_SHORT).show()
+                            return@updateUser
+                        } else {
+                            Toast.makeText(this, "Cập nhật mật khẩu thất bại!", Toast.LENGTH_SHORT).show()
+                            return@updateUser
+                        }
+
+                    }
+
             }
         }
     }

@@ -14,7 +14,7 @@ class UserRepository {
     // Map lại dữ liệu
     fun getData(userSnapshot: DataSnapshot) : UserModel {
         val uid = userSnapshot.child("uid").getValue(String::class.java)
-        val fullName = userSnapshot.child("name").getValue(String::class.java)
+        val fullName = userSnapshot.child("full_name").getValue(String::class.java)
         val email = userSnapshot.child("email").getValue(String::class.java)
         val password = userSnapshot.child("password").getValue(String::class.java)
         val phoneNumber = userSnapshot.child("phone").getValue(String::class.java)

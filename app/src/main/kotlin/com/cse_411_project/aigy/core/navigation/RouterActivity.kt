@@ -6,7 +6,8 @@ import org.koin.android.ext.android.inject
 
 class RouteActivity : AppCompatActivity() {
 
-    private val navigator: Navigator by inject()
+    private val sharedPreferences by lazy { getSharedPreferences("MyPrefs", Context.MODE_PRIVATE) }
+    private val navigator: Navigator by lazy { Navigator(Authenticator(sharedPreferences)) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -26,17 +26,22 @@ class Navigator(private val authenticator: Authenticator) {
 
 //        showKhanhMain(context)
 
-//        when (authenticator.userLoggedIn()) {
-//            true -> showAgents(context)
-//            false -> showLogin(context)
-//        }
+        when (authenticator.userLoggedIn()) {
+            -1 -> showWelcome(context)
+            0 -> showAdmin(context)
+            1 -> showProfile(context)
+        }
     }
 
 
     // Display UI Admin
     private fun showAdmin(context: Context) = context.startActivity(AdminActivity.callingIntent(context))
 
-    private fun showWelcome(context: Context) = context.startActivity(WelcomeAgentActivity.callingIntent(context))
+    private fun showWelcome(context: Context) = context.startActivity(WelcomeActivity.callingIntent(context))
+
+    private fun showHome(context: Context) = context.startActivity(ExploreActivity.callingIntent(context))
+
+    private fun showProfile(context: Context) = context.startActivity(ProfileActivity.callingIntent(context))
 
     private fun showKhanhMain(context: Context) = context.startActivity(MainActivity.callingIntent(context))
 

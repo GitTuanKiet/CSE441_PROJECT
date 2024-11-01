@@ -1,11 +1,13 @@
 package com.cse_411_project.aigy.khanh.activity
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -16,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.cse_411_project.aigy.R
+import com.cse_411_project.aigy.features.chat.ExploreActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 
@@ -88,12 +91,21 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+        Log.d("prefs", sharedPreferences.all.toString())
 
         txtEmail = findViewById(R.id.hidden_email)
         txtEmail.text = sharedPreferences.getString("email", "")
 
-        txtFullName = findViewById(R.id.txt_full_name_user)
-        txtFullName.text = sharedPreferences.getString("full_name", "")
+//        txtFullName = findViewById(R.id.txt_full_name_user)
+//        txtFullName.text = sharedPreferences.getString("fullName", "")
+    }
+
+    companion object {
+        fun newIntent(context: Context): Intent {
+            return Intent(context, ProfileActivity::class.java)
+        }
+
+        fun callingIntent(context: Context) = Intent(context, ProfileActivity::class.java)
     }
 
 //    private val cropImage = registerForActivityResult(CropImageContract()) { result ->

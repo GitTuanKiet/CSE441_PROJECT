@@ -54,9 +54,9 @@ class AccountInformationActivity : AppCompatActivity() {
     }
 
     private fun loadUserInfo() {
-        edtFullName.setText(sharedPreferences.getString("full_name", ""))
+        edtFullName.setText(sharedPreferences.getString("fullName", ""))
         edtEmail.setText(sharedPreferences.getString("email", ""))
-        edtPhoneNumber.setText(sharedPreferences.getString("phone_number", ""))
+        edtPhoneNumber.setText(sharedPreferences.getString("phoneNumber", ""))
     }
 
     private fun updateUserInformation() {
@@ -71,27 +71,30 @@ class AccountInformationActivity : AppCompatActivity() {
             phoneNumber = newPhoneNumber,
             password = sharedPreferences.getString("password", "") ?: "",
             uid = sharedPreferences.getString("uid", "") ?: "",
-            urlImage = sharedPreferences.getString("url_image", "") ?: "",
+            urlImage = sharedPreferences.getString("urlImage", "") ?: "",
             decentralization = sharedPreferences.getString("decentralization", "") ?: "",
-            isOnline = sharedPreferences.getBoolean("is_online", false),
+            isOnline = sharedPreferences.getBoolean("isOnline", false),
             idListAgent = sharedPreferences.getStringSet("id_list_agent", setOf())?.toList() ?: emptyList(),
-            conversationList = sharedPreferences.getStringSet("conversation_list", setOf())?.toList() ?: emptyList(),
-            referralCount = sharedPreferences.getInt("referral_count", 0)
+            conversationList = sharedPreferences.getStringSet("conversationList", setOf())?.toList() ?: emptyList(),
+            referralCount = sharedPreferences.getInt("referralCount", 0)
         )
 
         // Update SharedPreferences
         with(sharedPreferences.edit()) {
-            putString("full_name", newFullName)
+            putString("fullName", newFullName)
             putString("email", newEmail)
-            putString("phone_number", newPhoneNumber)
+            putString("phoneNumber", newPhoneNumber)
             apply()
         }
 
-        try {
-            userViewModel.updateUser(updatedUser)
-            Toast.makeText(this, "Cập nhật thông tin thành công!", Toast.LENGTH_SHORT).show()
-        } catch (e: Exception) {
-            Toast.makeText(this, "Lỗi cập nhật thông tin: ${e.message}", Toast.LENGTH_SHORT).show()
-        }
+            userViewModel.updateUser(updatedUser) { isSuccess ->
+                if (isSuccess) {
+                    Toast.makeText(this, "Cập nhật thông tin thành công!", Toast.LENGTH_SHORT).show()
+                    return@updateUser
+                } else {
+                    Toast.makeText(this, "Cập nhật thông tin thất bại!", Toast.LENGTH_SHORT).show()
+                }
+            }
+
     }
 }

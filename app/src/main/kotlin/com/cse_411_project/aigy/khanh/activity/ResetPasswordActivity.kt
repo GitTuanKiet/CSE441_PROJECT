@@ -66,7 +66,13 @@ class ResetPasswordActivity : AppCompatActivity() {
     }
 
     private fun resetPassword(newPassword: String) {
-        userViewModel.updatePasswordByEmailAndPhoneNumber(email, phoneNumber, newPassword)
+        userViewModel.updatePasswordByEmailAndPhoneNumber(email, phoneNumber, newPassword) { isSuccess ->
+            if (isSuccess) {
+                Toast.makeText(this, "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Đổi mật khẩu thất bại", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     companion object {

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -12,6 +13,7 @@ import com.cse_411_project.aigy.R
 import java.util.Locale
 
 class LanguageActivity : AppCompatActivity() {
+    private lateinit var ibtnback: ImageButton
     private lateinit var btnEnglishMode: Button
     private lateinit var btnVietnameseMode: Button
     private lateinit var sharedPreferences: SharedPreferences
@@ -37,6 +39,11 @@ class LanguageActivity : AppCompatActivity() {
             changeLanguage("vi")
         }
 
+        ibtnback = findViewById(R.id.ibtn_back)
+        ibtnback.setOnClickListener {
+            finish()
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -48,11 +55,13 @@ class LanguageActivity : AppCompatActivity() {
         val locale = Locale(localeName)
         Locale.setDefault(locale)
         val config = resources.configuration
-        config.setLocale(locale)
-        resources.updateConfiguration(config, resources.displayMetrics)
-
-        recreate()
+        if (config.locale != locale) {
+            config.setLocale(locale)
+            resources.updateConfiguration(config, resources.displayMetrics)
+            recreate()
+        }
     }
+
 
     private fun changeLanguage(newLanguage: String) {
         val currentLanguage = sharedPreferences.getString(LANGUAGE_KEY, "en")

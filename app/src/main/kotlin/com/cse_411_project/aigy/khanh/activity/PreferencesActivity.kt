@@ -35,10 +35,7 @@ class PreferencesActivity : AppCompatActivity() {
 
         lbtnAccountInformation = findViewById(R.id.lbtn_account_information)
         lbtnAccountInformation.setOnClickListener {
-            val intent = Intent(
-                this,
-                com.cse_411_project.aigy.khanh.activity.AccountInformationActivity::class.java
-            )
+            val intent = Intent(this, AccountInformationActivity::class.java)
             startActivity(intent)
         }
 

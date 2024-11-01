@@ -3,6 +3,7 @@ package com.cse_411_project.aigy.khanh.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -27,16 +28,17 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var iBtnBack: ImageButton
     private lateinit var btnRegister: Button
     private lateinit var btnSignIn: TextView
-    private var isDialogOpen = false
+//    private var isDialogOpen = false
     private lateinit var edtFullName: EditText
     private lateinit var edtEmail: EditText
     private lateinit var edtPassword: EditText
     private lateinit var edtConfirmPassword: EditText
     private lateinit var edtPhoneNumber: EditText
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var phoneNumber: String
 
-    private lateinit var verificationCode: String
-    private lateinit var forceResendingToken: PhoneAuthProvider.ForceResendingToken
+//    private lateinit var verificationCode: String
+//    private lateinit var forceResendingToken: PhoneAuthProvider.ForceResendingToken
 
     private val userRepository = UserRepository()
     private val userViewModel = UserViewModel(userRepository)
@@ -83,123 +85,198 @@ class SignUpActivity : AppCompatActivity() {
         val email = edtEmail.text.toString().trim()
         val password = edtPassword.text.toString().trim()
         val confirmPassword = edtConfirmPassword.text.toString().trim()
-        val phoneNumber = "+84" + edtPhoneNumber.text.toString().trim()
+        val phoneNumberInput = edtPhoneNumber.text.toString().trim()
+        phoneNumber = if (phoneNumberInput.startsWith("0")) {
+            "+84" + phoneNumberInput.substring(1)
+        } else {
+            "+84$phoneNumberInput"
+        }
 
         if (validateInput(fullName, email, password, confirmPassword, phoneNumber)) {
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        sendVerificationCode(phoneNumber)
-                        openPhoneNumberVerifyFragment()
-                        Toast.makeText(
-                            this,
-                            "OTP đã được gửi đến số điện thoại của bạn",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        userViewModel.createUser(
+                            UserModel(
+                                uid = firebaseAuth.currentUser!!.uid,
+                                fullName = edtFullName.text.toString().trim(),
+                                email = email,
+                                password = password,
+                                phoneNumber = phoneNumber,
+                                urlImage = "",
+                                decentralization = "user",
+                                isOnline = true,
+                                idListAgent = emptyList(),
+                                conversationList = emptyList(),
+                                referralCount = 0
+                            )
+                        ) { isSuccess ->
+                            if (isSuccess) {
+                                Toast.makeText(this, "Đăng ký thành công", Toast.LENGTH_SHORT).show()
+                                openSignInActivity()
+                            } else {
+                                Toast.makeText(this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     } else {
-                        Toast.makeText(this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show()
+                        val ex = task.exception.toString()
+
+                        if (ex.contains("The email address is already in use by another account",false)) {
+                            Toast.makeText(this, "Email đã được sử dụng!", Toast.LENGTH_SHORT).show()
+                        } else if (ex.contains("The email address is badly formatted", false)) {
+                            Toast.makeText(this, "Email không hợp lệ!", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, "Đăng ký thất bại!", Toast.LENGTH_SHORT).show()
+                            Log.e("SignUpActivity", ex)
+                        }
                     }
                 }
         }
     }
-
-    private fun sendVerificationCode(number: String) {
-        val options = PhoneAuthOptions.newBuilder(firebaseAuth)
-            .setPhoneNumber(number)
-            .setTimeout(60L, TimeUnit.SECONDS)
-            .setActivity(this)
-            .setCallbacks(callbacks)
-            .build()
-        PhoneAuthProvider.verifyPhoneNumber(options)
-    }
-
-    private val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-        override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-            firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    if (isDialogOpen) {
-                        val phoneNumberVerifyDialog =
-                            supportFragmentManager.findFragmentByTag("PhoneNumberVerifyDialog") as PhoneNumberVerifyDialogFragment
-                        phoneNumberVerifyDialog.dismiss()
-                    }
-                    Toast.makeText(this@SignUpActivity, "Đăng ký thành công", Toast.LENGTH_SHORT)
-                        .show()
-                    userViewModel.createUser(
-                        UserModel(
-                            uid = firebaseAuth.currentUser!!.uid,
-                            fullName = edtFullName.text.toString().trim(),
-                            email = edtEmail.text.toString().trim(),
-                            password = edtPassword.text.toString().trim(),
-                            phoneNumber = edtPhoneNumber.text.toString().trim(),
-                            urlImage = "",
-                            decentralization = "user",
-                            isOnline = true,
-                            idListAgent = emptyList(),
-                            conversationList = emptyList(),
-                            referralCount = 0
-                        )
-                    )
-                    openSignInActivity()
-                } else {
-                    Toast.makeText(this@SignUpActivity, "Đăng ký thất bại", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-        }
-
-        override fun onVerificationFailed(e: FirebaseException) {
-            Toast.makeText(
-                this@SignUpActivity,
-                "Xác thực OTP thất bại: ${e.message}",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-
-        override fun onCodeSent(
-            verificationId: String,
-            token: PhoneAuthProvider.ForceResendingToken
-        ) {
-            verificationCode = verificationId
-            forceResendingToken = token
-        }
-    }
-
-    private fun openPhoneNumberVerifyFragment() {
-        isDialogOpen = true
-        val phoneNumberVerifyDialog = PhoneNumberVerifyDialogFragment()
-
-        val bundle = Bundle()
-        bundle.putString("phone_number", "+84" + edtPhoneNumber.text.toString().trim())
-        phoneNumberVerifyDialog.arguments = bundle
-
-        phoneNumberVerifyDialog.isCancelable = false
-        phoneNumberVerifyDialog.setOnDismissListener(object :
-            PhoneNumberVerifyDialogFragment.OnDialogDismissListener {
-            override fun onDialogDismiss() {
-                isDialogOpen = false
-            }
-        })
-        phoneNumberVerifyDialog.show(supportFragmentManager, "PhoneNumberVerifyDialog")
-    }
-
-    fun verifyOtp(otpCode: String) {
-        val credential = PhoneAuthProvider.getCredential(verificationCode, otpCode)
-        firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Toast.makeText(this, "Xác thực OTP thành công", Toast.LENGTH_SHORT).show()
-                Toast.makeText(this, "Chuyển sang màn hình đăng nhập", Toast.LENGTH_SHORT).show()
-                openSignInActivity()
-            } else {
-                Toast.makeText(this, "Xác thực OTP thất bại", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    fun resendOtp() {
-        val phoneNumber = "+84" + edtPhoneNumber.text.toString().trim()
-        sendVerificationCode(phoneNumber)
-        Toast.makeText(this, "Mã xác thực đã được gửi lại!", Toast.LENGTH_SHORT).show()
-    }
+//
+//    fun verifyOtp(otpCode: String) {
+//        val credential = PhoneAuthProvider.getCredential(verificationCode, otpCode)
+//        firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
+//            if (task.isSuccessful) {
+//                // OTP đã được xác thực, tiến hành tạo tài khoản Firebase
+//                val email = edtEmail.text.toString().trim()
+//                val password = edtPassword.text.toString().trim()
+//
+//                firebaseAuth.createUserWithEmailAndPassword(email, password)
+//                    .addOnCompleteListener { createTask ->
+//                        if (createTask.isSuccessful) {
+//                            userViewModel.createUser(
+//                                UserModel(
+//                                    uid = firebaseAuth.currentUser!!.uid,
+//                                    fullName = edtFullName.text.toString().trim(),
+//                                    email = email,
+//                                    password = password,
+//                                    phoneNumber = phoneNumber,
+//                                    urlImage = "",
+//                                    decentralization = "user",
+//                                    isOnline = true,
+//                                    idListAgent = emptyList(),
+//                                    conversationList = emptyList(),
+//                                    referralCount = 0
+//                                )
+//                            )
+//                            Toast.makeText(this, "Đăng ký thành công", Toast.LENGTH_SHORT).show()
+//                            openSignInActivity()
+//                        } else {
+//                            val ex = task.exception.toString()
+//
+//                            if (ex.contains("The email address is already in use by another account", false)) {
+//                                Toast.makeText(this, "Email đã được sử dụng", Toast.LENGTH_SHORT).show()
+//                                finish()
+//                            } else if (ex.contains("The email address is badly formatted", false)) {
+//                                Toast.makeText(this, "Email không hợp lệ", Toast.LENGTH_SHORT).show()
+//                                finish()
+//                            } else {
+//                                Toast.makeText(this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show()
+//                                Log.e("SignUpActivity", ex)
+//                            }
+//                        }
+//                    }
+//            } else {
+//                Toast.makeText(this, "Xác thực OTP thất bại", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//    }
+//
+//    private fun sendVerificationCode(number: String) {
+//        val options = PhoneAuthOptions.newBuilder(firebaseAuth)
+//            .setPhoneNumber(number)
+//            .setTimeout(60L, TimeUnit.SECONDS)
+//            .setActivity(this)
+//            .setCallbacks(callbacks)
+//            .build()
+//        PhoneAuthProvider.verifyPhoneNumber(options)
+//    }
+//
+//    private val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+//        override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+//            firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
+//                if (task.isSuccessful) {
+//                    if (isDialogOpen) {
+//                        val phoneNumberVerifyDialog =
+//                            supportFragmentManager.findFragmentByTag("PhoneNumberVerifyDialog") as PhoneNumberVerifyDialogFragment
+//                        phoneNumberVerifyDialog.dismiss()
+//                    }
+//                    Toast.makeText(this@SignUpActivity, "Đăng ký thành công", Toast.LENGTH_SHORT)
+//                        .show()
+//                    userViewModel.createUser(
+//                        UserModel(
+//                            uid = firebaseAuth.currentUser!!.uid,
+//                            fullName = edtFullName.text.toString().trim(),
+//                            email = edtEmail.text.toString().trim(),
+//                            password = edtPassword.text.toString().trim(),
+//                            phoneNumber = phoneNumber,
+//                            urlImage = "",
+//                            decentralization = "user",
+//                            isOnline = true,
+//                            idListAgent = emptyList(),
+//                            conversationList = emptyList(),
+//                            referralCount = 0
+//                        )
+//                    )
+//                    openSignInActivity()
+//                } else {
+//                    val ex = task.exception.toString()
+//
+//                    if (ex.contains("The email address is already in use by another account", false)) {
+//                        Toast.makeText(this@SignUpActivity, "Email đã được sử dụng", Toast.LENGTH_SHORT).show()
+//                        finish()
+//                    } else if (ex.contains("The email address is badly formatted", false)) {
+//                        Toast.makeText(this@SignUpActivity, "Email không hợp lệ", Toast.LENGTH_SHORT).show()
+//                        finish()
+//                    } else {
+//                        Toast.makeText(this@SignUpActivity, "Đăng ký thất bại", Toast.LENGTH_SHORT).show()
+//                        Log.e("SignUpActivity", ex)
+//                    }
+//                }
+//            }
+//        }
+//
+//        override fun onVerificationFailed(e: FirebaseException) {
+//            Toast.makeText(
+//                this@SignUpActivity,
+//                "Xác thực OTP thất bại: ${e.message}",
+//                Toast.LENGTH_SHORT
+//            ).show()
+//        }
+//
+//        override fun onCodeSent(
+//            verificationId: String,
+//            token: PhoneAuthProvider.ForceResendingToken
+//        ) {
+//            verificationCode = verificationId
+//            forceResendingToken = token
+//        }
+//    }
+//
+//    private fun openPhoneNumberVerifyFragment() {
+//        isDialogOpen = true
+//        val phoneNumberVerifyDialog = PhoneNumberVerifyDialogFragment()
+//
+//        val bundle = Bundle()
+//        bundle.putString("phone_number", phoneNumber)
+//        phoneNumberVerifyDialog.arguments = bundle
+//
+//        phoneNumberVerifyDialog.isCancelable = false
+//        phoneNumberVerifyDialog.setOnDismissListener(object :
+//            PhoneNumberVerifyDialogFragment.OnDialogDismissListener {
+//            override fun onDialogDismiss() {
+//                isDialogOpen = false
+//            }
+//        })
+//        phoneNumberVerifyDialog.show(supportFragmentManager, "PhoneNumberVerifyDialog")
+//    }
+//
+//    fun resendOtp() {
+//        val phoneNumber = phoneNumber
+//        sendVerificationCode(phoneNumber)
+//        Toast.makeText(this, "Mã xác thực đã được gửi lại!", Toast.LENGTH_SHORT).show()
+//    }
 
     private fun openSignInActivity() {
         val intent = SignInActivity.newIntent(this)
@@ -214,6 +291,9 @@ class SignUpActivity : AppCompatActivity() {
         confirmPassword: String,
         phoneNumber: String
     ): Boolean {
+        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+" // Định dạng email cơ bản
+        val phonePattern = "^(\\+84|0)[1-9][0-9]{8,9}$" // Định dạng số điện thoại hợp lệ cho Việt Nam
+
         return when {
             fullName.isEmpty() -> {
                 edtFullName.error = "Vui lòng nhập họ và tên"
@@ -225,8 +305,18 @@ class SignUpActivity : AppCompatActivity() {
                 false
             }
 
+            !email.matches(emailPattern.toRegex()) -> {
+                edtEmail.error = "Email không đúng định dạng"
+                false
+            }
+
             password.isEmpty() -> {
                 edtPassword.error = "Vui lòng nhập mật khẩu"
+                false
+            }
+
+            password.length < 6 -> {
+                edtPassword.error = "Mật khẩu phải có ít nhất 6 ký tự"
                 false
             }
 
@@ -240,8 +330,13 @@ class SignUpActivity : AppCompatActivity() {
                 false
             }
 
-            phoneNumber.length < 10 -> {
-                edtPhoneNumber.error = "Vui lòng nhập số điện thoại hợp lệ"
+            phoneNumber.isEmpty() -> {
+                edtPhoneNumber.error = "Vui lòng nhập số điện thoại"
+                false
+            }
+
+            !phoneNumber.matches(phonePattern.toRegex()) -> {
+                edtPhoneNumber.error = "Số điện thoại không hợp lệ"
                 false
             }
 

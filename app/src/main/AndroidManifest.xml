@@ -105,6 +105,9 @@
             android:name=".khanh.activity.MainActivity"
             android:exported="false">
         </activity>
+        <activity
+            android:name=".khanh.activity.ThemeActivity"
+            android:exported="false" />
         <activity android:name=".khanh.activity.WelcomeActivity" />
     </application>
 </manifest>
