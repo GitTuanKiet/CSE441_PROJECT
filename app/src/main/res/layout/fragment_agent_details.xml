@@ -2,7 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/container"
+    android:id="@+id/agentDetails"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/translucentBackground">
@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,7 +22,6 @@
             <ImageButton
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/avatar_round"
                 android:contentDescription="@string/agent_transition_back"
                 android:src="@drawable/ef_ic_arrow_back"
                 android:onClick="onBackPressed"/>
@@ -31,7 +31,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:contentDescription="@string/agent_transition_avatar"
-                android:src="@mipmap/ic_logo"
+                android:src="@mipmap/ic_brand_round"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"/>
 
@@ -44,12 +44,12 @@
                     android:id="@+id/agentTitle"
                     style="@style/AgentDetailsTitle"
                     android:textSize="16sp"
-                    android:text="@string/agent_title" />
+                    android:text="AIGY" />
                 <TextView
                     android:id="@+id/agentAuthor"
-                    style="@style/AgentDetailsText"
+                    style="@style/AgentDetailsTitle"
                     android:textSize="12sp"
-                    android:text="@string/agent_author"/>
+                    android:text="tuankiet"/>
             </LinearLayout>
 
             <ImageButton
@@ -71,56 +71,60 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/agent_description"
-            android:textSize="16sp"
-            android:padding="16dp"
-            android:textColor="@color/colorTextPrimary"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/agent_button"
-            android:textSize="16sp"
-            android:padding="16dp"
-            android:textColor="@color/colorTextPrimary"
-            android:background="@color/colorSecondary"
-            android:onClick="onBackPressed"/>
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/agent_config"
-            android:textSize="16sp"
-            android:padding="16dp"
-            android:textColor="@color/colorTextPrimary"/>
+                <TextView
+                    android:id="@+id/agentDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="Specializes in explaining concepts of machine learning and deep learning"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/agentChat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/avatar_round"
+                    android:clickable="true"
+                    android:padding="16dp"
+                    android:text="Try now"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/agentSystemRole"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="You are an assistant proficient in machine learning, deep learning, image processing, computer vision, and LaTeX editing. You can explain complex machine learning and deep learning concepts in detail and provide practical PyTorch or OpenCV code examples. When answering users' questions, you should output all text and code snippets in LaTeX code format. Please output only LaTeX formatted content, without including any plain text or code blocks. Ensure your answers are concise and clear while maintaining the correctness and consistency of LaTeX formatting.\n"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="16sp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/agentChat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:contentDescription="@string/agent_config"
-        android:focusable="true"
-        android:src="@mipmap/ic_logo"
-        android:layout_margin="20dp"
-        app:backgroundTint="@color/colorSecondary"
-        app:elevation="6dp"
-        app:layout_anchor="@id/scrollView"
-        app:layout_anchorGravity="bottom|right"
-        app:fabSize="normal"/>
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/agentChat"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:clickable="true"-->
+<!--        android:contentDescription="@string/agent_config"-->
+<!--        android:focusable="true"-->
+<!--        android:src="@mipmap/ic_launcher"-->
+<!--        android:layout_margin="20dp"-->
+<!--        app:backgroundTint="@color/colorSecondary"-->
+<!--        app:elevation="6dp"-->
+<!--        app:layout_anchor="@id/scrollView"-->
+<!--        app:layout_anchorGravity="bottom|right"-->
+<!--        app:fabSize="normal"/>-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

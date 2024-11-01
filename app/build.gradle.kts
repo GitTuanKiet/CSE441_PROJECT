@@ -25,6 +25,7 @@ plugins {
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
 }
 
 val appConfig = AppConfig()
@@ -92,6 +93,7 @@ dependencies {
 //    implementation(libs.firebase.database)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.gridlayout)
+    implementation(libs.google.generativeai)
     runtimeOnly(libs.androidx.viewpager2)
 
 

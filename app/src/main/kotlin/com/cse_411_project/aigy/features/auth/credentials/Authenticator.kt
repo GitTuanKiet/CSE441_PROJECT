@@ -15,6 +15,8 @@
  */
 package com.cse_411_project.aigy.features.auth.credentials
 
+import android.content.SharedPreferences
+
 
 class Authenticator(private val sharedPreferences: SharedPreferences) {
 

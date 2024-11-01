@@ -26,6 +26,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:background="@drawable/avatar_round"
+                android:src="@mipmap/ic_brand_round"
                 android:layout_marginEnd="16dp"
                 android:contentDescription="@string/agent_transition_avatar" />
 
@@ -40,7 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:text="EVA"
+                    android:text="AIGY"
                     android:textSize="18sp"
                     android:textColor="@color/colorTextPrimary"
                     android:textStyle="bold"/>
@@ -50,7 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:text="Eva is a virtual assistant that helps you learn English better..."
+                    android:text="Specializes in explaining concepts of machine learning and deep learning"
                     android:textSize="14sp"
                     android:textColor="@color/colorTextSecondary"/>
             </LinearLayout>

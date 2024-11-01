@@ -68,13 +68,11 @@ class AgentsFragment : BaseFragment() {
     private fun loadAgentsList() {
         binding.emptyView.invisible()
         binding.agentList.visible()
-        showProgress()
         agentsViewModel.loadAgents()
     }
 
     private fun renderAgentsList(agents: List<AgentView>?) {
         agentsAdapter.collection = agents.orEmpty()
-        hideProgress()
     }
 
     private fun handleFailure(failure: Failure?) {
@@ -89,7 +87,6 @@ class AgentsFragment : BaseFragment() {
     private fun renderFailure(@StringRes message: Int) {
         binding.agentList.invisible()
         binding.emptyView.visible()
-        hideProgress()
         notifyWithAction(message, R.string.action_refresh, ::loadAgentsList)
     }
 }

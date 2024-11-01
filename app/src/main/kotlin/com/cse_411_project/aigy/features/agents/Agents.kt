@@ -5,7 +5,6 @@ import com.cse_411_project.aigy.features.agents.data.AgentStoreRepository
 import com.cse_411_project.aigy.features.agents.data.AgentStoreService
 import com.cse_411_project.aigy.features.agents.interactor.GetAgentDetails
 import com.cse_411_project.aigy.features.agents.interactor.GetAgents
-import com.cse_411_project.aigy.features.agents.ui.AgentDetailsAnimator
 import com.cse_411_project.aigy.features.agents.ui.AgentDetailsViewModel
 import com.cse_411_project.aigy.features.agents.ui.AgentsViewModel
 import com.cse_411_project.aigy.features.agents.ui.AgentsAdapter
@@ -29,6 +28,5 @@ fun agentsFeature() = object : Feature {
         // Agent Details
         viewModelOf(::AgentDetailsViewModel)
         factoryOf(::GetAgentDetails)
-        factoryOf(::AgentDetailsAnimator)
     }
 }

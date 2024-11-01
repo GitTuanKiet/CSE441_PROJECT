@@ -1,5 +1,6 @@
 package com.cse_411_project.aigy.features.agents.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -13,14 +14,13 @@ class AgentDetailsViewModel(private val getAgentDetails: GetAgentDetails) : Base
     private val _agentDetails: MutableLiveData<AgentDetailsView> = MutableLiveData()
     val agentDetails: LiveData<AgentDetailsView> = _agentDetails
 
-    fun loadAgentDetails(identifier: String) {
-        return getAgentDetails(Params(identifier), viewModelScope) {
+    fun loadAgentDetails(identifier: String) =
+         getAgentDetails(Params(identifier), viewModelScope) {
             it.fold(::handleFailure, ::handleAgentDetails)
-        }
     }
 
     private fun handleAgentDetails(agentDetails: AgentDetails) {
-        _agentDetails.value = AgentDetailsView(agentDetails.identifier, agentDetails.author, AgentConfigView(agentDetails.config.systemRoles), AgentMetaView(agentDetails.meta.title, agentDetails.meta.description, agentDetails.meta.avatar, agentDetails.meta.tags, agentDetails.meta.category))
+        _agentDetails.value = AgentDetailsView(agentDetails.identifier, agentDetails.author, AgentConfigView(agentDetails.config.systemRole), AgentMetaView(agentDetails.meta.title, agentDetails.meta.description, agentDetails.meta.avatar, agentDetails.meta.tags, agentDetails.meta.category))
     }
 
     fun agentChat(identifier: String) {

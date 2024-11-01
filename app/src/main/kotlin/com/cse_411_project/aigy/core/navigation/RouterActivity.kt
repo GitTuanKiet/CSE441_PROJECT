@@ -1,7 +1,9 @@
 package com.cse_411_project.aigy.core.navigation
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.cse_411_project.aigy.features.auth.credentials.Authenticator
 import org.koin.android.ext.android.inject
 
 class RouteActivity : AppCompatActivity() {

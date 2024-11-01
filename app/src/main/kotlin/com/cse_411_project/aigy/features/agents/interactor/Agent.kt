@@ -38,7 +38,7 @@ data class AgentDetails(
 }
 
 data class AgentConfig(
-    val systemRoles: String
+    val systemRole: String
 ) {
     companion object {
         val empty = AgentConfig(String.empty())
