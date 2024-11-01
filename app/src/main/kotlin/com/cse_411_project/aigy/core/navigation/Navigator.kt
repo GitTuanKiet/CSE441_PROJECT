@@ -21,11 +21,11 @@ class Navigator(private val authenticator: Authenticator) {
     fun showMain(context: Context) {
 //        showAgents(context)
 
-//        showAdmin(context)
+        showAdmin(context)
 
 //        showWelcome(context)
 
-        showKhanhMain(context)
+//        showKhanhMain(context)
 
 //        when (authenticator.userLoggedIn()) {
 //            true -> showAgents(context)
