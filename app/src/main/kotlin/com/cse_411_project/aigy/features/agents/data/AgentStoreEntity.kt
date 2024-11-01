@@ -41,7 +41,7 @@ data class AgentDetailsEntity (
 }
 
 data class AgentConfigEntity(
-    private val systemRoles: String,
+    private val systemRole: String,
 ) {
-    fun toAgentConfig() = AgentConfig(systemRoles)
+    fun toAgentConfig() = AgentConfig(systemRole)
 }

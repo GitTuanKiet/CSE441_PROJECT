@@ -1,5 +1,7 @@
 package com.cse_411_project.aigy.features.chat
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -13,6 +15,12 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ExploreActivity : AppCompatActivity() {
+
+    companion object {
+        fun callingIntent(context: Context): Intent {
+            return Intent(context, ExploreActivity::class.java)
+        }
+    }
 
     private lateinit var adapter: ExploreAdapter
     private val agentList = mutableListOf<ExploreItem>()

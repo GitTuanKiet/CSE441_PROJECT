@@ -13,4 +13,4 @@ data class AgentMetaView(val title: String, val description: String, val avatar:
 data class AgentDetailsView(val identifier: String, val author: String, val config: AgentConfigView, val meta: AgentMetaView) : Parcelable
 
 @Parcelize
-data class AgentConfigView(val systemRoles: String) : Parcelable
+data class AgentConfigView(val systemRole: String) : Parcelable

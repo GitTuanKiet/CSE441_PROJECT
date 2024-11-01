@@ -1,16 +1,22 @@
 package com.cse_411_project.aigy.features.agents.ui
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import com.cse_411_project.aigy.R
 import com.cse_411_project.aigy.core.extension.*
 import com.cse_411_project.aigy.core.failure.Failure
 import com.cse_411_project.aigy.core.failure.Failure.*
+import com.cse_411_project.aigy.core.navigation.Navigator
 import com.cse_411_project.aigy.core.platform.BaseFragment
 import com.cse_411_project.aigy.databinding.FragmentAgentDetailsBinding
+import com.cse_411_project.aigy.features.chat.WelcomeAgentActivity
 import com.cse_411_project.aigy.features.agents.failure.AgentFailure.*
 import org.koin.android.ext.android.inject
 
@@ -24,7 +30,8 @@ class AgentDetailsFragment : BaseFragment() {
         }
     }
 
-    private val agentDetailsAnimator: AgentDetailsAnimator by inject()
+    private val navigator: Navigator by inject()
+
     private val agentDetailsViewModel: AgentDetailsViewModel by inject()
 
     private var _binding: FragmentAgentDetailsBinding? = null
@@ -32,7 +39,6 @@ class AgentDetailsFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.let { agentDetailsAnimator.postponeEnterTransition(it) }
 
         with(agentDetailsViewModel) {
             observe(agentDetails, ::renderAgentDetails)
@@ -40,32 +46,27 @@ class AgentDetailsFragment : BaseFragment() {
         }
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentAgentDetailsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (firstTimeCreated(savedInstanceState)) {
-            (arguments?.getParcelable(PARAM_AGENT, AgentView::class.java))?.identifier?.let {
-                agentDetailsViewModel.loadAgentDetails(
-                    it
-                )
-            }
-        } else {
-            agentDetailsAnimator.translateLeftView(binding.agentChat)
-            agentDetailsAnimator.cancelTransition(binding.agentAvatar)
-            (arguments?.getParcelable(PARAM_AGENT, AgentView::class.java))?.meta?.let {
-                binding.agentAvatar.loadFromUrl(
-                    it.avatar
-                )
-            }
+        val agent = arguments?.getParcelable(PARAM_AGENT, AgentView::class.java)
+        agent?.identifier?.let {
+            agentDetailsViewModel.loadAgentDetails(it)
         }
     }
 
-    override fun onBackPressed() {
-        agentDetailsAnimator.fadeInvisible(binding.scrollView, binding.agentDetails)
-        if (binding.agentChat.isVisible())
-            agentDetailsAnimator.translateRightView(binding.agentChat)
-        else
-            agentDetailsAnimator.cancelTransition(binding.agentAvatar)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun renderAgentDetails(agent: AgentDetailsView?) {
@@ -73,17 +74,16 @@ class AgentDetailsFragment : BaseFragment() {
             with(agent) {
                 activity?.let {
                     binding.agentAvatar.loadUrlAndPostponeEnterTransition(meta.avatar, it)
-                    it.title = meta.title
                 }
+                binding.agentTitle.text = meta.title
                 binding.agentAuthor.text = author
                 binding.agentDescription.text = meta.description
-                binding.agentCategory.text =  meta.category
+                binding.agentSystemRole.text = config.systemRole
                 binding.agentChat.setOnClickListener {
-                    agentDetailsViewModel.agentChat(identifier) }
+                    navigator.showWelcomeAgent(requireActivity(), agent)
+                }
             }
         }
-        agentDetailsAnimator.fadeVisible(binding.scrollView, binding.agentDetails)
-        agentDetailsAnimator.translateLeftView(binding.agentChat)
     }
 
     private fun handleFailure(failure: Failure?) {

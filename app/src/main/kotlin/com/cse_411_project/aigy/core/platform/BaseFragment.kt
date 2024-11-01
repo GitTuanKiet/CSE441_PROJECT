@@ -32,10 +32,11 @@ import com.cse_411_project.aigy.core.extension.viewContainer
  */
 abstract class BaseFragment : Fragment() {
 
-    open fun onBackPressed() {}
+    open fun onBackPressed() {
+        activity?.onBackPressedDispatcher?.onBackPressed()
+    }
 
     internal fun firstTimeCreated(savedInstanceState: Bundle?) = savedInstanceState == null
-
 
     internal fun notify(@StringRes message: Int) =
         Snackbar.make(viewContainer, message, Snackbar.LENGTH_SHORT).show()

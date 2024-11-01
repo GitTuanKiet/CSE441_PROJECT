@@ -1,5 +1,6 @@
 package com.cse_411_project.aigy.features.agents.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
