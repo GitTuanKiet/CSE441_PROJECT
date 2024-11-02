@@ -44,14 +44,22 @@ class ChatActivity : AppCompatActivity() {
         binding = ActivityChatBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        if (savedInstanceState == null) {
-            supportFragmentManager.inTransaction {
-                add(binding.fragmentContainer.id, ChatFragment())
-            }
-        }
 
         val agentDetails =
             intent.getParcelableExtra(PARAM_AGENT, AgentDetailsView::class.java) as AgentDetailsView
+
+        if (savedInstanceState == null) {
+            val bundle = Bundle().apply {
+                putParcelable(PARAM_AGENT, agentDetails)
+            }
+            val chatFragment = ChatFragment().apply {
+                arguments = bundle
+            }
+            supportFragmentManager.inTransaction {
+                add(binding.fragmentContainer.id, chatFragment)
+            }
+        }
+
 
 //        findViewById<ImageButton>(R.id.btn_back).setOnClickListener {
 //            finish()
