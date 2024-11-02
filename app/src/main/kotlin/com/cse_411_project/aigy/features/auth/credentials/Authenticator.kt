@@ -17,12 +17,10 @@ package com.cse_411_project.aigy.features.auth.credentials
 
 import android.content.SharedPreferences
 
+class Authenticator() {
 
-class Authenticator(private val sharedPreferences: SharedPreferences) {
-
-    fun userLoggedIn(): Int {
-        val decentralization = sharedPreferences.getString("decentralization", "")
-        if (decentralization.isNullOrEmpty()) return -1
+    fun userLoggedIn(sharedPreferences: SharedPreferences): Int {
+        val decentralization = sharedPreferences.getString("decentralization", "") ?: return -1
         return when (decentralization) {
             "user" -> 1
             "admin" -> 0
