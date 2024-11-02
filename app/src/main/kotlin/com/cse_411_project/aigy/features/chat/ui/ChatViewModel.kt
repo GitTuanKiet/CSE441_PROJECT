@@ -189,12 +189,14 @@ class ChatViewModel(private val webApiRepository: ChatApiRepository = ChatApiRep
     }
 
     fun sendPrompt(
-        prompt: String
+        systemRole: String,
+        question: String
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val response = generativeModel.generateContent(prompt)
+//                val response = generativeModel.generateContent(prompt)
 
+                val response = generativeModel.generateContent("$systemRole $question")
                 response.text?.let { outputContent ->
                     _botMessages.postValue(ChatResponse(
                         status = "success",

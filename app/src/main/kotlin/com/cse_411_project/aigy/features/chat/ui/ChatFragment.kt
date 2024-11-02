@@ -1,35 +1,61 @@
 package com.cse_411_project.aigy.features.chat.ui
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cse_411_project.aigy.BuildConfig
 import com.cse_411_project.aigy.R
+import com.cse_411_project.aigy.core.extension.loadFromUrl
+import com.cse_411_project.aigy.core.extension.loadUrlAndPostponeEnterTransition
 import com.cse_411_project.aigy.databinding.FragmentChatBinding
+import com.cse_411_project.aigy.features.agents.ui.AgentDetailsView
+import com.cse_411_project.aigy.features.chat.ChatActivity
 import com.cse_411_project.aigy.features.chat.data.ChatResponse
 import com.cse_411_project.aigy.features.chat.data.ChatRequest
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class ChatFragment : Fragment() {
+    companion object {
+        private const val PARAM_AGENT = "param_agent"
+
+    }
+
     private lateinit var binding: FragmentChatBinding
     private val viewModel: ChatViewModel by viewModels() // Sử dụng ViewModel
     private var adapter: ChatRecyclerViewAdapter? = null
 
     private var messageList = mutableListOf<Any>()
 
+    private var agentDetails: AgentDetailsView? = null
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            agentDetails = it.getParcelable(PARAM_AGENT, AgentDetailsView::class.java)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentChatBinding.inflate(inflater, container, false)
+
+        agentDetails?.meta?.avatar?.let { binding.avatar.loadFromUrl(it) }
+        agentDetails?.meta?.title?.let { binding.title.text = it }
 
         customFirstBotResponse()
         setupRecyclerView()
@@ -40,12 +66,13 @@ class ChatFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         customLayoutWhenKeyboardOpen()
     }
 
     private fun customFirstBotResponse() {
         val defaultBotResponse = ChatResponse.Data(
-            answer = "Hello! I'm your assistant. How can I help you today?",
+            answer = "Hello! I'm ${agentDetails?.meta?.title}. How can I help you?",
             suggestedQuestions = emptyList()
         )
         messageList.add(defaultBotResponse)
@@ -94,7 +121,7 @@ class ChatFragment : Fragment() {
                 binding.edtMessage.setText("")
 
 //                viewModel.getMessages(accessToken, apiKey, chatRequest)
-                viewModel.sendPrompt(question)
+                viewModel.sendPrompt(agentDetails?.config?.systemRole ?: "", question)
                 binding.recyclerViewChat.scrollToPosition(messageList.size - 1)
             }
         }
