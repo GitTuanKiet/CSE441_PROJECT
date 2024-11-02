@@ -47,8 +47,6 @@ class Navigator(private val authenticator: Authenticator) {
 
     private fun showProfile(context: Context) = context.startActivity(ProfileActivity.callingIntent(context))
 
-    private fun showKhanhMain(context: Context) = context.startActivity(MainActivity.callingIntent(context))
-
     private fun showAgents(context: Context) =
         context.startActivity(AgentsActivity.callingIntent(context))
 
