@@ -15,7 +15,6 @@ import com.cse_411_project.aigy.features.agents.ui.AgentsActivity
 import com.cse_411_project.aigy.features.chat.WelcomeAgentActivity
 import com.cse_411_project.aigy.khanh.activity.MainActivity
 import com.cse_411_project.aigy.khanh.activity.ProfileActivity
-import com.cse_411_project.aigy.khanh.activity.WelcomeActivity
 
 class Navigator(private val authenticator: Authenticator) {
 //    private fun showLogin(context: Context) =
@@ -33,7 +32,7 @@ class Navigator(private val authenticator: Authenticator) {
         when (authenticator.userLoggedIn(sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE))) {
             -1 -> showWelcome(context)
             0 -> showAdmin(context)
-            1 -> showHome(context)
+            1 -> showProfile(context)
         }
     }
 
@@ -41,7 +40,7 @@ class Navigator(private val authenticator: Authenticator) {
     // Display UI Admin
     private fun showAdmin(context: Context) = context.startActivity(AdminActivity.callingIntent(context))
 
-    private fun showWelcome(context: Context) = context.startActivity(WelcomeActivity.callingIntent(context))
+    private fun showWelcome(context: Context) = context.startActivity(MainActivity.callingIntent(context))
 
     private fun showHome(context: Context) = context.startActivity(AgentsActivity.callingIntent(context))
 
