@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cse_411_project.aigy.R
+import com.cse_411_project.aigy.features.agents.ui.AgentsActivity
 import com.cse_411_project.aigy.features.chat.ExploreActivity
 import com.cse_411_project.aigy.khanh.model.UserModel
 import com.cse_411_project.aigy.khanh.repositories.UserRepository
@@ -83,7 +84,7 @@ class SignInActivity : AppCompatActivity() {
                                 if (userModel != null) {
                                     saveUserDataToPreferences(userModel)
                                     showToast("Đăng nhập thành công")
-//                                    startHomeActivity()
+                                    startHomeActivity()
 
                                     openProfileActivity()
                                 } else {
@@ -128,7 +129,7 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun startHomeActivity() {
-        val intent = Intent(this, ExploreActivity::class.java)
+        val intent = Intent(this, AgentsActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         finish()
