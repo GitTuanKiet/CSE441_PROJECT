@@ -86,7 +86,7 @@ class SignInActivity : AppCompatActivity() {
                                     showToast("Đăng nhập thành công")
                                     startHomeActivity()
 
-                                    openProfileActivity()
+//                                    openProfileActivity()
                                 } else {
                                     showToast("Không tìm thấy người dùng")
                                 }
@@ -135,9 +135,9 @@ class SignInActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun openProfileActivity() {
-        startActivity(ProfileActivity.newIntent(this))
-    }
+//    private fun openProfileActivity() {
+//        startActivity(ProfileActivity.newIntent(this))
+//    }
 
     private fun openSignUpActivity() {
         startActivity(SignUpActivity.newIntent(this))

@@ -22,7 +22,7 @@ class Navigator(private val authenticator: Authenticator) {
 //        context.startActivity(LoginActivity.callingIntent(context))
 
     fun showMain(context: Context) {
-//        showAgents(context)
+//        showHome(context)
 
 //        showAdmin(context)
 
@@ -30,10 +30,10 @@ class Navigator(private val authenticator: Authenticator) {
 
 //        showKhanhMain(context)
 
-        when (authenticator.userLoggedIn()) {
+        when (authenticator.userLoggedIn(sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE))) {
             -1 -> showWelcome(context)
             0 -> showAdmin(context)
-            1 -> showProfile(context)
+            1 -> showHome(context)
         }
     }
 
